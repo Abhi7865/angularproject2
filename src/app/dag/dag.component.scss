@@ -1,0 +1,367 @@
+html, body { 
+}
+
+.panel-one { 
+
+}
+button {
+    min-height: 40px;
+    min-width: 100px;
+}
+.panel-two {
+
+
+}
+
+#wrapper {
+    margin: left 10px;
+    margin: right 10px;
+    width:960px;
+}
+.box {
+    background: #BADA55;
+    border: 1px solid black;
+    padding: 10px 20px;
+    display: inline-block;
+  
+    &.dragging {
+      background: coral;
+    }
+  }
+
+  .right-border {
+    border-right: 2px solid #ccc;
+    height: auto;
+  }
+
+.control {
+    border-color: green;
+    border-radius: 10px;
+    border-width: 2px;
+    border-style: solid;
+    min-width: 150px;
+    text-align: center;
+    cursor: pointer;
+    height: fit-content;
+    height: -moz-max-content;
+    background-color: white;
+}
+
+
+.window {
+    z-index: 20;
+}
+
+.jtk-connector {
+    z-index: 4;
+}
+
+.jtk-endpoint {
+    z-index: 5;
+}
+
+.jtk-overlay {
+    z-index: 6;
+}
+
+.custom-menu {
+    z-index: 1000;
+    position: absolute;
+    background-color: #C0C0C0;
+    border: 1px solid black;
+    padding: 2px;
+}
+
+#toolbox .control {
+    margin: 10px 5px;
+}
+.setborder {
+    border: 5px dashed #ccc;
+    height: 1200px;
+    max-width: 1200px;
+    margin: 0;
+    padding: 5px;
+}
+.area {
+    background: #C0FFEE;
+   //padding: 40px;
+   height: 700px;
+   max-width: 1300px;
+  }
+
+ 
+.example-box {width: 200px;
+  height: 200px;
+  border: solid 1px #ccc;
+   color: rgba(0, 0, 0, 0.87); cursor: move; display: inline-flex;
+   justify-content: center;align-items: center;text-align: center;background: #fff;border-radius: 4px;
+    margin-right: 25px; position: relative; z-index: 1;box-sizing: border-box;
+    transition: box-shadow 200ms cubic-bezier(0, 0, 0.2, 1);
+     box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2),0 2px 2px 0 rgba(0, 0, 0, 0.14),
+      0 1px 5px 0 rgba(0, 0, 0, 0.12); }
+
+
+      
+      .example-boundary {width: 80%;
+       height: 1200px; border: dotted #ccc 2px; margin-left: 5%; }
+      
+       .container{
+        border-radius: 4px;
+
+		.textField{
+			z-index: 1;
+			padding: 10px;
+			display: flex;
+			width: fit-content;
+			flex-direction: column-reverse;
+
+			&.initialPosition{
+				transform: translate3d(250px, 180px, 0);
+				border: 1px solid hotpink;
+				.textField-options {
+					opacity: 1;
+				}
+			}
+
+      .textField-inner {
+				&:active + .textField{
+					border: 1px dashed grey;
+				}
+			}
+
+			&:hover, &:active, &:focus {
+				border: 1px dashed grey; 
+			}
+
+			&:hover .textField-options {
+				opacity: 1;
+			}
+
+	
+
+			.textField-options {
+				display: flex;
+				flex-direction: row-reverse;
+				padding-bottom: 8px;
+				opacity: 0;
+				.textField-move {
+					width: 100%;
+					display: flex;
+					justify-content: flex-end;
+					padding-left: 104px;
+					color: blue;
+					cursor: move;
+				}
+
+				.textField-remove {
+					color: red;
+					cursor: pointer;
+				}
+			}
+		}
+}
+.container {
+    width: 150px;
+    height: 200px;
+    // padding: 5px 10px;
+    text-align: center;
+    // border: dashed 1px #979797;
+    position: relative;
+    margin: 0 auto;
+  
+    input {
+      opacity: 0;
+      position: absolute;
+      z-index: 2;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      cursor: pointer;
+    }
+  
+    label {
+      color: white;
+      /* border-radius: 20px; */
+      background-color: #016FC0;
+      padding: 8px 16px;
+    }
+  
+    h3 {
+      font-size: 20px;
+      font-weight: 600;
+      color: #38424c;
+    }
+  }
+  .col-2 {
+    flex: 0 0 auto;
+    width: 16.66666667%;
+}
+  .fileover {
+    animation: shake 1s;
+    animation-iteration-count: infinite;
+  }
+  
+  
+  .files-list {
+    margin-top: 6px;
+  
+    .single-file {
+      
+      padding: 0.5rem;
+      justify-content: space-between;
+      align-items: center;
+      border: dashed 1px #979797;
+      margin-bottom: 1rem;
+  
+      .delete {
+        display: flex;
+        margin-left: 0.5rem;
+        cursor: pointer;
+        align-self: flex-end;
+      }
+  
+  
+      display: flex;
+      flex-grow: 1;
+  
+      .name {
+        font-size: 14px;
+        font-weight: 500;
+        color: #353f4a;
+        margin: 0;
+      }
+  
+      .size {
+        font-size: 12px;
+        font-weight: 500;
+        color: #a4a4a4;
+        margin: 0;
+        margin-bottom: 0.25rem;
+      }
+  
+      .info {
+        width: 100%
+      }
+    }
+  }
+  
+  /* Shake animation */
+  @keyframes shake {
+    0% {
+      transform: translate(1px, 1px) rotate(0deg);
+    }
+  
+    10% {
+      transform: translate(-1px, -2px) rotate(-1deg);
+    }
+  
+    20% {
+      transform: translate(-3px, 0px) rotate(1deg);
+    }
+  
+    30% {
+      transform: translate(3px, 2px) rotate(0deg);
+    }
+  
+    40% {
+      transform: translate(1px, -1px) rotate(1deg);
+    }
+  
+    50% {
+      transform: translate(-1px, 2px) rotate(-1deg);
+    }
+  
+    60% {
+      transform: translate(-3px, 1px) rotate(0deg);
+    }
+  
+    70% {
+      transform: translate(3px, 1px) rotate(-1deg);
+    }
+  
+    80% {
+      transform: translate(-1px, -1px) rotate(1deg);
+    }
+  
+    90% {
+      transform: translate(1px, 2px) rotate(0deg);
+    }
+  
+    100% {
+      transform: translate(1px, -2px) rotate(-1deg);
+    }
+  }
+
+  
+.container{
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+}
+.header{
+  flex-shrink: 0;
+  flex-grow: 0;
+  background: #039be5;
+  padding: 3px 5px;
+}
+.content{
+  flex-shrink: 1;
+  flex-grow: 1;
+  padding: 3px 5px;
+  position: relative;
+  overflow-y: auto;
+}
+
+.footer{
+  flex-shrink: 0;
+  flex-grow: 0;
+  background: #eee;
+  padding: 3px 15px;
+}
+p {
+  font-family: Lato;
+}
+
+nav a {
+  padding: 5px 10px;
+  text-decoration: none;
+  margin-top: 10px;
+  display: inline-block;
+  background-color: #eee;
+  border-radius: 4px;
+}
+
+nav a:visited, a:link {
+  color: #607D8B;
+}
+nav a:hover {
+  color: #039be5;
+  background-color: #CFD8DC;
+}
+nav a.active {
+  color: #039be5;
+}
+
+.close {
+	font-size: 10px;
+	position: absolute;
+	right: 9px;
+	top: 0px;
+	cursor: pointer;
+}
+
+.nodeId {
+	font-size: 10px;
+	position: absolute;
+	left: 9px;
+	top: 0px;
+	cursor: pointer;
+	font-weight: bold;
+}
+
+.setwidth {
+	width: 430px !important;
+}

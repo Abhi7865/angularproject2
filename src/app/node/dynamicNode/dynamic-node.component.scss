@@ -1,0 +1,96 @@
+:host {
+	position: absolute;
+}
+
+.node {
+	// min-width: 150px;
+    // max-width: 300px;
+    // min-height: 50px;
+
+    min-width: 200px;
+    min-height: 55px;
+
+    display: grid;
+    place-items: center;
+    grid-auto-flow: column;
+    column-gap: 4px;
+    grid-template-columns: 140px repeat(3, 16px);
+
+    padding: 8px;
+    padding-right: 12px;
+    border: 1px solid #b0c1d9;
+    background: #FFFFFF 0% 0% no-repeat padding-box;
+    box-shadow: 0px 0px 20px #00000014;
+    border-radius: 3px;
+}
+.edit {
+    height: 16px;
+    width: 16px;
+    font-size: 10px;
+    cursor: pointer;
+    color: white;
+    background-color: #00B0F0;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+}
+.configIcon {
+    cursor: pointer;
+}
+// .close, .edit {
+//     height: 15px;
+//     font-size: 15px;
+//     width: 15px;
+// 	position: absolute;
+// 	top: 0px;
+//     color: rgb(17, 16, 16);
+// 	cursor: pointer;
+// }
+// .close {
+// 	right: 5px;
+// }
+// .edit {
+//     right: 22px;
+// }
+
+.nodeId {
+	font-size: 10px;
+	position: absolute;
+	left: 9px;
+	top: 0px;
+	cursor: pointer;
+	font-weight: bold;
+}
+
+.dragIcon {
+    height: 15px;
+    width: 20px;
+    position: absolute;
+    bottom: 2px;
+    right: 0;
+    cursor: grab;
+    background-color: #111010;
+    mask-image: url('../../../assets/images/drag.svg');
+    mask-size: contain;
+    mask-repeat: no-repeat;
+    mask-position: center;
+    border-right: 2px solid #d7d7d7;
+}
+
+// .node > .mat-form-field {
+//     padding: 10px;
+// }
+
+.setwidth {
+	width: 430px !important;
+}
+
+
+
+:host ::ng-deep .mat-form-field-appearance-legacy .mat-form-field-underline {
+    height: 0px;
+}
+:host ::ng-deep .mat-form-field-appearance-legacy.mat-focused .mat-form-field-underline,
+:host ::ng-deep .mat-form-field-appearance-legacy:hover .mat-form-field-underline {
+    height: 1px;
+}

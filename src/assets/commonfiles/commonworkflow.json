@@ -1,0 +1,137 @@
+{
+	"commonworkflow": [
+		{
+			"name": "workflowName",
+			"required": true,
+			"value": "",
+			"type": "text",
+			"label":"Workflow Name"
+		},
+		{
+			"name": "workflow_owner",
+			"required": false,
+			"value": "",
+			"type": "text",
+			"label":"Workflow Owner"
+		},
+		{
+			"name": "depends_on_past",
+			"required": false,
+			"value": "",
+			"type": "text",
+			"label":"Depends On Past"
+		},
+		{
+			"name": "start_year",
+			"required": false,
+			"value": "",
+			"type": "text",
+			"label":"Start Year"
+		},
+		{
+			"name": "start_month",
+			"required": false,
+			"value": "",
+			"type": "text",
+			"label":"Start Month"
+		},
+		{
+			"name": "start_day",
+			"required": false,
+			"value": "",
+			"type": "text",
+			"label":"Start Day"
+		},
+		{
+			"name": "email",
+			"required": false,
+			"value": "",
+			"type": "text",
+			"label":"Email"
+		},
+		{
+			"name": "email_on_failure",
+			"required": false,
+			"value": "",
+			"type": "text",
+			"label":"Email On Failure"
+		},
+		{
+			"name": "email_on_retry",
+			"required": false,
+			"value": "",
+			"type": "text",
+			"label":"Email On Retry"
+		},
+		{
+			"name": "retries",
+			"required": false,
+			"value": "",
+			"type": "text",
+			"label":"Retries"
+		},
+		{
+			"name": "retry_delay",
+			"required": false,
+			"value": "",
+			"type": "text",
+			"label":"Retry Delay"
+		},
+		{
+			"name": "queue",
+			"required": false,
+			"value": "",
+			"type": "text",
+			"label":"Queue"
+		},
+		{
+			"name": "pool",
+			"required": false,
+			"value": "",
+			"type": "text",
+			"label":"Pool"
+		},
+		{
+			"name": "priority_weight",
+			"required": false,
+			"value": "",
+			"type": "text",
+			"label":"Priority Weight"
+		},
+		{
+			"name": "end_year",
+			"required": false,
+			"value": "",
+			"type": "text",
+			"label":"End Year"
+		},
+		{
+			"name": "end_month",
+			"required": false,
+			"value": "",
+			"type": "text",
+			"label":"End Month"
+		},
+		{
+			"name": "end_day",
+			"required": false,
+			"value": "",
+			"type": "text",
+			"label":"End Day"
+		},
+		{
+			"name": "fileName",
+			"required": false,
+			"value": "",
+			"type": "text",
+			"label":"File Name"
+		},
+		{
+			"name": "type",
+			"required": false,
+			"value": "",
+			"type": "text",
+			"label":"Type"
+		}
+	]
+}

@@ -1,0 +1,165 @@
+html, body { 
+}
+.container {
+  display: flex;
+  flex-direction: row;
+}
+.panel-one { 
+}
+// button {
+//   height: 40px;
+//   width: 100px;
+// }
+.panel-two { 
+}
+
+header {
+    background-color: var(--primary-clr);
+}
+
+.right-border {
+  border-right: 2px solid #ccc;
+  height: auto;
+}
+
+
+#toolbox {
+  display: flex;
+  padding: 10px;
+  flex-flow: row wrap;
+  align-content: flex-start;
+}
+
+.control {
+  border-color: green;
+  border-radius: 10px;
+  border-width: 2px;
+  border-style: solid;
+  width: 120px;
+  text-align: center;
+  cursor: pointer;
+  height: fit-content;
+  height: -moz-max-content;
+  background-color: white;
+}
+
+html,body,.container {
+  height:100%;
+}
+
+.window {
+  z-index: 20;
+}
+
+.jtk-connector {
+  z-index: 4;
+}
+
+.jtk-endpoint {
+  z-index: 5;
+}
+
+.jtk-overlay {
+  z-index: 6;
+}
+
+.custom-menu {
+  z-index: 1000;
+  position: absolute;
+  background-color: #C0C0C0;
+  border: 1px solid black;
+  padding: 2px;
+}
+
+#toolbox .control {
+  margin: 10px 5px;
+}
+
+.button.btn.btn-primary {
+  background: linear-gradient(180deg,#0d72ad 0,#035484);
+  color: #fff;
+  padding: 0.3rem .2rem;
+  font-size: 13px;
+  margin: 0 1px;
+  border: 1px solid #005485;
+ 
+  min-width: 8.625rem;
+  min-height: 38px;
+}
+
+
+.setwidth {
+  width: 430px !important;
+}
+
+header {
+    z-index: 2;
+}
+header nav {
+    display: flex;
+    align-items: center;
+    column-gap: 10px;
+    padding: 10px 20px;
+    color: white;
+    background-color: var(--mat-primary-clr);
+}
+header nav .nav-item:hover {
+	background-color: rgba(0, 0, 0, 0.2);
+    color: white;
+}
+header nav .nav-item.active {
+	background-color: rgba(0, 0, 0, 0.4);
+}
+header nav .nav-brand {
+    text-transform: uppercase;
+    // letter-spacing: 4px;
+    margin: 0;
+    margin-right: 50px;
+}
+header nav .nav-smartdata-logo{
+  width: 58px;
+  height: 46px;
+  margin-left: 50px;
+  display: inline-block;
+  background-color: white;
+  -webkit-mask-image: url(../assets/images/smartdatalogo.png);
+  -webkit-mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+}
+header nav .nav-brand-logo {
+    width: 58px;
+    height: 46px;
+    margin-left: 50px;
+    display: inline-block;
+    background-color: white;
+    -webkit-mask-image: url(../assets/images/LTI_Lets_solve.png);
+    -webkit-mask-size: contain;
+    -webkit-mask-repeat: no-repeat;
+    -webkit-mask-position: center;
+}
+header nav button.mat-button .mat-icon {
+	color: rgba(255, 255, 255, 0.6);
+}
+
+
+
+// nav a {
+//   padding: 5px 10px;
+//   text-decoration: none;
+//   margin-top: 10px;
+//   display: inline-block;
+//   background-color: #eee;
+//   border-radius: 4px;
+// }
+
+// nav a:visited, a:link {
+//   color: #607D8B;
+// }
+// nav a:hover {
+//   color: #039be5;
+//   background-color: #CFD8DC;
+// }
+// nav a.active {
+//   color: #039be5;
+// }

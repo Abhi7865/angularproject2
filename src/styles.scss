@@ -1,0 +1,418 @@
+// Custom Theming for Angular Material
+// For more information: https://material.angular.io/guide/theming
+@use "~@angular/material" as mat;
+// Plus imports for other components in your app.
+
+// Include the common styles for Angular Material. We include this here so that you only
+// have to load a single css file for Angular Material in your app.
+// Be sure that you only ever include this mixin once!
+@include mat.core();
+
+// Define the palettes for your theme using the Material Design palettes available in palette.scss
+// (imported above). For each palette, you can optionally specify a default, lighter, and darker
+// hue. Available color palettes: https://material.io/design/color/
+
+// $smartdata-primary: mat.define-palette(mat.$indigo-palette);
+// $smartdata-accent: mat.define-palette(mat.$orange-palette);
+
+/* For use in src/lib/core/theming/_palette.scss */
+$primary: (
+    50 : #e0e4ec,
+    100 : #b3bccf,
+    200 : #8090b0,
+    300 : #4d6390,
+    400 : #264178,
+    500 : #002060,
+    600 : #001c58,
+    700 : #00184e,
+    800 : #001344,
+    900 : #000b33,
+    A100 : #6b7cff,
+    A200 : #384eff,
+    A400 : #0521ff,
+    A700 : #001aeb,
+    contrast: (
+        50 : #000000,
+        100 : #000000,
+        200 : #000000,
+        300 : #ffffff,
+        400 : #ffffff,
+        500 : #ffffff,
+        600 : #ffffff,
+        700 : #ffffff,
+        800 : #ffffff,
+        900 : #ffffff,
+        A100 : #000000,
+        A200 : #ffffff,
+        A400 : #ffffff,
+        A700 : #ffffff,
+    )
+);
+
+$accent: (
+    50 : #fcf1e0,
+    100 : #f7ddb3,
+    200 : #f1c680,
+    300 : #ebaf4d,
+    400 : #e79d26,
+    500 : #e38c00,
+    600 : #e08400,
+    700 : #dc7900,
+    800 : #d86f00,
+    900 : #d05c00,
+    A100 : #fffbf8,
+    A200 : #ffdbc5,
+    A400 : #ffbb92,
+    A700 : #ffab79,
+    contrast: (
+        50 : #000000,
+        100 : #000000,
+        200 : #000000,
+        300 : #000000,
+        400 : #000000,
+        500 : #000000,
+        600 : #000000,
+        700 : #000000,
+        800 : #000000,
+        900 : #ffffff,
+        A100 : #000000,
+        A200 : #000000,
+        A400 : #000000,
+        A700 : #000000,
+    )
+);
+
+/* For use in src/lib/core/theming/_palette.scss */
+$warn: (
+    50 : #eee6f4,
+    100 : #d4c1e3,
+    200 : #b898d0,
+    300 : #9b6ebd,
+    400 : #854fae,
+    500 : #7030a0,
+    600 : #682b98,
+    700 : #5d248e,
+    800 : #531e84,
+    900 : #411373,
+    A100 : #cfa9ff,
+    A200 : #b276ff,
+    A400 : #9643ff,
+    A700 : #872aff,
+    contrast: (
+        50 : #000000,
+        100 : #000000,
+        200 : #000000,
+        300 : #000000,
+        400 : #ffffff,
+        500 : #ffffff,
+        600 : #ffffff,
+        700 : #ffffff,
+        800 : #ffffff,
+        900 : #ffffff,
+        A100 : #000000,
+        A200 : #000000,
+        A400 : #ffffff,
+        A700 : #ffffff,
+    )
+);
+
+
+$smartdata-primary: mat.define-palette($primary);
+$smartdata-accent: mat.define-palette($accent);
+$smartdata-warn: mat.define-palette($warn);
+
+
+// The warn palette is optional (defaults to red).
+// $smartdata-warn: mat.define-palette(mat.$red-palette);
+
+// Create the theme object. A theme consists of configurations for individual
+// theming systems such as "color" or "typography".
+$smartdata-theme: mat.define-light-theme(
+	(
+		color: (
+			primary: $smartdata-primary,
+			accent: $smartdata-accent,
+			warn: $smartdata-warn,
+		),
+	)
+);
+
+// Include theme styles for core and each component used in your app.
+// Alternatively, you can import and @include the theme mixins for each component
+// that you are using.
+@include mat.all-component-themes($smartdata-theme);
+
+:root {
+	--mat-primary-clr: #{mat.get-color-from-palette($smartdata-primary)};
+
+	// --mat-primary-lighter-clr: #{mat.get-color-from-palette(
+	// 		$smartdata-primary,
+	// 		50
+	// 	)};
+
+	--mat-primary-light-clr: #016FC0;
+	--mat-primary-lighter-clr: #CCE2F3;
+
+	--mat-accent-clr: #{mat.get-color-from-palette($smartdata-accent)};
+	--mat-accent-lighter-clr: #{mat.get-color-from-palette(
+			$smartdata-accent,
+			50
+		)};
+	--mat-accent-dark-clr: #{mat.get-color-from-palette($smartdata-accent, 700)};
+
+	--primary-clr: #fbfbfb;
+	--primary-dark-clr: #f8f9fa;
+	--bdr-clr: #e5e5e5;
+
+	--orange-clr: #E38C00;
+	--purple-clr: #7030A0;
+}
+
+html,
+body {
+	height: 100%;
+}
+body {
+	margin: 0;
+	font-family:Arial, Helvetica, sans-serif !important;
+}
+
+.container-fluid {
+	height: 100%;
+	position: relative;
+	display: flex;
+	grid-column-gap: 10px;
+	column-gap: 10px;
+	padding: 0;
+}
+
+.chart-container {
+	position: relative;
+	height: 1200px;
+	width: 1800px;
+	box-shadow: 0px 0px 2px 1px #e7e7e7;
+	background-color: rgb(255, 255, 255);
+	background-image: url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PHBhdHRlcm4gaWQ9ImdyaWQiIHdpZHRoPSI0MCIgaGVpZ2h0PSI0MCIgcGF0dGVyblVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+PHBhdGggZD0iTSAwIDEwIEwgNDAgMTAgTSAxMCAwIEwgMTAgNDAgTSAwIDIwIEwgNDAgMjAgTSAyMCAwIEwgMjAgNDAgTSAwIDMwIEwgNDAgMzAgTSAzMCAwIEwgMzAgNDAiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI2QwZDBkMCIgb3BhY2l0eT0iMC4yIiBzdHJva2Utd2lkdGg9IjEiLz48cGF0aCBkPSJNIDQwIDAgTCAwIDAgMCA0MCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjZDBkMGQwIiBzdHJva2Utd2lkdGg9IjEiLz48L3BhdHRlcm4+PC9kZWZzPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjZ3JpZCkiLz48L3N2Zz4=);
+}
+
+#toolbox {
+	width: 18%;
+	display: flex;
+	flex-flow: row wrap;
+	align-content: flex-start;
+	overflow: auto;
+	background-color: #CCE2F3;;
+	border-right: 1px solid var(--bdr-clr);
+}
+#toolbox > * {
+	padding: 10px;
+	width: 100%;
+	border-bottom: 1px solid var(--bdr-clr);
+}
+
+.dropzone {
+	flex: 1;
+	padding: 10px;
+	overflow: auto;
+	background-color: var(--primary-dark-clr);
+	border: 1px solid var(--bdr-clr);
+}
+
+.mat-form-field {
+	width: 100%;
+}
+.mat-icon.mat-icon-disable {
+	color: #8e8e8e;
+}
+.mat-list .mat-list-search {
+	margin-bottom: -10px;
+	margin-top: 5px;
+}
+.mat-list .mat-list-search.mat-form-field-appearance-fill .mat-form-field-flex {
+	padding: 0.15em 0.75em 0 0.75em;
+	align-items: center;
+}
+.mat-list
+	.mat-list-search.mat-form-field-appearance-fill
+	.mat-form-field-infix {
+	padding: 0 0 0.75em 0;
+}
+.mat-form-field .mat-icon {
+	color: rgba(0, 0, 0, 0.25);
+}
+.mat-list-item {
+	height: 42px !important;
+	cursor: pointer;
+	color: rgba(0, 0, 0, 0.77) !important;
+	// color: var(--mat-accent-dark-clr) !important;
+}
+.mat-list-item:hover {
+		background-color: rgba(75, 163, 245, 0.20);
+	// background: var(--mat-accent-lighter-clr);
+}
+.mat-list-item .mat-list-item-content {
+	padding: 0 8px;
+}
+.mat-list-item .mat-list-item-content .mat-icon {
+	margin-right: 10px;
+}
+button.mat-button .mat-icon {
+	margin-right: 6px;
+	// color: rgba(0, 0, 0, 0.6);
+	// color: #8e8e8e
+}
+.mat-button.mat-accent, .mat-icon-button.mat-accent, .mat-stroked-button.mat-accent {
+    /* color: #e38c00; */
+    color: #016FC0;}
+.mat-form-field-label {
+    transform: translateY(-1.34375em) scale(0.75);
+    width: 133.3333333333%;
+    COLOR: #016FC0;
+}
+.mat-form-field.mat-no-space .mat-form-field-wrapper {
+	padding-bottom: 0;
+}
+.mat-form-field.mat-no-space .mat-form-field-underline {
+	bottom: 0px !important;
+}
+.mat-form-field.mat-no-space:not(.mat-form-field-has-label)
+	.mat-form-field-infix {
+	border-top-width: 0;
+    padding-bottom: .2em;
+}
+
+
+.mat-snack-bar-container .mat-simple-snackbar {
+	font-size: 15px;
+}
+.mat-snack-bar-container.snackbar-success .mat-simple-snackbar {
+	color: hsl(120deg 100% 76%);
+}
+.mat-snack-bar-container.snackbar-error .mat-simple-snackbar {
+	color: hsl(0deg 100% 70%);
+}
+.mat-snack-bar-container.snackbar-info .mat-simple-snackbar {
+	color: hsl(180deg 100% 50%);
+}
+.mat-snack-bar-container.snackbar-warning .mat-simple-snackbar {
+	color: hsl(39deg 100% 50%);
+}
+
+
+.mat-tooltip {
+	font-size: 15px;
+	white-space: pre-line;
+}
+
+
+.flex-spacer {
+	flex-grow: 1;
+}
+
+.bdr-top {
+	border-top: 1px solid var(--bdr-clr);
+}
+.bdr-right {
+	border-right: 1px solid var(--bdr-clr);
+}
+.bdr-bottom {
+	border-bottom: 1px solid var(--bdr-clr);
+}
+.bdr-left {
+	border-left: 1px solid var(--bdr-clr);
+}
+.bdr-all {
+	border: 1px solid var(--bdr-clr);
+}
+
+/*****************************************************************
+MODAL
+*****************************************************************/
+
+.modal-body {
+	overflow-y: auto;
+}
+.modal-dialog {
+	height: 100%;
+}
+.modal-content {
+	height: 100%;
+	border-radius: 0;
+	border: none;
+}
+.modal-header {
+	border-bottom-color: #eeeeee;
+	background-color: #fafafa;
+}
+.modal-footer {
+    column-gap: 10px;
+}
+@media (min-width: 576px) {
+	.modal-dialog {
+		margin: 0px;
+	}
+}
+
+.sidenav {
+	height: 100%;
+	width: 400px;
+	position: fixed;
+	z-index: 2;
+	top: 0;
+	right: 0;
+	background-color: white;
+	overflow-x: hidden;
+	transition: 0.5s;
+
+	// border: 2px solid #000;
+	box-shadow: 1px 8px 9px 2px grey;
+}
+
+.sidenav a {
+	padding: 8px 8px 8px 32px;
+	text-decoration: none;
+	font-size: 25px;
+	color: #818181;
+	display: block;
+	transition: 0.3s;
+}
+
+.sidenav a:hover {
+	color: #f1f1f1;
+}
+
+.sidenav .closebtn {
+	position: absolute;
+	top: 0;
+	right: 25px;
+	font-size: 36px;
+	margin-left: 50px;
+}
+
+::-webkit-scrollbar {
+	width: 10px;
+	height: 10px;
+}
+
+::-webkit-scrollbar-track {
+	background-clip: padding-box;
+    border: solid transparent;
+    border-width: 1px;
+    background-color: #A3BBD6;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+	background-color: var(--mat-primary-light-clr);
+    background-clip: padding-box;
+    border: solid transparent;
+    border-radius: 10px;
+}
+::-webkit-scrollbar-corner {
+
+    background-color: transparent;
+
+}
+// ::-webkit-scrollbar-thumb:hover {
+// 	background-color: #ccc;
+// }

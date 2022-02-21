@@ -1,0 +1,2268 @@
+{
+	"Input": [
+        {
+			"name": "description",
+			"required": false,
+			"value": "",
+			"type": "textarea",
+			"readOnly": false,
+			"label": "Description"
+		},
+		{
+			"name": "id",
+			"required": false,
+			"value": "",
+			"type": "text",
+			"readOnly": true,
+			"label":"Id"
+		},
+		{
+			"name": "component_name",
+			"required": true,
+			"value": "csv1",
+			"type": "text",
+			"readOnly": false,
+			"label":"Component Name"
+		},
+		{
+			"name": "component_type",
+			"required": false,
+			"value": "Input",
+			"type": "text",
+			"readOnly": true,
+			"label":"Component Type"
+		},
+		{
+			"name": "sequence_number",
+			"required": false,
+			"value": "1",
+			"type": "text",
+			"readOnly": true,
+			"label":"Sequence Number"
+		},
+		{
+			"name": "input_data_file_path",
+			"required": false,
+			"value": "csv",
+			"type": "text",
+			"readOnly": false,
+			"label":"Input Data File Path"
+		},
+		{
+			"name": "input_schema_file_path",
+			"required": false,
+			"value": "",
+			"type": "text",
+			"readOnly": false,
+			"label":"Input Schema File Path"
+		},
+		{
+			"name": "delimiter",
+			"required": false,
+			"value": "",
+			"type": "text",
+			"readOnly": false,
+			"label":"Delimiter"
+		},
+		{
+			"name": "header",
+			"required": false,
+			"value": true,
+			"type": "text",
+			"readOnly": false,
+			"label":"Header"
+		},
+		{
+			"name": "input_data_file_type",
+			"required": false,
+			"value": ["csv","db","excel","SeperatedValues","PARQUET" ,"MYSQL" ],
+			"type": "dropdown",
+			"readOnly": false,
+			"label":"Input Data File Type"
+		},
+
+		{
+			"name": "table_name",
+			"required": false,
+			"value": "",
+			"type": "text",
+			"readOnly": false,
+			"label":"Table Name"
+		},
+		{
+			"name": "database_name",
+			"required": false,
+			"value": "",
+			"type": "text",
+			"readOnly": false,
+			"label":"Database Name"
+		}
+	],
+	"Join": [
+        {
+			"name": "description",
+			"required": false,
+			"value": "",
+			"type": "textarea",
+			"readOnly": false,
+			"label":"Description"
+		},
+		{
+			"name": "id",
+			"required": true,
+			"value": "",
+			"type": "text",
+			"readOnly": true,
+			"label":"Id"
+		},
+		{
+			"name": "sequence_number",
+			"display": "Sequence Number",
+			"required": false,
+			"value": "",
+			"type": "text",
+			"readOnly": true,
+			"label": "Sequence Number"
+		},
+		{
+			"name": "component_type",
+			"display": "Component Type",
+			"required": false,
+			"value": "",
+			"type": "text",
+			"readOnly": true,
+			"label": "Component Type"
+		},
+		{
+			"name": "join_type",
+			"required": false,
+			"value": [],
+			"type": "array",
+			"readOnly": false,
+			"label": "Join Type"
+		},
+		{
+			"name": "join_conditions",
+			"required": false,
+			"value": [],
+			"type": "array",
+			"readOnly": false,
+			"label": "Join Conditions"
+		},
+		{
+			"name": "component_name",
+			"required": true,
+			"value": "",
+			"type": "text",
+			"readOnly": false,
+			"label": "Component Name"
+		},
+
+		{
+			"name": "node_reference",
+			"required": false,
+			"value": [],
+			"type": "array",
+			"readOnly": true,
+			"label": "Node Reference"
+		},
+		{
+			"name": "broadcast_camp",
+			"required": false,
+			"value": "",
+			"type": "text",
+			"readOnly": false,
+			"label": "Broadcast Camp"
+		}
+	],
+	"Scan": [
+        {
+			"name": "description",
+			"required": false,
+			"value": "",
+			"type": "textarea",
+			"readOnly": false,
+			"label": "Description"
+		},
+        {
+			"name": "id",
+			"required": false,
+			"value": "",
+			"type": "text",
+			"readOnly": true,
+			"label": "Id"
+		},
+		{
+			"name": "component_name",
+			"required": true,
+			"value": "",
+			"type": "text",
+			"readOnly": false,
+			"label": "Component Name"
+		},
+		{
+			"name": "sequence_number",
+			"display": "Sequence Number",
+			"required": false,
+			"value": "",
+			"type": "text",
+			"readOnly": true,
+			"label": "Sequence Number"
+		},
+		{
+			"name": "component_type",
+			"required": false,
+			"value": "",
+			"type": "text",
+			"readOnly": true,
+			"label": "Component Type"
+		},
+		{
+			"name": "scan_type",
+			"required": false,
+			"value": "",
+			"type": "text",
+			"readOnly": false,
+			"label": "Scan Type"
+		},
+		{
+			"name": "node_reference",
+			"required": false,
+			"value": [],
+			"type": "array",
+			"readOnly": true,
+			"label": "Node Reference"
+		},
+		{
+			"name": "scan_partition_key",
+			"required": false,
+			"value": "",
+			"type": "text",
+			"readOnly": false,
+			"label": "Scan Partition Key"
+		},
+		{
+			"name": "scan_order_by_column",
+			"required": false,
+			"value": [],
+			"type": "array",
+			"readOnly": false,
+			"label": "Scan Order By Column"
+		},
+		{
+			"name": "scan_sum_column",
+			"required": false,
+			"value": [],
+			"type": "array",
+			"readOnly": false,
+			"label": "Scan Sum Column"
+		}
+	],
+	"Filter": [
+        {
+			"name": "description",
+			"required": false,
+			"value": "",
+			"type": "textarea",
+			"readOnly": false,
+			"label": "Description"
+		},
+        {
+			"name": "id",
+			"required": false,
+			"value": "",
+			"type": "text",
+			"readOnly": true,
+			"label": "Id"
+		},
+		{
+			"name": "component_name",
+			"required": true,
+			"value": "",
+			"type": "text",
+			"readOnly": false,
+			"label": "Component Name"
+		},
+		{
+			"name": "sequence_number",
+			"display": "Sequence Number",
+			"value": "",
+			"type": "text",
+			"readOnly": true,
+			"label": "Sequence Number"
+		},
+		{
+			"name": "component_type",
+			"required": true,
+			"value": "",
+			"type": "text",
+			"readOnly": true,
+			"label": "Component Type"
+		},
+		{
+			"name": "filter_type",
+			"required": false,
+			"value": "",
+			"type": "text",
+			"readOnly": false,
+			"label": "Filter Type"
+		},
+		{
+			"name": "node_reference",
+			"required": false,
+			"value": [],
+			"type": "array",
+			"readOnly": true,
+			"label": "Node Reference"
+		},
+		{
+			"name": "filter_criteria",
+			"required": false,
+			"value": "",
+			"type": "text",
+			"readOnly": false,
+			"label": "Filter Criteria"
+		}
+	],
+	"Sort": [
+        {
+			"name": "description",
+			"required": false,
+			"value": "",
+			"type": "textarea",
+			"readOnly": false,
+			"label": "Description"
+		},
+        {
+			"name": "id",
+			"required": false,
+			"value": "",
+			"type": "text",
+			"readOnly": true,
+			"label": "Id"
+		},
+		{
+			"name": "component_name",
+			"required": true,
+			"value": "",
+			"type": "text",
+			"readOnly": false,
+			"label": "Component Name"
+		},
+		{
+			"name": "sequence_number",
+			"display": "Sequence Number",
+			"required": false,
+			"value": "",
+			"type": "text",
+			"readOnly": true,
+			"label": "Sequence Number"
+		},
+		{
+			"name": "component_type",
+			"required": true,
+			"value": "",
+			"type": "text",
+			"readOnly": true,
+			"label": "Component Type"
+		},
+		{
+			"name": "node_reference",
+			"required": true,
+			"value": [],
+			"type": "array",
+			"readOnly": true,
+			"label": "Node Reference"
+		},
+		{
+			"name": "sorting_type",
+			"required": true,
+			"value": [],
+			"type": "array",
+			"readOnly": false,
+			"label": "Sorting Type"
+		},
+		{
+			"name": "sorting_column_name",
+			"required": true,
+			"value": [],
+			"type": "array",
+			"readOnly": false,
+			"label": "Sorting Column Name"
+		}
+	],
+
+	"Write": [
+        {
+			"name": "description",
+			"required": false,
+			"value": "",
+			"type": "textarea",
+			"readOnly": false,
+			"label": "Description"
+		},
+        {
+			"name": "id",
+			"required": false,
+			"value": "",
+			"type": "text",
+			"readOnly": true,
+			"label": "Id"
+		},
+		{
+			"name": "component_name",
+			"required": true,
+			"value": "",
+			"type": "text",
+			"readOnly": false,
+			"label": "Component Name"
+		},
+		{
+			"name": "sequence_number",
+			"display": "Sequence Number",
+			"required": false,
+			"value": "",
+			"type": "text",
+			"readOnly": true,
+			"label": "Sequence Number"
+		},
+		{
+			"name": "component_type",
+			"required": true,
+			"value": "",
+			"type": "text",
+			"readOnly": true,
+			"label": "Component Type"
+		},
+		{
+			"name": "output_data_file_path",
+			"required": false,
+			"value": "",
+			"type": "text",
+			"readOnly": false,
+			"label": "Output Data File Path"
+		},
+		{
+			"name": "output_data_file_type",
+			"required": false,
+			"value": ["DB","csv","excel","PARQUET"],
+			"type": "dropdown",
+			"readOnly": false,
+			"label": "Output Data File Type"
+		},
+		{
+			"name": "node_reference",
+			"required": false,
+			"value": [],
+			"type": "array",
+			"readOnly": true,
+			"label": "Node Reference"
+		},
+		{
+			"name": "table_name",
+			"required": false,
+			"value": "",
+			"type": "text",
+			"readOnly": false,
+			"label": "Table Name"
+		},
+		{
+			"name": "database_name",
+			"required": false,
+			"value": "",
+			"type": "text",
+			"readOnly": false,
+			"label": "Database Name"
+		}
+	],
+	"Partition": [
+        {
+			"name": "description",
+			"required": false,
+			"value": "",
+			"type": "textarea",
+			"readOnly": false,
+			"label": "Description"
+		},
+        {
+			"name": "id",
+			"required": false,
+			"value": "",
+			"type": "text",
+			"readOnly": true,
+			"label": "Id"
+		},
+		{
+			"name": "component_name",
+			"required": true,
+			"value": "",
+			"type": "text",
+			"readOnly": false,
+			"label": "Component Name"
+		},
+		{
+			"name": "sequence_number",
+			"display": "Sequence Number",
+			"required": false,
+			"value": "",
+			"type": "text",
+			"readOnly": true,
+			"label": "Sequence Number"
+		},
+		{
+			"name": "component_type",
+			"required": true,
+			"value": "",
+			"type": "text",
+			"readOnly": true,
+			"label": "Component Type"
+		},
+		{
+			"name": "node_reference",
+			"required": true,
+			"value": [],
+			"type": "array",
+			"readOnly": true,
+			"label": "Node Reference"
+		},
+		{
+			"name": "partition_key",
+			"required": true,
+			"value": [],
+			"type": "text",
+			"readOnly": false,
+			"label": "Partition Key"
+		},
+		{
+			"name": "partition_type",
+			"required": true,
+			"value": [],
+			"type": "text",
+			"readOnly": false,
+			"label": "Partition Type"
+		},
+		{
+			"name": "partition_file_path",
+			"required": true,
+			"value": [],
+			"type": "text",
+			"readOnly": false,
+			"label": "Partition File Path"
+		}
+	],
+	"Lookup": [
+        {
+			"name": "description",
+			"required": false,
+			"value": "",
+			"type": "textarea",
+			"readOnly": false,
+			"label": "Description"
+		},
+        {
+			"name": "id",
+			"required": false,
+			"value": "",
+			"type": "text",
+			"readOnly": true,
+			"label": "Id"
+		},
+		{
+			"name": "component_name",
+			"required": true,
+			"value": [],
+			"type": "text",
+			"readOnly": false,
+			"label": "Component Name"
+		},
+		{
+			"name": "sequence_number",
+			"display": "Sequence Number",
+
+			"value": [],
+			"type": "text",
+			"readOnly": true,
+			"label": "Sequence Number"
+		},
+		{
+			"name": "component_type",
+			"required": true,
+			"value": [],
+			"type": "text",
+			"readOnly": true,
+			"label": "Component Type"
+		},
+		{
+			"name": "node_reference",
+			"required": false,
+			"type": "array",
+			"value": [],
+			"readOnly": true,
+			"label": "Node Reference"
+		},
+		{
+			"name": "lookup_type",
+			"required": true,
+			"value": ["Lookup","Lookup_Select_Join","Lookup_And_Replace"],
+			"selectedIndex": 1,
+			"type": "dropdown",
+			"readOnly": false,
+			"label": "Lookup Type"
+		},
+		{
+			"name": "lookup_select_key1",
+			"required": false,
+			"type": "array",
+			"value": [],
+			"readOnly": false,
+			"label": "Lookup Select Key 1"
+		},
+		{
+			"name": "lookup_select_key2",
+			"required": false,
+			"value": [],
+			"type": "array",
+			"readOnly": false,
+			"label": "Lookup Select Key 2"
+		},
+		{
+			"name": "lookup_join_columns",
+			"required": false,
+			"value": [],
+			"type": "array",
+			"readOnly": false,
+			"label": "Lookup Join Columns"
+		},
+		{
+			"name": "lookup_join_select_columns",
+			"required": false,
+			"value": [],
+			"type": "array",
+			"readOnly": false,
+			"label": "Lookup Join Select Columns"
+		}
+	],
+	"Rollup": [
+        {
+			"name": "description",
+			"required": false,
+			"value": "",
+			"type": "textarea",
+			"readOnly": false,
+			"label": "Description"
+		},
+		{
+			"name": "id",
+			"required": false,
+			"value": "",
+			"type": "text",
+			"readOnly": true,
+			"label": "Id"
+		},
+		{
+			"name": "component_name",
+			"required": true,
+			"value": "csv1",
+			"type": "text",
+			"readOnly": false,
+			"label": "Component Name"
+		},
+		{
+			"name": "component_type",
+			"required": false,
+			"value": "Input",
+			"type": "text",
+			"readOnly": true,
+			"label": "Component Type"
+		},
+		{
+			"name": "sequence_number",
+			"required": false,
+			"value": "1",
+			"type": "text",
+			"readOnly": true,
+			"label": "Sequence Number"
+		},
+		{
+			"name": "node_reference",
+			"required": false,
+			"value": [],
+			"type": "array",
+			"readOnly": true,
+			"label": "Node Reference"
+		},
+		{
+			"name": "rollup_groupby_keys",
+			"required": false,
+			"value": [],
+			"type": "array",
+			"readOnly": false,
+			"label": "Rollup Groupby Keys"
+		},
+		{
+			"name": "rollup_type",
+			"required": false,
+			"value": "",
+			"type": "text",
+			"readOnly": false,
+			"label": "Rollup Type"
+		},
+		{
+			"name": "rollup_col",
+			"required": false,
+			"value": "",
+			"type": "text",
+			"readOnly": false,
+			"label": "Rollup Col"
+		}
+	],
+	"Metapivot": [
+        {
+			"name": "description",
+			"required": false,
+			"value": "",
+			"type": "textarea",
+			"readOnly": false,
+			"label": "Description"
+		},
+		{
+			"name": "id",
+			"required": false,
+			"value": "",
+			"type": "text",
+			"readOnly": true,
+			"label": "Id"
+		},
+		{
+			"name": "component_name",
+			"required": true,
+			"value": "",
+			"type": "text",
+			"readOnly": false,
+			"label": "Component Name"
+		},
+		{
+			"name": "sequence_number",
+			"required": false,
+			"value": "1",
+			"type": "text",
+			"readOnly": true,
+			"label": "Sequence Number"
+		},
+		{
+			"name": "component_type",
+			"required": false,
+			"value": "Input",
+			"type": "text",
+			"readOnly": true,
+			"label": "Component Type"
+		},
+		{
+			"name": "metapivot_type",
+			"required": false,
+			"value": "",
+			"type": "text",
+			"readOnly": false,
+			"label": "Metapivot Type"
+		},
+		{
+			"name": "node_reference",
+			"required": false,
+			"value": [],
+			"type": "array",
+			"readOnly": true,
+			"label": "Node Reference"
+		},
+
+		{
+			"name": "temp_file_path",
+			"required": false,
+			"value": "",
+			"type": "text",
+			"readOnly": false,
+			"label": "Temp File Path"
+		}
+	],
+	"Concatenation": [
+        {
+			"name": "description",
+			"required": false,
+			"value": "",
+			"type": "textarea",
+			"readOnly": false,
+			"label": "Description"
+		},
+		{
+			"name": "id",
+			"required": false,
+			"value": "",
+			"type": "text",
+			"readOnly": true,
+			"label": "Id"
+			
+		},
+		{
+			"name": "component_name",
+			"required": true,
+			"value": "",
+			"type": "text",
+			"readOnly": false,
+			"label": "Component Name"
+		},
+		{
+			"name": "sequence_number",
+			"required": false,
+			"value": "1",
+			"type": "text",
+			"readOnly": true,
+			"label": "Sequence Number"
+		},
+		{
+			"name": "component_type",
+			"required": false,
+			"value": "Input",
+			"type": "text",
+			"readOnly": true,
+			"label": "Component Type"
+		},
+		{
+			"name": "concatenation_file_path",
+			"required": false,
+			"value": "",
+			"type": "text",
+			"readOnly": false,
+			"label": "Concatenation File Path"
+		},
+		{
+			"name": "concatenation_file_schema_path",
+			"required": false,
+			"value": "",
+			"type": "text",
+			"readOnly": false,
+			"label": "Concatenation File Schema Path"
+		},
+		{
+			"name": "concatenation_type",
+			"required": false,
+			"value": "",
+			"type": "text",
+			"readOnly": false,
+			"label": "Concatenation Type"
+		},
+		{
+			"name": "node_reference",
+			"required": false,
+			"value": [],
+			"type": "array",
+			"readOnly": true,
+			"label": "Node Reference"
+		}
+	],
+	"Lookup_Select_Join": [
+        {
+			"name": "description",
+			"required": false,
+			"value": "",
+			"type": "textarea",
+			"readOnly": false,
+			"label": "Description"
+		},
+		{
+			"name": "id",
+			"required": false,
+			"value": "",
+			"type": "text",
+			"readOnly": true,
+			"label": "Id"
+		},
+		{
+			"name": "component_name",
+			"required": true,
+			"value": "",
+			"type": "text",
+			"readOnly": false,
+			"label": "Component Name"
+		},
+		{
+			"name": "sequence_number",
+			"required": false,
+			"value": "1",
+			"type": "text",
+			"readOnly": true,
+			"label": "Sequence Number"
+		},
+		{
+			"name": "component_type",
+			"required": false,
+			"value": "Input",
+			"type": "text",
+			"readOnly": true,
+			"label": "Component Type"
+		},
+		{
+			"name": "lookup_type",
+			"required": false,
+			"value": ["LOOKUP","Lookup_Select_Join","Lookup_And_Replace"],
+			"type": "dropdown",
+			"readOnly": false,
+			"label": "Lookup Type"
+		},
+		{
+			"name": "node_reference",
+			"required": false,
+			"value": [],
+			"type": "array",
+			"readOnly": true,
+			"label": "Node Reference"
+		},
+		{
+			"name": "lookup_select_key1",
+			"required": false,
+			"value": [],
+			"type": "array",
+			"readOnly": false,
+			"label": "Lookup Select Key 1"
+		},
+		{
+			"name": "lookup_select_key2",
+			"required": false,
+			"value": [],
+			"type": "array",
+			"readOnly": false,
+			"label": "Lookup Select Key 2"
+		},
+		{
+			"name": "lookup_join_columns",
+			"required": false,
+			"value": [],
+			"type": "array",
+			"readOnly": false,
+			"label": "Lookup Join Columns"
+		},
+		{
+			"name": "lookup_join_select_columns",
+			"required": false,
+			"value": [],
+			"type": "array",
+			"readOnly": false,
+			"label": "Lookup Join Select Columns"
+		}
+	],
+	"LOOKUP": [
+        {
+			"name": "description",
+			"required": false,
+			"value": "",
+			"type": "textarea",
+			"readOnly": false,
+			"label": "Description"
+		},
+		{
+			"name": "id",
+			"required": false,
+			"value": "",
+			"type": "text",
+			"readOnly": true,
+			"label": "Id"
+		},
+		{
+			"name": "component_name",
+			"required": true,
+			"value": "",
+			"type": "text",
+			"readOnly": false,
+			"label": "Component Name"
+		},
+		{
+			"name": "component_type",
+			"required": false,
+			"value": "Input",
+			"type": "text",
+			"readOnly": true,
+			"label": "Component Type"
+		},
+		{
+			"name": "lookup_select_key",
+			"required": false,
+			"value": [],
+			"type": "array",
+			"readOnly": false,
+			"label": "Lookup Select Key"
+		},
+		{
+			"name": "lookup_type",
+			"required": false,
+			"value": ["LOOKUP","Lookup_Select_Join","Lookup_And_Replace"],
+			"type": "dropdown",
+			"readOnly": false,
+			"label": "Lookup Type"
+		},
+		{
+			"name": "node_reference",
+			"required": false,
+			"value": [],
+			"type": "array",
+			"readOnly": true,
+			"label": "Node Reference"
+		}
+	],
+	"INTERMIDIATEFILES": [
+        {
+			"name": "description",
+			"required": false,
+			"value": "",
+			"type": "textarea",
+			"readOnly": false,
+			"label": "Description"
+		},
+		{
+			"name": "id",
+			"required": false,
+			"value": "",
+			"type": "text",
+			"readOnly": true,
+			"label": "Id"
+		},
+		{
+			"name": "component_name",
+			"required": true,
+			"value": "",
+			"type": "text",
+			"readOnly": false,
+			"label": "Component Name"
+		},
+		{
+			"name": "sequence_number",
+			"required": false,
+			"value": "1",
+			"type": "text",
+			"readOnly": true,
+			"label": "Sequence Number"
+		},
+		{
+			"name": "component_type",
+			"required": false,
+			"value": "Input",
+			"type": "text",
+			"readOnly": true,
+			"label": "Component Type"
+		},
+		{
+			"name": "intermidiate_files_type",
+			"required": false,
+			"value": "",
+			"type": "text",
+			"readOnly": false,
+			"label": "Intermediate Files Type"
+		},
+		{
+			"name": "node_reference",
+			"required": false,
+			"value": [],
+			"type": "array",
+			"readOnly": true,
+			"label": "Node Reference"
+		},
+		{
+			"name": "output_intermidiate_files_path",
+			"required": false,
+			"value": "",
+			"type": "text",
+			"readOnly": false,
+			"label": "Output Intermediate Files Path"
+		},
+		{
+			"name": "output_intermidiate_files_header",
+			"required": false,
+			"value": "",
+			"type": "text",
+			"readOnly": false,
+			"label": "Output Intermediate Files Header"
+		}
+	],
+	"Normalize": [
+        {
+			"name": "description",
+			"required": false,
+			"value": "",
+			"type": "textarea",
+			"readOnly": false,
+			"label": "Description"
+		},
+		{
+			"name": "id",
+			"required": false,
+			"value": "",
+			"type": "text",
+			"readOnly": true,
+			"label": "Id"
+		},
+		{
+			"name": "component_name",
+			"required": true,
+			"value": "",
+			"type": "text",
+			"readOnly": false,
+			"label": "Component Name"
+		},
+		{
+			"name": "sequence_number",
+			"required": false,
+			"value": "1",
+			"type": "text",
+			"readOnly": true,
+			"label": "Sequence Number"
+		},
+		{
+			"name": "component_type",
+			"required": false,
+			"value": "Input",
+			"type": "text",
+			"readOnly": true,
+			"label": "Component Type"
+		},
+		{
+			"name": "normalize_type",
+			"required": false,
+			"value": "",
+			"type": "text",
+			"readOnly": false,
+			"label": "Normalize Type"
+		},
+		{
+			"name": "node_reference",
+			"required": false,
+			"value": [],
+			"type": "array",
+			"readOnly": true,
+			"label": "Node Reference"
+		},
+		{
+			"name": "normalize_split_column",
+			"required": false,
+			"value": "",
+			"type": "text",
+			"readOnly": false,
+			"label": "Normalize Split Column"
+		},
+		{
+			"name": "normalize_column_delimiter",
+			"required": false,
+			"value": "",
+			"type": "text",
+			"readOnly": false,
+			"label": "Normalize Column Delimiter"
+		}
+	],
+	"Merge": [
+        {
+			"name": "description",
+			"required": false,
+			"value": "",
+			"type": "textarea",
+			"readOnly": false,
+			"label": "Description"
+		},
+		{
+			"name": "id",
+			"required": false,
+			"value": "",
+			"type": "text",
+			"readOnly": true,
+			"label": "Id"
+		},
+		{
+			"name": "component_name",
+			"required": true,
+			"value": "",
+			"type": "text",
+			"readOnly": false,
+			"label": "Component Name"
+		},
+		{
+			"name": "sequence_number",
+			"required": false,
+			"value": "1",
+			"type": "text",
+			"readOnly": true,
+			"label": "Sequence Number"
+		},
+		{
+			"name": "component_type",
+			"required": false,
+			"value": "Input",
+			"type": "text",
+			"readOnly": true,
+			"label": "Component Type"
+		},
+		{
+			"name": "merge_type",
+			"required": false,
+			"value": "",
+			"type": "text",
+			"readOnly": false,
+			"label": "Merge Type"
+		},
+		{
+			"name": "node_reference",
+			"required": false,
+			"value": [],
+			"type": "array",
+			"readOnly": true,
+			"label": "Node Reference"
+		},
+		{
+			"name": "merge_key",
+			"required": false,
+			"value": "",
+			"type": "text",
+			"readOnly": false,
+			"label": "Merge Key"
+		}
+	],
+	"Gather": [
+        {
+			"name": "description",
+			"required": false,
+			"value": "",
+			"type": "textarea",
+			"readOnly": false,
+			"label": "Description"
+		},
+		{
+			"name": "id",
+			"required": false,
+			"value": "",
+			"type": "text",
+			"readOnly": true,
+			"label": "Id"
+		},
+		{
+			"name": "component_name",
+			"required": true,
+			"value": "",
+			"type": "text",
+			"readOnly": false,
+			"label": "Component Name"
+		},
+		{
+			"name": "sequence_number",
+			"required": false,
+			"value": "1",
+			"type": "text",
+			"readOnly": true,
+			"label": "Sequence Number"
+		},
+		{
+			"name": "component_type",
+			"required": false,
+			"value": "Input",
+			"type": "text",
+			"readOnly": true,
+			"label": "Component Type"
+		},
+		{
+			"name": "gather_type",
+			"required": false,
+			"value": "",
+			"type": "text",
+			"readOnly": false,
+			"label": "Gather Type"
+		},
+		{
+			"name": "node_reference",
+			"required": false,
+			"value": [],
+			"type": "array",
+			"readOnly": true,
+			"label": "Node Reference"
+		}
+	],
+	"Fuse": [
+        {
+			"name": "description",
+			"required": false,
+			"value": "",
+			"type": "textarea",
+			"readOnly": false,
+			"label": "Description"
+		},
+		{
+			"name": "id",
+			"required": false,
+			"value": "",
+			"type": "text",
+			"readOnly": true,
+			"label": "Id"
+		},
+		{
+			"name": "component_name",
+			"required": true,
+			"value": "",
+			"type": "text",
+			"readOnly": false,
+			"label": "Component Name"
+		},
+		{
+			"name": "sequence_number",
+			"required": false,
+			"value": "1",
+			"type": "text",
+			"readOnly": true,
+			"label": "Sequence Number"
+		},
+		{
+			"name": "component_type",
+			"required": false,
+			"value": "Input",
+			"type": "text",
+			"readOnly": true,
+			"label": "Component Type"
+		},
+		{
+			"name": "fuse_type",
+			"required": false,
+			"value": "",
+			"type": "text",
+			"readOnly": false,
+			"label": "Fuse Type"
+		},
+		{
+			"name": "node_reference",
+			"required": false,
+			"value": [],
+			"type": "array",
+			"readOnly": true,
+			"label": "Node Reference"
+		}
+	],
+	"XML_split": [
+        {
+			"name": "description",
+			"required": false,
+			"value": "",
+			"type": "textarea",
+			"readOnly": false,
+			"label": "Description"
+		},
+		{
+			"name": "id",
+			"required": false,
+			"value": "",
+			"type": "text",
+			"readOnly": true,
+			"label": "Id"
+		},
+		{
+			"name": "component_name",
+			"required": true,
+			"value": "",
+			"type": "text",
+			"readOnly": false,
+			"label": "Component Name"
+		},
+		{
+			"name": "sequence_number",
+			"required": false,
+			"value": "1",
+			"type": "text",
+			"readOnly": true,
+			"label": "Sequence Number"
+		},
+		{
+			"name": "component_type",
+			"required": false,
+			"value": "Input",
+			"type": "text",
+			"readOnly": true,
+			"label": "Component Type"
+		},
+		{
+			"name": "node_reference",
+			"required": false,
+			"value": [],
+			"type": "array",
+			"readOnly": true,
+			"label": "Node Reference"
+		},
+		{
+			"name": "xml_split_type",
+			"required": false,
+			"value": "",
+			"type": "text",
+			"readOnly": false,
+			"label": "XML Split Type"
+		},
+		{
+			"name": "xml_split_column_name",
+			"required": false,
+			"value": "",
+			"type": "text",
+			"readOnly": false,
+			"label": "XML Split Column Name"
+		},
+		{
+			"name": "row_tag",
+			"required": false,
+			"value": "",
+			"type": "text",
+			"readOnly": false,
+			"label": "Row Tag"
+		},
+		{
+			"name": "root_tag",
+			"required": false,
+			"value": "",
+			"type": "text",
+			"readOnly": false,
+			"label": "Root Tag"
+		},
+		{
+			"name": "xml_output_data_file_path",
+			"required": false,
+			"value": "",
+			"type": "text",
+			"readOnly": false,
+			"label": "XML Output Data File Path"
+		}
+	],
+	"XML_combin": [
+        {
+			"name": "description",
+			"required": false,
+			"value": "",
+			"type": "textarea",
+			"readOnly": false,
+			"label": "Description"
+		},
+		{
+			"name": "id",
+			"required": false,
+			"value": "",
+			"type": "text",
+			"readOnly": true,
+			"label": "Id"
+		},
+		{
+			"name": "component_name",
+			"required": true,
+			"value": "",
+			"type": "text",
+			"readOnly": false,
+			"label": "Component Name"
+		},
+		{
+			"name": "sequence_number",
+			"required": false,
+			"value": "1",
+			"type": "text",
+			"readOnly": true,
+			"label": "Sequence Number"
+		},
+		{
+			"name": "component_type",
+			"required": false,
+			"value": "Input",
+			"type": "text",
+			"readOnly": true,
+			"label": "Component Type"
+		},
+
+		{
+			"name": "input_data_file_path",
+			"required": false,
+			"value": "",
+			"type": "text",
+			"readOnly": false,
+			"label": "Input Data File Path"
+		},
+		{
+			"name": "xml_combine_type",
+			"required": false,
+			"value": "",
+			"type": "text",
+			"readOnly": false,
+			"label": "XML Combine Type"
+		},
+		{
+			"name": "row_tag",
+			"required": false,
+			"value": "",
+			"type": "text",
+			"readOnly": false,
+			"label": "Row Tag"
+		},
+		{
+			"name": "root_tag",
+			"required": false,
+			"value": "",
+			"type": "text",
+			"readOnly": false,
+			"label": "Root Tag"
+		},
+		{
+			"name": "xml_output_data_file_path",
+			"required": false,
+			"value": "",
+			"type": "text",
+			"readOnly": false,
+			"label": "XML Output Data File Path"
+		}
+	],
+	"Repair_Input": [
+        {
+			"name": "description",
+			"required": false,
+			"value": "",
+			"type": "textarea",
+			"readOnly": false,
+			"label": "Description"
+		},
+		{
+			"name": "id",
+			"required": false,
+			"value": "",
+			"type": "text",
+			"readOnly": true,
+			"label": "Id"
+		},
+		{
+			"name": "component_name",
+			"required": true,
+			"value": "",
+			"type": "text",
+			"readOnly": false,
+			"label": "Component Name"
+		},
+		{
+			"name": "sequence_number",
+			"required": false,
+			"value": "1",
+			"type": "text",
+			"readOnly": true,
+			"label": "Sequence Number"
+		},
+		{
+			"name": "component_type",
+			"required": false,
+			"value": "Input",
+			"type": "text",
+			"readOnly": true,
+			"label": "Component Type"
+		},
+
+		{
+			"name": "repair_input_type",
+			"required": false,
+			"value": "",
+			"type": "text",
+			"readOnly": false,
+			"label": "Repair Input Type"
+		},
+		{
+			"name": "repair_input_schema_path",
+			"required": false,
+			"value": "",
+			"type": "text",
+			"readOnly": false,
+			"label": "Repair Input Schema Path"
+		},
+		{
+			"name": "repair_input_bool",
+			"required": false,
+			"value": "",
+			"type": "text",
+			"readOnly": false,
+			"label": "Repair Input Bool"
+		},
+		{
+			"name": "node_reference",
+			"required": false,
+			"value": [],
+			"type": "array",
+			"readOnly": true,
+			"label": "Node Reference"
+		}
+	],
+	"Redefine_Format": [
+        {
+			"name": "description",
+			"required": false,
+			"value": "",
+			"type": "textarea",
+			"readOnly": false,
+			"label": "Description"
+		},
+		{
+			"name": "id",
+			"required": false,
+			"value": "",
+			"type": "text",
+			"readOnly": true,
+			"label": "Id"
+		},
+		{
+			"name": "component_name",
+			"required": true,
+			"value": "",
+			"type": "text",
+			"readOnly": false,
+			"label": "Component Name"
+		},
+		{
+			"name": "sequence_number",
+			"required": false,
+			"value": "1",
+			"type": "text",
+			"readOnly": true,
+			"label": "Sequence Number"
+		},
+		{
+			"name": "component_type",
+			"required": false,
+			"value": "Input",
+			"type": "text",
+			"readOnly": true,
+			"label": "Component Type"
+		},
+
+		{
+			"name": "redefine_format_type",
+			"required": false,
+			"value": "",
+			"type": "text",
+			"readOnly": false,
+			"label": "Redefine Format Type"
+		},
+		{
+			"name": "redefine_format_data_file_path",
+			"required": false,
+			"value": "",
+			"type": "text",
+			"readOnly": false,
+			"label": "Redefine Format Data File Path"
+		},
+		{
+			"name": "redefine_format_file_schema_path",
+			"required": false,
+			"value": "",
+			"type": "text",
+			"readOnly": false,
+			"label": "Redefine Format File Schema Path"
+		},
+		{
+			"name": "redefine_format_file_header",
+			"required": false,
+			"value": "",
+			"type": "text",
+			"readOnly": false,
+			"label": "Redefine Format File Header"
+		},
+		{
+			"name": "redefine_format_delimiter",
+			"required": false,
+			"value": "",
+			"type": "text",
+			"readOnly": false,
+			"label": "Redefine Format Delimiter"
+		}
+	],
+	"Split": [
+        {
+			"name": "description",
+			"required": false,
+			"value": "",
+			"type": "textarea",
+			"readOnly": false,
+			"label": "Description"
+		},
+		{
+			"name": "id",
+			"required": false,
+			"value": "",
+			"type": "text",
+			"readOnly": true,
+			"label": "Id"
+		},
+		{
+			"name": "component_name",
+			"required": true,
+			"value": "",
+			"type": "text",
+			"readOnly": false,
+			"label": "Component Name"
+		},
+		{
+			"name": "sequence_number",
+			"required": false,
+			"value": "1",
+			"type": "text",
+			"readOnly": true,
+			"label": "Sequence Number"
+		},
+		{
+			"name": "component_type",
+			"required": false,
+			"value": "Input",
+			"type": "text",
+			"readOnly": true,
+			"label": "Component Type"
+		},
+
+		{
+			"name": "split_type",
+			"required": false,
+			"value": "",
+			"type": "text",
+			"readOnly": false,
+			"label": "Split Type"
+		},
+		{
+			"name": "node_reference",
+			"required": false,
+			"value": [],
+			"type": "array",
+			"readOnly": true,
+			"label": "Node Reference"
+		},
+		{
+			"name": "split_length",
+			"required": false,
+			"value": "",
+			"type": "text",
+			"readOnly": false,
+			"label": "Split Length"
+		},
+		{
+			"name": "split_column",
+			"required": false,
+			"value": "",
+			"type": "text",
+			"readOnly": false,
+			"label": "Split Column"
+		},
+		{
+			"name": "split_file_path",
+			"required": false,
+			"value": "",
+			"type": "text",
+			"readOnly": false,
+			"label": "Split File Path"
+		}
+	],
+	"Generate_Records": [
+        {
+			"name": "description",
+			"required": false,
+			"value": "",
+			"type": "textarea",
+			"readOnly": false,
+			"label": "Description"
+		},
+		{
+			"name": "id",
+			"required": false,
+			"value": "",
+			"type": "text",
+			"readOnly": true,
+			"label": "Id"
+		},
+		{
+			"name": "component_name",
+			"required": true,
+			"value": "",
+			"type": "text",
+			"readOnly": false,
+			"label": "Component Name"
+		},
+		{
+			"name": "sequence_number",
+			"required": false,
+			"value": "1",
+			"type": "text",
+			"readOnly": true,
+			"label": "Sequence Number"
+		},
+		{
+			"name": "component_type",
+			"required": false,
+			"value": "Input",
+			"type": "text",
+			"readOnly": true,
+			"label": "Component Type"
+		},
+
+		{
+			"name": "generate_records_type",
+			"required": false,
+			"value": "",
+			"type": "text",
+			"readOnly": false,
+			"label": "Generate Records Type"
+		},
+
+		{
+			"name": "generate_records_length",
+			"required": false,
+			"value": "",
+			"type": "text",
+			"readOnly": false,
+			"label": "Generate Records Length"
+		},
+		{
+			"name": "generate_records_file_schema_path",
+			"required": false,
+			"value": "",
+			"type": "text",
+			"readOnly": false,
+			"label": "Generate Records File Schema Path"
+		}
+	],
+	"createdata": [
+        {
+			"name": "description",
+			"required": false,
+			"value": "",
+			"type": "textarea",
+			"readOnly": false,
+			"label": "Description"
+		},
+		{
+			"name": "id",
+			"required": false,
+			"value": "",
+			"type": "text",
+			"readOnly": true,
+			"label": "Id"
+		},
+		{
+			"name": "component_name",
+			"required": true,
+			"value": "",
+			"type": "text",
+			"readOnly": false,
+			"label": "Component Name"
+		},
+		{
+			"name": "sequence_number",
+			"required": false,
+			"value": "1",
+			"type": "text",
+			"readOnly": true,
+			"label": "Sequence Number"
+		},
+		{
+			"name": "component_type",
+			"required": false,
+			"value": "Input",
+			"type": "text",
+			"readOnly": true,
+			"label": "Component Type"
+		},
+
+		{
+			"name": "create_data_type",
+			"required": false,
+			"value": "",
+			"type": "text",
+			"readOnly": false,
+			"label": "Create Data Type"
+		},
+
+		{
+			"name": "create_data_file_schema_path",
+			"required": false,
+			"value": "",
+			"type": "text",
+			"readOnly": false,
+			"label": "Create Data File Schema Path"
+		},
+		{
+			"name": "node_reference",
+			"required": false,
+			"value": [],
+			"type": "array",
+			"readOnly": true,
+			"label": "Node Reference"
+		}
+	],
+	"Dedup_sort": [
+        {
+			"name": "description",
+			"required": false,
+			"value": "",
+			"type": "textarea",
+			"readOnly": false,
+			"label": "Description"
+		},
+		{
+			"name": "id",
+			"required": false,
+			"value": "",
+			"type": "text",
+			"readOnly": true,
+			"label": "Id"
+		},
+		{
+			"name": "component_name",
+			"required": true,
+			"value": "",
+			"type": "text",
+			"readOnly": false,
+			"label": "Component Name"
+		},
+		{
+			"name": "sequence_number",
+			"required": false,
+			"value": "1",
+			"type": "text",
+			"readOnly": true,
+			"label": "Sequence Number"
+		},
+		{
+			"name": "component_type",
+			"required": false,
+			"value": "Input",
+			"type": "text",
+			"readOnly": true,
+			"label": "Component Type"
+		},
+		{
+			"name": "node_reference",
+			"required": false,
+			"value": [],
+			"type": "array",
+			"readOnly": true,
+			"label": "Node Reference"
+		},
+
+		{
+			"name": "dedup_sort_type",
+			"required": false,
+			"value": "",
+			"type": "text",
+			"readOnly": false,
+			"label": "Dedup Sort Type"
+		},
+
+		{
+			"name": "dedup_sort_columns",
+			"required": false,
+			"value": [],
+			"type": "array",
+			"readOnly": false,
+			"label": "Dedup Sort Columns"
+		}
+	],
+	"Leading_Records": [
+        {
+			"name": "description",
+			"required": false,
+			"value": "",
+			"type": "textarea",
+			"readOnly": false,
+			"label": "Description"
+		},
+		{
+			"name": "id",
+			"required": false,
+			"value": "",
+			"type": "text",
+			"readOnly": true,
+			"label": "Id"
+		},
+		{
+			"name": "component_name",
+			"required": true,
+			"value": "",
+			"type": "text",
+			"readOnly": false,
+			"label": "Component Name"
+		},
+		{
+			"name": "sequence_number",
+			"required": false,
+			"value": "1",
+			"type": "text",
+			"readOnly": true,
+			"label": "Sequence Number"
+		},
+		{
+			"name": "component_type",
+			"required": false,
+			"value": "Input",
+			"type": "text",
+			"readOnly": true,
+			"label": "Component Type"
+		},
+		{
+			"name": "node_reference",
+			"required": false,
+			"value": [],
+			"type": "array",
+			"readOnly": true,
+			"label": "Node Reference"
+		},
+
+		{
+			"name": "leading_records_type",
+			"required": false,
+			"value": "",
+			"type": "text",
+			"readOnly": false,
+			"label": "Leading Records Type"
+		},
+
+		{
+			"name": "leading_records_count",
+			"required": false,
+			"value": [],
+			"type": "array",
+			"readOnly": false,
+			"label": "Leading Records Count"
+		}
+	],
+	"Reformat": [
+        {
+			"name": "description",
+			"required": false,
+			"value": "",
+			"type": "textarea",
+			"readOnly": false,
+			"label": "Description"
+		},
+		{
+			"name": "id",
+			"required": false,
+			"value": "",
+			"type": "text",
+			"readOnly": true,
+			"label": "Id"
+		},
+		{
+			"name": "component_name",
+			"required": true,
+			"value": "",
+			"type": "text",
+			"readOnly": false,
+			"label": "Component Name"
+		},
+		{
+			"name": "sequence_number",
+			"required": false,
+			"value": "1",
+			"type": "text",
+			"readOnly": true,
+			"label": "Sequence Number"
+		},
+		{
+			"name": "component_type",
+			"required": false,
+			"value": "Input",
+			"type": "text",
+			"readOnly": true,
+			"label": "Component Type"
+		},
+		{
+			"name": "node_reference",
+			"required": false,
+			"value": [],
+			"type": "array",
+			"readOnly": true,
+			"label": "Node Reference"
+		},
+
+		{
+			"name": "reformat_type",
+			"required": false,
+			"value": "",
+			"type": "text",
+			"readOnly": false,
+			"label": "Reformat Type"
+		},
+		{
+			"name": "column_name",
+			"required": false,
+			"value": "",
+			"type": "text",
+			"readOnly": false,
+			"label": "Column Name"
+		},
+		{
+			"name": "default_value",
+			"required": false,
+			"value": "",
+			"type": "text",
+			"readOnly": false,
+			"label": "Default Value"
+		},
+
+		{
+			"name": "select_columns",
+			"required": false,
+			"value": [],
+			"type": "array",
+			"readOnly": false,
+			"label": "Select Columns"
+		},
+		{
+			"name": "join_conditions",
+			"required": false,
+			"value": [],
+			"type": "array",
+			"readOnly": false,
+			"label": "Join Conditions"
+		}
+	],
+	"AddColumn": [
+        {
+			"name": "description",
+			"required": false,
+			"value": "",
+			"type": "textarea",
+			"readOnly": false,
+			"label": "Description"
+		},
+		{
+			"name": "id",
+			"required": false,
+			"value": "",
+			"type": "text",
+			"readOnly": true,
+			"label": "Id"
+		},
+		{
+			"name": "component_name",
+			"required": true,
+			"value": "",
+			"type": "text",
+			"readOnly": false,
+			"label": "Component Name"
+		},
+		{
+			"name": "sequence_number",
+			"required": false,
+			"value": "1",
+			"type": "text",
+			"readOnly": true,
+			"label": "Sequence Number"
+		},
+		{
+			"name": "component_type",
+			"required": false,
+			"value": "Input",
+			"type": "text",
+			"readOnly": true,
+			"label": "Component Type"
+		},
+		{
+			"name": "node_reference",
+			"required": false,
+			"value": [],
+			"type": "array",
+			"readOnly": true,
+			"label": "Node Reference"
+		},
+
+		{
+			"name": "add_column_type",
+			"required": false,
+			"value": "",
+			"type": "text",
+			"readOnly": false,
+			"label": "Add Column Type"
+		},
+
+		{
+			"name": "add_column_name",
+			"required": false,
+			"value": [],
+			"type": "array",
+			"readOnly": false,
+			"label": "Add Column Name"
+		},
+		{
+			"name": "add_column_condition",
+			"required": false,
+			"value": [],
+			"type": "array",
+			"readOnly": false,
+			"label": "Add Column Condition"
+		}
+	],
+	"Lookup_And_Replace": [
+        {
+			"name": "description",
+			"required": false,
+			"value": "",
+			"type": "textarea",
+			"readOnly": false,
+			"label": "Description"
+		},
+		{
+			"name": "id",
+			"required": false,
+			"value": "",
+			"type": "text",
+			"readOnly": true,
+			"label": "Id"
+		},
+		{
+			"name": "component_name",
+			"required": true,
+			"value": "",
+			"type": "text",
+			"readOnly": false,
+			"label": "Component Name"
+		},
+		{
+			"name": "sequence_number",
+			"required": false,
+			"value": "1",
+			"type": "text",
+			"readOnly": true,
+			"label": "Sequence Number"
+		},
+		{
+			"name": "component_type",
+			"required": false,
+			"value": "Input",
+			"type": "text",
+			"readOnly": true,
+			"label": "Component Type"
+		},
+		{
+			"name": "node_reference",
+			"required": false,
+			"value": [],
+			"type": "array",
+			"readOnly": true,
+			"label": "Node Reference"
+		},
+
+		{
+			"name": "column_name",
+			"required": false,
+			"value": [],
+			"type": "array",
+			"readOnly": false,
+			"label": "Column Name"
+		},
+		{
+			"name": "default_value",
+			"required": false,
+			"value": [],
+			"type": "array",
+			"readOnly": false,
+			"label": "Default Value"
+		},
+		{
+			"name": "lookup_type",
+			"required": false,
+			"value": ["LOOKUP","Lookup_Select_Join","Lookup_And_Replace"],
+			"type": "dropdown",
+			"readOnly": false,
+			"label": "Lookup Type"
+		}
+	]
+}
