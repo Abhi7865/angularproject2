@@ -101,14 +101,14 @@ export class DynamicNodeComponent implements AfterViewInit {
             this.nodeRemove();
         });
 
-        this.nodeService.jsPlumbInstance.bind('connection', info => {
+        this.jsPlumbInstance.bind('connection', info => {
             if (info.targetId === this.node.id) {
                 if (this.referenceId !== -1) {
                     this.fetchNodeReference();
                 }
             }
         });
-        this.nodeService.jsPlumbInstance.bind('connectionDetached', info => {
+        this.jsPlumbInstance.bind('connectionDetached', info => {
             if (info.targetId === this.node.id) {
                 if (this.referenceId !== -1) {
                     setTimeout(() => {
@@ -141,11 +141,11 @@ export class DynamicNodeComponent implements AfterViewInit {
             this.destinationEndPoint = this.jsPlumbInstance.addEndpoints(this.node.id,
                 [{ anchor: 'Left', uuid: this.node.id + 'left' }], this.destination);
         }
-        else if (this.node.type == 'InputRead') {
+        else if (this.node.type == 'Input') {
             this.sourceEndPoint = this.jsPlumbInstance.addEndpoint(this.node.id,
                 { anchor: 'Right', uuid: this.node.id + 'right' }, this.source);
         }
-        else if (this.node.type == 'WriteOutput') {
+        else if (this.node.type == 'Write') {
             this.destinationEndPoint = this.jsPlumbInstance.addEndpoints(this.node.id,
                 [{ anchor: 'Left', uuid: this.node.id + 'left' }], this.destination);
         }
@@ -160,11 +160,6 @@ export class DynamicNodeComponent implements AfterViewInit {
         this.jsPlumbInstance.draggable(this.node.id);
 
         this.generateForm();
-    }
-
-    ngAfterViewChecked() {
-        // this.cdRef.detectChanges();
-        this.nodeService.checkDescription();
     }
 
     ngOnDestroy() {
@@ -278,7 +273,7 @@ export class DynamicNodeComponent implements AfterViewInit {
 
         let sourceIds: any[] = [];
 
-        this.nodeService.jsPlumbInstance.getEndpoints(this.node.id)
+        this.jsPlumbInstance.getEndpoints(this.node.id)
             .filter(ep => ep["isTarget"])
             .map((ep) => ep.connections?.filter(connection => connection.targetId === this.node.id))
             .forEach(connections => {

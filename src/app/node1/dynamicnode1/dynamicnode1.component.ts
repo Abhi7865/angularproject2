@@ -1,5 +1,5 @@
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
-import { AfterViewInit, ChangeDetectorRef, Component, HostBinding, Input } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, HostBinding, Input, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatChipInputEvent } from '@angular/material/chips';
 import { Subscription } from 'rxjs';
@@ -48,6 +48,8 @@ export class Dynamicnode1Component implements AfterViewInit {
         return this.left;
     }
 
+    @ViewChild("nodeDiv") nodeDiv: ElementRef;
+
     sourceEndPoint: any;
     destinationEndPoint: any;
     exampleDropOptions = {
@@ -57,7 +59,7 @@ export class Dynamicnode1Component implements AfterViewInit {
     };
     source = {
         endpoint: ['Dot', { radius: 5 }],
-        paintStyle: { fill: '#7030A0'},
+        paintStyle: { fill: '#7030A0' },
         isSource: true,
         scope: 'jsPlumb_DefaultScope',
         connectorStyle: { stroke: '#7030A0', strokeWidth: 3 },
@@ -101,8 +103,6 @@ export class Dynamicnode1Component implements AfterViewInit {
 
         this.nodeService.jsPlumbInstance.bind('connection', info => {
             if (info.targetId === this.node.id) {
-                console.log(info.source.getAttribute("data"));
-
                 if (this.referenceId !== -1) {
                     this.fetchNodeReference();
                 }
@@ -110,8 +110,6 @@ export class Dynamicnode1Component implements AfterViewInit {
         });
         this.nodeService.jsPlumbInstance.bind('connectionDetached', info => {
             if (info.targetId === this.node.id) {
-                console.log(info.source.getAttribute("data"));
-
                 if (this.referenceId !== -1) {
                     setTimeout(() => {
                         this.fetchNodeReference();
@@ -219,6 +217,7 @@ export class Dynamicnode1Component implements AfterViewInit {
                     if (da.name === "task_node_reference") {
                         this.referenceId = index;
                     }
+                    this.nodeForm.controls[da.name].updateValueAndValidity();
                 });
             }
 
@@ -230,6 +229,7 @@ export class Dynamicnode1Component implements AfterViewInit {
             }
         });
         this.save();
+        this.cdRef.detectChanges();
     }
 
     fetchNodeReference() {
@@ -305,6 +305,14 @@ export class Dynamicnode1Component implements AfterViewInit {
             values.push(event.value);
             event.chipInput!.clear();
         }
+    }
+    
+    highlightNode() {
+        this.nodeDiv.nativeElement.classList.add('highlight');
+        setTimeout(() => {
+            this.nodeDiv.nativeElement.classList.remove('highlight');
+        }, 2000);
+
     }
 }
 

@@ -18,7 +18,7 @@
 		},
 		{
 			"name": "task_Name",
-			"required": false,
+			"required": true,
 			"value": "",
 			"type": "text",
 			"label": "Task Name"
@@ -28,6 +28,7 @@
 			"required": false,
 			"value": "",
 			"type": "text",
+			"readOnly": true,
 			"label": "Task Filename"
 		},
 		{

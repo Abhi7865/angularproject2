@@ -7,7 +7,7 @@ import { NodeService } from './node.service';
     templateUrl: './node.component.html',
     styleUrls: ['./node.component.scss']
 })
-export class NodeComponent implements OnChanges, AfterViewInit {
+export class NodeComponent implements AfterViewInit {
 
     @Input() nodes;
 
@@ -18,15 +18,15 @@ export class NodeComponent implements OnChanges, AfterViewInit {
     }
 
     ngAfterViewInit() {
-        // this.nodeService.jsPlumbInstance.bind('connection', info => {
-        //     this.nodeService.updateSourceInformation(info);
-        //     this.nodeService.updateTargetInformation(info);
-        // });
+        this.setViewContainerRef();
     }
 
-    ngOnChanges() {
-        this.nodeService.setRootViewContainerRef(this.viewContainerRef, this.hostVCR);
+    clearContainer() {
         this.nodeService.clear();
+    }
+
+    setViewContainerRef() {
+        this.nodeService.setRootViewContainerRef(this.viewContainerRef, this.hostVCR);
     }
 
     addDynamicNodes(node, formData) {

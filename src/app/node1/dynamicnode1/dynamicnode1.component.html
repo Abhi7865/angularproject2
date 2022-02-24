@@ -1,4 +1,4 @@
-<div class="node" (dblclick)="allowNodeEdit()">
+<div class="node" #nodeDiv (dblclick)="allowNodeEdit()" [ngClass]="nodeForm.invalid ? 'invalid': ''">
     <mat-form-field class="mat-no-space text-center">
         <textarea matInput autosize minRows="1" class="node-textarea" [formControl]="componentNameControl"></textarea>
     </mat-form-field>
@@ -22,7 +22,8 @@
 
                     <form class="form-horizontal" [formGroup]="nodeForm">
                         <ng-container *ngFor="let item of attributeList; index as i;">
-                            <ng-container [ngSwitch]="item.type">
+                            <ng-container [ngSwitch]="item.type"
+                                *ngIf="item.name != 'id' && item.name != 'sequence_number' && item.name != 'task_node_reference'">
 
                                 <mat-form-field *ngSwitchCase="'text'" floatLabel="always" appearance="fill">
                                     <mat-label>{{item.label}}</mat-label>
@@ -58,6 +59,7 @@
                                                 </button>
                                             </mat-chip>
                                         </ng-container>
+                                        
                                         <input [matChipInputFor]="chipList"
                                             [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
                                             [matChipInputAddOnBlur]="true"

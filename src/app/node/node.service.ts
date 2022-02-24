@@ -11,15 +11,20 @@ import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { shareReplay } from 'rxjs/operators';
 import { DynamicNodeComponent } from './dynamicNode/dynamic-node.component';
 
+class NodeTabDetails {
+    nodes: any[] = [];
+    nodeFormData: any[] = [];
+    dynamicNodeCompList: DynamicNodeComponent[] = [];
+    viewContainerRef: ViewContainerRef;
+    jsPlumbInstance: jsPlumbInstance;
+    fileHandle: FileSystemHandle;
+}
+
 @Injectable()
 export class NodeService {
 
-    nodes: any[] = [];
-    nodeFormData: any[] = [];
-    dynamicNodeList: DynamicNodeComponent[] = [];
-    jsPlumbInstance: jsPlumbInstance;
-
-    private rootViewContainer: ViewContainerRef;
+    nodeTabDetails: NodeTabDetails[] = [];
+    selectedTabIndex = 0;
 
     public updateNodeList: BehaviorSubject<any> = new BehaviorSubject([]);
     public newTaskList: any[] = [];
@@ -29,17 +34,26 @@ export class NodeService {
     public changeflowSub: Subject<any> = new Subject();
 
     fetchedComponentList$: Observable<any>;
-    currentFileHandler: FileSystemHandle | null;
 
     constructor(
         private factoryResolver: ComponentFactoryResolver,
         public http: HttpClient,
         private _snackBar: MatSnackBar) { }
 
-    public setRootViewContainerRef(viewContainerRef, hostVCR: ViewContainerRef) {
-        this.rootViewContainer = viewContainerRef;
+    get selectedNodeTab() {
+        return this.nodeTabDetails[this.selectedTabIndex];
+    }
+    setCurrentTabIndex(index: number) {
+        this.selectedTabIndex = index;
+    }
 
-        this.jsPlumbInstance = jsPlumb.getInstance({
+    public setRootViewContainerRef(viewContainerRef, hostVCR: ViewContainerRef) {
+
+        this.nodeTabDetails.push(new NodeTabDetails());
+
+        this.selectedNodeTab.viewContainerRef = viewContainerRef;
+
+        this.selectedNodeTab.jsPlumbInstance = jsPlumb.getInstance({
             Container: hostVCR.element.nativeElement,
             DragOptions: {
                 containment: "parentEnclosed"
@@ -48,17 +62,20 @@ export class NodeService {
     }
 
     public addDynamicNode(node: any, formData) {
+
         const factory = this.factoryResolver.resolveComponentFactory(DynamicNodeComponent);
-        const component = factory.create(this.rootViewContainer.parentInjector);
+        const component = factory.create(this.selectedNodeTab.viewContainerRef.parentInjector);
+
         (<any>component.instance).node = node;
         (<any>component.instance).formData = formData;
-        (<any>component.instance).jsPlumbInstance = this.jsPlumbInstance;
-        this.rootViewContainer.insert(component.hostView);
-        this.dynamicNodeList.push(component.instance);
+        (<any>component.instance).jsPlumbInstance = this.selectedNodeTab.jsPlumbInstance;
+
+        this.selectedNodeTab.viewContainerRef.insert(component.hostView);
+        this.selectedNodeTab.dynamicNodeCompList.push(component.instance);
     }
 
     public clear() {
-        this.rootViewContainer.clear();
+        this.selectedNodeTab.viewContainerRef.clear();
     }
 
     getJSON(key): Observable<any> {
@@ -71,32 +88,34 @@ export class NodeService {
         }
         return this.fetchedComponentList$;
     }
-    maintainJason(n: any, formData) {
-        this.nodes.push(n);
-        this.nodeFormData.push(formData);
+
+    maintainJson(n: any, formData) {
+        this.selectedNodeTab.nodes.push(n);
+        this.selectedNodeTab.nodeFormData.push(formData);
     }
+
     updateNodeFormData(id, formData) {
-        const index = this.nodes.findIndex((d: any) => d.id == id);
-        this.nodeFormData[index] = formData;
+        const index = this.selectedNodeTab.nodes.findIndex((d: any) => d.id == id);
+        this.selectedNodeTab.nodeFormData[index] = formData;
     }
 
     deleteNode(id: any) {
-        const index = this.nodes.findIndex((d: any) => d.id == id);
-        this.nodes.splice(index, 1);
-        this.nodeFormData.splice(index, 1);
-        this.dynamicNodeList.splice(index, 1);
+        const index = this.selectedNodeTab.nodes.findIndex((d: any) => d.id == id);
+        this.selectedNodeTab.nodes.splice(index, 1);
+        this.selectedNodeTab.nodeFormData.splice(index, 1);
+        this.selectedNodeTab.dynamicNodeCompList.splice(index, 1);
     }
 
-    downloadJson(overwrite = false) {
+    async downloadJson(overwrite = false, filename: string) {
 
-        if (!this.nodes?.length) {
+        if (!this.selectedNodeTab.nodes?.length) {
             this._snackBar.open("Graph doesn't contain any node", "", { panelClass: "snackbar-error" });
             return;
         }
 
-        console.log(JSON.stringify(this.nodes));
+        console.log(JSON.stringify(this.selectedNodeTab.nodes));
 
-        const connections = (this.jsPlumbInstance.getAllConnections() as any[])
+        const connections = (this.selectedNodeTab.jsPlumbInstance.getAllConnections() as any[])
             .map((conn) => ({ uuids: conn.getUuids() }));
 
         if (!connections?.length) {
@@ -104,7 +123,7 @@ export class NodeService {
             return;
         }
 
-        let invalidComp = this.dynamicNodeList.find(comp => comp.nodeForm.invalid);
+        let invalidComp = this.selectedNodeTab.dynamicNodeCompList.find(comp => comp.nodeForm.invalid);
         if (invalidComp) {
             invalidComp.highlightNode();
             this._snackBar.open(`Form INVALID of Node - [${invalidComp.componentNameControl.value}]`, "", { panelClass: "snackbar-error" });
@@ -112,11 +131,11 @@ export class NodeService {
         }
 
         let counter = 0;
-        this.nodes.map((d: any) => {
-            const da: any = this.jsPlumbInstance.getEndpoints(d.id)[0];
+        this.selectedNodeTab.nodes.map((d: any) => {
+            const da: any = this.selectedNodeTab.jsPlumbInstance.getEndpoints(d.id)[0];
 
-            this.nodes[counter].cor.x = da.element.offsetLeft;
-            this.nodes[counter].cor.y = da.element.offsetTop;
+            this.selectedNodeTab.nodes[counter].cor.x = da.element.offsetLeft;
+            this.selectedNodeTab.nodes[counter].cor.y = da.element.offsetTop;
 
             counter++;
         });
@@ -127,8 +146,8 @@ export class NodeService {
         }
 
         const allData = {
-            "component": this.nodeFormData,
-            "nodeData": this.nodes,
+            "component": this.selectedNodeTab.nodeFormData,
+            "nodeData": this.selectedNodeTab.nodes,
             "connection": connections
         }
 
@@ -136,17 +155,17 @@ export class NodeService {
             type: "application/json"
         });
 
-        this.saveFile(nodeDataBlob, overwrite).then(() => {
-            this.getCurrentFileHandler()?.name &&
-                this.updateListWithNewTask(allData, this.getCurrentFileHandler()?.name);
-        });
+        await this.saveFile(nodeDataBlob, overwrite, filename);
+        this.updateListWithNewTask(allData, this.getCurrentFileHandler()?.name);
+
+        return overwrite ? this.getCurrentFileHandler()?.name : undefined;
 
     }
 
     getTaskSequence() {
 
         // Get All Edges
-        let edges = this.jsPlumbInstance.getAllConnections()
+        let edges = this.selectedNodeTab.jsPlumbInstance.getAllConnections()
             .map(connection => ({
                 sourceId: connection.sourceId,
                 targetId: connection.targetId
@@ -176,7 +195,7 @@ export class NodeService {
         }
 
         console.log("Node Edge Map: " + nodeEdgeMap);
-        if (Object.keys(nodeEdgeMap).length != this.nodes.length) {
+        if (Object.keys(nodeEdgeMap).length != this.selectedNodeTab.nodes.length) {
             this._snackBar.open("Graph contains isolated node", "", { panelClass: "snackbar-error" });
             return false;
         }
@@ -215,23 +234,23 @@ export class NodeService {
             return false;
         }
 
-        this.nodes.forEach((node, index) => {
+        this.selectedNodeTab.nodes.forEach((node, index) => {
             node.sequenceNo = topologicalOrderList[node.id];
-            this.nodeFormData[index]["sequence_number"] = node.sequenceNo;
+            this.selectedNodeTab.nodeFormData[index]["sequence_number"] = node.sequenceNo;
         });
 
-        this.nodes.sort((n1, n2) => n1.sequenceNo - n2.sequenceNo);
-        this.nodeFormData.sort((n1, n2) => n1.sequence_number - n2.sequence_number);
-        console.log("Task Sorted: " + this.nodes);
+        this.selectedNodeTab.nodes.sort((n1, n2) => n1.sequenceNo - n2.sequenceNo);
+        this.selectedNodeTab.nodeFormData.sort((n1, n2) => n1.sequence_number - n2.sequence_number);
+        console.log("Task Sorted: " + this.selectedNodeTab.nodes);
 
         return true;
     }
 
-    async saveFile(blob, overwrite = false) {
+    async saveFile(blob, overwrite = false, filename: string) {
 
         const newHandle = await fileSave(blob, {
             id: "task",
-            fileName: 'TaskData',
+            fileName: filename || 'TaskData',
             extensions: ['.json'],
             startIn: 'downloads',
             excludeAcceptAllOption: true,
@@ -247,50 +266,46 @@ export class NodeService {
     }
 
     setCurrentFileHandler(handler) {
-        this.currentFileHandler = handler;
+        this.selectedNodeTab.fileHandle = handler;
     }
     getCurrentFileHandler() {
-        return this.currentFileHandler;
+        return this.selectedNodeTab.fileHandle;
     }
 
-    connectNodes() {
-        const allSourceArray = JSON.parse(JSON.stringify(this.nodes));
-        const allTargetArray = JSON.parse(JSON.stringify(this.nodes));
+    // connectNodes() {
+    //     const allSourceArray = JSON.parse(JSON.stringify(this.nodes));
+    //     const allTargetArray = JSON.parse(JSON.stringify(this.nodes));
 
 
-        allSourceArray.map((data: any) => {
-            if (data.type == 'Join' || data.type == 'Scan' || data.type == 'Sort'
-                || data.type == 'Partition' || data.type == 'Rollup' || data.type == 'Metapivot' || data.type == 'Concatenation'
-                || data.type == 'Lookup_Select_Join' || data.type == 'Lookup_Select' || data.type == 'Intermediate_files' || data.type == 'Normalize'
-                || data.type == 'Merge' || data.type == 'Gather' || data.type == 'Fuse' || data.type == 'XML_split'
-                || data.type == 'XML_combin' || data.type == 'Repair_Input' || data.type == 'Redefine_Format' || data.type == 'Split'
-                || data.type == 'Generate_Records' || data.type == 'Create_data' || data.type == 'Dedup_sort' || data.type == 'Leading_Records'
-                || data.type == 'Reformat' || data.type == 'AddColumn' || data.type == 'Lookup_And_Replace'
-            ) {
-                const targetData = allTargetArray.filter((tar: any) => tar.id == data.TargetLeft);
-                var endpoint1 = this.jsPlumbInstance.getEndpoints(targetData[0].id)[0];
-                var endpoint2 = this.jsPlumbInstance.getEndpoints(data.id)[0];
-                this.jsPlumbInstance.connect({ source: endpoint1, target: endpoint2 });
-                // Target top
-                const targetDataRight = allTargetArray.filter((tar: any) => tar.id == data.TargetTop);
-                var endpoint3 = this.jsPlumbInstance.getEndpoints(targetDataRight[0].id)[0];
-                var endpoint2 = this.jsPlumbInstance.getEndpoints(data.id)[1];
-                this.jsPlumbInstance.connect({ source: endpoint3, target: endpoint2 });
-            } else {
-                const targetData = allTargetArray.filter((tar: any) => tar.id == data.target);
-                var endpoint5 = this.jsPlumbInstance.getEndpoints(targetData[0].id)[1];
-                var endpoint6 = this.jsPlumbInstance.getEndpoints(data.id)[0];
-                this.jsPlumbInstance.connect({ source: endpoint6, target: endpoint5 });
-            }
-        });
-    }
-
-    checkDescription() {
-
-    }
+    //     allSourceArray.map((data: any) => {
+    //         if (data.type == 'Join' || data.type == 'Scan' || data.type == 'Sort'
+    //             || data.type == 'Partition' || data.type == 'Rollup' || data.type == 'Metapivot' || data.type == 'Concatenation'
+    //             || data.type == 'Lookup_Select_Join' || data.type == 'Lookup_Select' || data.type == 'Intermediate_files' || data.type == 'Normalize'
+    //             || data.type == 'Merge' || data.type == 'Gather' || data.type == 'Fuse' || data.type == 'XML_split'
+    //             || data.type == 'XML_combin' || data.type == 'Repair_Input' || data.type == 'Redefine_Format' || data.type == 'Split'
+    //             || data.type == 'Generate_Records' || data.type == 'Create_data' || data.type == 'Dedup_sort' || data.type == 'Leading_Records'
+    //             || data.type == 'Reformat' || data.type == 'AddColumn' || data.type == 'Lookup_And_Replace'
+    //         ) {
+    //             const targetData = allTargetArray.filter((tar: any) => tar.id == data.TargetLeft);
+    //             var endpoint1 = this.jsPlumbInstance.getEndpoints(targetData[0].id)[0];
+    //             var endpoint2 = this.jsPlumbInstance.getEndpoints(data.id)[0];
+    //             this.jsPlumbInstance.connect({ source: endpoint1, target: endpoint2 });
+    //             // Target top
+    //             const targetDataRight = allTargetArray.filter((tar: any) => tar.id == data.TargetTop);
+    //             var endpoint3 = this.jsPlumbInstance.getEndpoints(targetDataRight[0].id)[0];
+    //             var endpoint2 = this.jsPlumbInstance.getEndpoints(data.id)[1];
+    //             this.jsPlumbInstance.connect({ source: endpoint3, target: endpoint2 });
+    //         } else {
+    //             const targetData = allTargetArray.filter((tar: any) => tar.id == data.target);
+    //             var endpoint5 = this.jsPlumbInstance.getEndpoints(targetData[0].id)[1];
+    //             var endpoint6 = this.jsPlumbInstance.getEndpoints(data.id)[0];
+    //             this.jsPlumbInstance.connect({ source: endpoint6, target: endpoint5 });
+    //         }
+    //     });
+    // }
 
     addConnection(connection) {
-        this.jsPlumbInstance.connect({ uuids: connection.uuids });
+        this.selectedNodeTab.jsPlumbInstance.connect({ uuids: connection.uuids });
     }
 
     updateListWithNewTask(data: any, taskname: any) {
@@ -301,9 +316,13 @@ export class NodeService {
         } else {
             this.newTaskList.push(data);
         }
-        this.updateNodeList.next(this.newTaskList);
-
+        this.publishUpdatedNodeList();
     }
+
+    publishUpdatedNodeList() {
+        this.updateNodeList.next(this.newTaskList);
+    }
+
     getTempWorkFlowJson() {
 
         return new Promise((resolve, reject) => {
@@ -318,26 +337,26 @@ export class NodeService {
 
     getNodeList() {
         return new Promise((resolve, reject) => {
-            resolve(this.nodes);
+            resolve(this.selectedNodeTab.nodes);
         })
 
     }
 
     removeAllNOde() {
-        let connections = (this.jsPlumbInstance.getAllConnections() as any[])
+        let connections = (this.selectedNodeTab.jsPlumbInstance.getAllConnections() as any[])
             .map((conn) => ({ uuids: conn.getUuids() }));
         let counter = 0;
-        this.nodes.map((d: any) => {
-            const da: any = this.jsPlumbInstance.getEndpoints(d.id)[0];
+        this.selectedNodeTab.nodes.map((d: any) => {
+            const da: any = this.selectedNodeTab.jsPlumbInstance.getEndpoints(d.id)[0];
 
-            this.nodes[counter].cor.x = da.element.offsetLeft;
-            this.nodes[counter].cor.y = da.element.offsetTop;
+            this.selectedNodeTab.nodes[counter].cor.x = da.element.offsetLeft;
+            this.selectedNodeTab.nodes[counter].cor.y = da.element.offsetTop;
 
             counter++;
         })
 
         const allData = {
-            "nodeData": this.nodes,
+            "nodeData": this.selectedNodeTab.nodes,
             "connection": connections
         }
         this.tempWorkflowNode = JSON.parse(JSON.stringify(allData));
@@ -346,21 +365,20 @@ export class NodeService {
 
     }
     removeAllTaskList() {
-        let connections = (this.jsPlumbInstance.getAllConnections() as any[])
+        let connections = (this.selectedNodeTab.jsPlumbInstance.getAllConnections() as any[])
             .map((conn) => ({ uuids: conn.getUuids() }));
         let counter = 0;
-        console.log(this.nodes);
-        this.nodes.map((d: any) => {
-            const da: any = this.jsPlumbInstance.getEndpoints(d.id)[0];
+        this.selectedNodeTab.nodes.map((d: any) => {
+            const da: any = this.selectedNodeTab.jsPlumbInstance.getEndpoints(d.id)[0];
 
-            this.nodes[counter].cor.x = da.element.offsetLeft;
-            this.nodes[counter].cor.y = da.element.offsetTop;
+            this.selectedNodeTab.nodes[counter].cor.x = da.element.offsetLeft;
+            this.selectedNodeTab.nodes[counter].cor.y = da.element.offsetTop;
 
             counter++;
         })
 
         const allData = {
-            "nodeData": this.nodes,
+            "nodeData": this.selectedNodeTab.nodes,
             "connection": connections
         }
         this.tempnewTaskList = JSON.parse(JSON.stringify(allData));
@@ -370,13 +388,26 @@ export class NodeService {
     }
 
     emptyAllNode() {
-        this.nodes = [];
-        this.nodeFormData = [];
-        this.dynamicNodeList = [];
+        this.selectedNodeTab.nodes = [];
+        this.selectedNodeTab.nodeFormData = [];
+
+        this.selectedNodeTab.dynamicNodeCompList = [];
     }
 
     reset() {
-        this.jsPlumbInstance.reset();
+        this.selectedNodeTab.jsPlumbInstance.reset();
+    }
+
+    deleteNodeTab() {
+        let nodeDetails = this.nodeTabDetails[this.selectedTabIndex];
+        if (nodeDetails.fileHandle) {
+            let index = this.newTaskList.findIndex(task => task.taskname === nodeDetails.fileHandle.name);
+            if (index > -1) {
+                this.newTaskList.splice(index, 1);
+                this.publishUpdatedNodeList();
+            }
+        }
+        this.nodeTabDetails.splice(this.selectedTabIndex, 1);
     }
 
     updateListWithNewTaskReload(newdata: any) {

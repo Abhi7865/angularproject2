@@ -1,10 +1,26 @@
-import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, QueryList, ViewChildren } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { fileOpen, FileWithHandle } from 'browser-fs-access';
 import { concat, Observable } from 'rxjs';
 import { debounceTime, distinctUntilChanged, map, skip, take } from 'rxjs/operators';
+import { v4 as uuidv4 } from 'uuid';
 import { NodeComponent } from '../node/node.component';
 import { NodeService } from '../node/node.service';
+
+
+class CanvasTab {
+    id: number;
+    _title: string;
+    title: string;
+    editing = false;
+    nodes: any[] = [];
+
+    constructor(index: number) {
+        this.id = index;
+        this.title = "Canvas-" + index;
+    }
+}
 
 @Component({
     selector: 'app-task',
@@ -13,10 +29,10 @@ import { NodeService } from '../node/node.service';
 })
 export class TaskComponent implements OnInit {
 
-    nodes: any[] = [];
-    @ViewChild('nodeChild') nodeChild: NodeComponent;
+    selectedTabIndex = 0;
+    canvasTabIndex = 1;
+    canvasTabDetails = [new CanvasTab(this.canvasTabIndex)];
 
-    index = 0;
     popupTittle = "";
 
     taskList: any[] = [];
@@ -28,7 +44,12 @@ export class TaskComponent implements OnInit {
 
     uploadedFileWithHandler: FileWithHandle;
 
-    constructor(private cdRef: ChangeDetectorRef, private nodeService: NodeService) { }
+    @ViewChildren('nodeChild') nodeComponentList: QueryList<NodeComponent>;
+
+    constructor(
+        private cdRef: ChangeDetectorRef,
+        private nodeService: NodeService,
+        private _snackBar: MatSnackBar) { }
 
     ngOnInit() {
 
@@ -48,9 +69,9 @@ export class TaskComponent implements OnInit {
         //     console.log(this.taskList);
         // });
 
-        this.nodeService.changeflowSub.subscribe((data) => {
-            this.changeFlow(data);
-        });
+        // this.nodeService.changeflowSub.subscribe((data) => {
+        //     this.changeFlow(data);
+        // });
 
     }
 
@@ -60,6 +81,14 @@ export class TaskComponent implements OnInit {
             this.searchControl.setValue("");
             this.cdRef.detectChanges();
         });
+    }
+
+    get currentCanvasTab() {
+        return this.canvasTabDetails[this.selectedTabIndex];
+    }
+
+    getCurrentCanvasTab() {
+        return this.currentCanvasTab;
     }
 
     filterComponentList(input: string) {
@@ -74,16 +103,15 @@ export class TaskComponent implements OnInit {
     create(cor: any) {
 
         const n = {
-            id: "i" + (this.index + 1).toString(),
+            id: uuidv4().replaceAll('-', ''),
             // name: this.popupTittle,
             type: this.popupTittle,
             cor: cor,
         };
 
-        this.index += 1;
-        this.nodeChild.addDynamicNodes(n, {});
-        this.nodeService.maintainJason(n, {});
-        this.nodes.push(n);
+        this.nodeComponentList.get(this.selectedTabIndex)?.addDynamicNodes(n, {});
+        this.nodeService.maintainJson(n, {});
+        this.currentCanvasTab?.nodes.push(n);
 
     }
 
@@ -93,33 +121,33 @@ export class TaskComponent implements OnInit {
         this.create(screen);
     }
 
-    changeFlow(val: any) {
+    // changeFlow(val: any) {
 
-        this.typeofFlow = val.value;
-        if (val.value == 'workflow') {
-            this.taskList = [];
-            this.nodeService.removeAllTaskList();
-            this.nodeService.getTempWorkFlowJson().then((data) => {
+    //     this.typeofFlow = val.value;
+    //     if (val.value == 'workflow') {
+    //         this.taskList = [];
+    //         this.nodeService.removeAllTaskList();
+    //         this.nodeService.getTempWorkFlowJson().then((data) => {
 
-                this.import(data);
-            });
+    //             this.import(data);
+    //         });
 
-        } else {
+    //     } else {
 
-            this.nodeService.removeAllNOde();
-            this.nodeService.getTaskJson().then((data: any) => {
-                if (data.nodeData !== undefined) {
-                    this.taskList = JSON.parse(JSON.stringify(data)).nodeData;
+    //         this.nodeService.removeAllNOde();
+    //         this.nodeService.getTaskJson().then((data: any) => {
+    //             if (data.nodeData !== undefined) {
+    //                 this.taskList = JSON.parse(JSON.stringify(data)).nodeData;
 
-                    this.import(data);
-                    this.nodeService.updateListWithNewTaskReload(data)
-                }
-            });
+    //                 this.import(data);
+    //                 this.nodeService.updateListWithNewTaskReload(data)
+    //             }
+    //         });
 
 
-        }
-        this.cdRef.detectChanges();
-    }
+    //     }
+    //     this.cdRef.detectChanges();
+    // }
 
     async uploadJson() {
         const fileHandler = await fileOpen({
@@ -129,14 +157,25 @@ export class TaskComponent implements OnInit {
             startIn: 'downloads',
             excludeAcceptAllOption: true,
         });
-        this.import(await fileHandler.text());
         this.uploadedFileWithHandler = fileHandler;
+
+        let fileAlreadyExistsIndex = this.nodeService.nodeTabDetails
+            .findIndex(tab => tab.fileHandle && (fileHandler.name === tab.fileHandle.name));
+
+        if (fileAlreadyExistsIndex > -1) {
+            this._snackBar.open("File already imported in Canvas " + (fileAlreadyExistsIndex + 1), "", { panelClass: "snackbar-warning" });
+            return;
+        }
+
+        this.import(await fileHandler.text());
         this.nodeService.setCurrentFileHandler(fileHandler.handle);
+
+        this.currentCanvasTab.title = this.uploadedFileWithHandler.name.replace(".json", "");
     }
 
     import(data: any) {
 
-        let nodes: any = [];
+        let nodes: any = {};
 
         if (this.isValidJson(data)) {
             nodes = JSON.parse(data);
@@ -144,11 +183,21 @@ export class TaskComponent implements OnInit {
             nodes = data;
         }
 
-        this.nodeService.emptyAllNode();
-        this.nodeService.reset();
-        if (this.nodes.length) {
-            this.nodes = [];
+        if (!nodes?.nodeData?.length) {
+            this._snackBar.open("JSON doesn't contain node data (field: 'nodeData')", "", { panelClass: "snackbar-error" });
+            return;
         }
+        if (!nodes?.connection?.length) {
+            this._snackBar.open("JSON doesn't contain node connection data (field: 'connection')", "", { panelClass: "snackbar-error" });
+            return;
+        }
+
+        this.addNewCanvas();
+
+        // this.nodeComponentList.get(this.selectedTabIndex)?.clearContainer();
+        // this.nodeService.emptyAllNode();
+        // this.nodeService.reset();
+
         this.cdRef.detectChanges();
 
         nodes.nodeData.map((data: any, index) => {
@@ -164,13 +213,10 @@ export class TaskComponent implements OnInit {
             if (formData == undefined) formData = {};
 
             console.log(n, formData);
-            this.nodeChild.addDynamicNodes(n, formData);
-            this.nodeService.maintainJason(n, formData);
-            this.nodes.push(n);
+            this.nodeComponentList.get(this.selectedTabIndex)?.addDynamicNodes(n, formData);
+            this.nodeService.maintainJson(n, formData);
+            this.currentCanvasTab?.nodes.push(n);
 
-            if (parseInt(data.id) > this.index) {
-                this.index = parseInt(data.id);
-            }
             this.cdRef.detectChanges();
 
         });
@@ -180,15 +226,75 @@ export class TaskComponent implements OnInit {
                 this.nodeService.addConnection(connection);
             });
         }
-
+        
+        this.nodeService.updateListWithNewTask(nodes, this.uploadedFileWithHandler?.name);
         this.cdRef.detectChanges();
     }
+
     isValidJson(json) {
         try {
             JSON.parse(json);
             return true;
         } catch (e) {
             return false;
+        }
+    }
+
+    nodeTabChanged(e) {
+        this.nodeService.setCurrentTabIndex(e.index);
+    }
+
+    addNewCanvas() {
+        this.canvasTabDetails.push(new CanvasTab(++this.canvasTabIndex));
+        this.selectedTabIndex = this.canvasTabDetails.length - 1;
+        this.nodeService.setCurrentTabIndex(this.selectedTabIndex);
+    }
+
+    resetCanvas() {
+        this.nodeComponentList.get(this.selectedTabIndex)?.clearContainer();
+        this.currentCanvasTab.nodes = [];
+        this.nodeService.emptyAllNode();
+        this.nodeService.reset();
+    }
+
+    deleteCanvas() {
+        this.resetCanvas();
+        this.nodeService.deleteNodeTab();
+        this.canvasTabDetails.splice(this.selectedTabIndex, 1);
+
+        this.selectedTabIndex -= 1;
+        this.nodeService.setCurrentTabIndex(this.selectedTabIndex);
+    }
+
+    setCurrentTabLabel(newLabel: string | undefined) {
+        if (newLabel) {
+            newLabel = newLabel.replace(".json", "");
+            this.currentCanvasTab.title = newLabel;
+        }
+    }
+
+    tabLabelEdit(tab: CanvasTab = this.canvasTabDetails[this.selectedTabIndex]) {
+        tab._title = tab.title;
+        tab.editing = true;
+    }
+
+    tabLabelRename(e, tab: CanvasTab, forceStop = false) {
+        if (tab._title) {
+            tab._title = tab._title.trim();
+        }
+        if (tab._title) {
+            let sameLabelTabExist = this.canvasTabDetails.find(t => t.title === tab._title && t.id !== tab.id);
+            if (sameLabelTabExist) {
+                this._snackBar.open("Canvas Label already exists", "", { panelClass: "snackbar-error" });
+                tab._title = tab.title;
+                if (forceStop) tab.editing = false;
+            } else {
+                tab.title = tab._title;
+                tab.editing = false;
+            }
+        } else {
+            tab._title = tab.title;
+            if (forceStop) tab.editing = false;
         }
     }
 }

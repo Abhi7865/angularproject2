@@ -9,8 +9,10 @@ import { DagService } from '../dag/dag.service';
 import { Dynamicnode1Component } from './dynamicnode1/dynamicnode1.component';
 @Injectable()
 export class Node1Service {
+
     nodes: any[] = [];
     nodeFormData: any[] = [];
+    dynamicNodeCompList: Dynamicnode1Component[] = [];
     jsPlumbInstance: jsPlumbInstance;
 
     private rootViewContainer: ViewContainerRef;
@@ -46,10 +48,13 @@ export class Node1Service {
     public addDynamicNode(node: any, formData) {
         const factory = this.factoryResolver.resolveComponentFactory(Dynamicnode1Component);
         const component = factory.create(this.rootViewContainer.parentInjector);
+
         (<any>component.instance).node = node;
         (<any>component.instance).formData = formData;
         (<any>component.instance).jsPlumbInstance = this.jsPlumbInstance;
+
         this.rootViewContainer.insert(component.hostView);
+        this.dynamicNodeCompList.push(component.instance);
     }
 
     public clear() {
@@ -76,7 +81,7 @@ export class Node1Service {
         }
         return this.fetchedCommonData$;
     }
-    maintainJason(n: any, formData) {
+    maintainJson(n: any, formData) {
         this.nodes.push(n);
         this.nodeFormData.push(formData);
     }
@@ -93,6 +98,7 @@ export class Node1Service {
         const index = this.nodes.findIndex((d: any) => d.id == id);
         this.nodes.splice(index, 1);
         this.nodeFormData.splice(index, 1);
+        this.dynamicNodeCompList.splice(index, 1);
     }
 
     downloadJson(overwrite = false) {
@@ -109,6 +115,13 @@ export class Node1Service {
 
         if (!connections?.length) {
             this._snackBar.open("Graph doesn't contain any edge", "", { panelClass: "snackbar-error" });
+            return;
+        }
+
+        let invalidComp = this.dynamicNodeCompList.find(comp => comp.nodeForm.invalid);
+        if (invalidComp) {
+            invalidComp.highlightNode();
+            this._snackBar.open(`Form INVALID of Node - [${invalidComp.componentNameControl.value}]`, "", { panelClass: "snackbar-error" });
             return;
         }
 
@@ -377,6 +390,7 @@ export class Node1Service {
     emptyAllNode() {
         this.nodes = [];
         this.nodeFormData = [];
+        this.dynamicNodeCompList = [];
     }
 
     reset() {

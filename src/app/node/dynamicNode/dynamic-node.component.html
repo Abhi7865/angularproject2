@@ -22,7 +22,8 @@
 
                     <form class="form-horizontal" [formGroup]="nodeForm">
                         <ng-container *ngFor="let item of attributeList; index as i;">
-                            <ng-container [ngSwitch]="item.type">
+                            <ng-container [ngSwitch]="item.type" *ngIf="item.name !='id' && item.name !='sequence_number' &&
+                            item.name != 'node_reference'">
 
                                 <mat-form-field *ngSwitchCase="'text'" floatLabel="always" appearance="fill">
                                     <mat-label>{{item.label}}</mat-label>
@@ -41,7 +42,7 @@
                                 </mat-form-field>
 
                                 <mat-checkbox *ngSwitchCase="'boolean'" [formControlName]="item.name"
-                                    style="margin-bottom: 15px;" [required]="item.required">
+                                    [required]="item.required" style="margin-bottom: 15px;">
                                     {{item.label}}
                                 </mat-checkbox>
 

@@ -1,3 +1,4 @@
+import { A11yModule } from '@angular/cdk/a11y';
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -9,8 +10,10 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
+import { MatMenuModule } from '@angular/material/menu';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSnackBarModule, MAT_SNACK_BAR_DEFAULT_OPTIONS } from '@angular/material/snack-bar';
+import { MatTabsModule } from '@angular/material/tabs';
 import { MatTooltipModule, MAT_TOOLTIP_DEFAULT_OPTIONS } from '@angular/material/tooltip';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -29,6 +32,7 @@ import { Dynamicnode1Component } from './node1/dynamicnode1/dynamicnode1.compone
 import { Node1Component } from './node1/node1.component';
 import { Node1Service } from './node1/node1.service';
 import { TaskComponent } from './task/task.component';
+
 
 
 
@@ -87,9 +91,12 @@ export const CUSTOM_DATE_FORMAT = {
         MatListModule,
         MatSnackBarModule,
         MatTooltipModule,
+        MatTabsModule,
+        MatMenuModule,
         MatSelectModule,
         MatDatepickerModule,
         MatNativeDateModule,
+        A11yModule,
         AutosizeModule
     ],
     exports: [RouterModule],
@@ -99,7 +106,7 @@ export const CUSTOM_DATE_FORMAT = {
         {
             provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: {
                 duration: 3000,
-                // horizontalPosition: "center",
+                horizontalPosition: "left"
                 // verticalPosition: "bottom"
             }
         },

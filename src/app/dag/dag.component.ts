@@ -6,6 +6,8 @@ import { fileOpen, FileWithHandle } from 'browser-fs-access';
 import { NodeService } from '../node/node.service';
 import { Node1Component } from '../node1/node1.component';
 import { Node1Service } from '../node1/node1.service';
+import { v4 as uuidv4 } from 'uuid';
+
 
 @Component({
     selector: 'app-dag',
@@ -18,7 +20,6 @@ export class DagComponent implements OnInit {
     files: any[] = [];
     @ViewChild('nodeChild') nodeChild: Node1Component;
 
-    index = 0;
     popupTittle = "";
     typeofFlow = 'task';
     taskList: any = [];
@@ -30,7 +31,6 @@ export class DagComponent implements OnInit {
     formComponentData;
 
     public show = false;
-    public title = "";
     currentData: any = "";
 
     uploadedFileWithHandler: FileWithHandle;
@@ -67,16 +67,15 @@ export class DagComponent implements OnInit {
     create(cor: any) {
 
         const n = {
-            id: "i" + (this.index + 1).toString(),
+            id: uuidv4().replaceAll('-', ''),
             // name: this.popupTittle,
             type: this.popupTittle,
             cor: cor,
 
         };
 
-        this.index += 1;
         this.nodeChild.addDynamicNodes(n, {});
-        this.node1Service.maintainJason(n, {});
+        this.node1Service.maintainJson(n, {});
         this.nodes.push(n);
     }
 
@@ -220,6 +219,7 @@ export class DagComponent implements OnInit {
         }
         this.node1Service.emptyAllNode();
         this.node1Service.reset();
+
         if (this.nodes.length) {
             this.nodes = [];
         }
@@ -239,12 +239,9 @@ export class DagComponent implements OnInit {
 
             console.log(n, formData);
             this.nodeChild.addDynamicNodes(n, formData);
-            this.node1Service.maintainJason(n, formData);
+            this.node1Service.maintainJson(n, formData);
             this.nodes.push(n);
 
-            if (parseInt(data.id) > this.index) {
-                this.index = parseInt(data.id);
-            }
             this.cdRef.detectChanges();
 
         });
@@ -286,7 +283,7 @@ export class DagComponent implements OnInit {
 
     generateWorkflowForm() {
         this.nodeForm = new FormGroup({});
-        this.title = "Common Task";
+        
         this.commonworkflowlist.forEach((da: any) => {
             if (da.type == 'boolean') {
                 this.nodeForm.addControl(da.name, new FormControl(da.value || false));
@@ -330,6 +327,7 @@ export class DagComponent implements OnInit {
                     [da.name]: this.formComponentData[da.name]
                 });
             }
+            this.nodeForm.controls[da.name].updateValueAndValidity();
         });
 
         if (this.formComponentData?.start_year && this.formComponentData?.start_month && this.formComponentData?.start_day) {

@@ -3,22 +3,20 @@
         <nav>
             <div class="nav-smartdata-logo"></div>
 
-            <a mat-button class="nav-item" (click)="changeflowapp('workflow')" routerLink="/" routerLinkActive="active"
-                [routerLinkActiveOptions]="{ exact: true }">Task Workflow</a>
-            <a mat-button class="nav-item" (click)="changeflowapp('task')" routerLink="/dag" routerLinkActive="active"
-                [routerLinkActiveOptions]="{ exact: true }">DAG Workflow</a>
+            <button mat-button class="nav-item" [ngClass]="selectedIndex === 0 ? 'active' : ''"
+                (click)="selectedIndex = 0">Task Workflow</button>
+            <button mat-button class="nav-item" [ngClass]="selectedIndex === 1 ? 'active' : ''"
+                (click)="selectedIndex = 1">DAG Workflow</button>
 
             <span class="flex-spacer"></span>
 
             <button mat-button (click)="importJson()">
                 <img src="../../../assets/images/Import.svg" alt="" class="configIcon">
-                <!--<mat-icon>cloud_upload</mat-icon>-->
                 Import
             </button>
 
             <button mat-button (click)="saveJson(true)">
                 <img src="../../../assets/images/Save.svg" alt="" class="configIcon">
-               <!-- <mat-icon>save</mat-icon>-->
                 Save
             </button>
 
@@ -26,11 +24,12 @@
                 <img src="../../../assets/images/saveas.svg" alt="" class="configIcon">
                 Save As
             </button>
-            
+
             <div class="nav-brand-logo"></div>
         </nav>
     </header>
     <div class="content" style="min-height: 0;">
-        <router-outlet></router-outlet>
+        <app-task [hidden]="selectedIndex == 1"></app-task>
+        <app-dag [hidden]="selectedIndex == 0"></app-dag>
     </div>
 </div>

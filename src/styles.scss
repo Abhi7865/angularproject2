@@ -186,6 +186,7 @@ body {
 
 .chart-container {
 	position: relative;
+    display: inline-block;
 	height: 1200px;
 	width: 1800px;
 	box-shadow: 0px 0px 2px 1px #e7e7e7;
@@ -211,6 +212,7 @@ body {
 .dropzone {
 	flex: 1;
 	padding: 10px;
+    padding-bottom: 0px;
 	overflow: auto;
 	background-color: var(--primary-dark-clr);
 	border: 1px solid var(--bdr-clr);
@@ -393,7 +395,7 @@ MODAL
 	background-color: white;
 	overflow-x: hidden;
 	transition: 0.5s;
-	box-shadow: 1px 8px 9px 2px grey;
+	box-shadow: 0px 0px 12px 0.2px rgba(0, 0, 0, 0.4);
 }
 
 .sidenav a {
@@ -426,19 +428,22 @@ MODAL
 	background-clip: padding-box;
 	border: solid transparent;
 	border-width: 1px;
-	background-color: #a3bbd6;
 	border-radius: 10px;
+}
+#toolbox::-webkit-scrollbar-track {
+	background-color: #a3bbd6;
 }
 
 ::-webkit-scrollbar-thumb {
-	background-color: var(--mat-primary-light-clr);
+    background-color: rgba(0, 0, 0, 0.1);
 	background-clip: padding-box;
 	border: solid transparent;
 	border-radius: 10px;
 }
+#toolbox::-webkit-scrollbar-thumb {
+	background-color: var(--mat-primary-light-clr);
+}
+
 ::-webkit-scrollbar-corner {
 	background-color: transparent;
 }
-// ::-webkit-scrollbar-thumb:hover {
-// 	background-color: #ccc;
-// }
