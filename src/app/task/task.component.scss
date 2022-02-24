@@ -84,19 +84,8 @@ body,
 	padding: 5px 10px;
 }
 
-:host ::ng-deep .mat-list {
+.mat-list {
 	padding-top: 20px !important;
-	background-color: var(--mat-primary-lighter-clr);
-
-	.mat-list-item-content, .mat-subheader {
-		color: var(--mat-primary-clr);
-	}
-	.mat-icon {
-		color: var(--mat-primary-light-clr);
-	}
-	.mat-list-search.mat-form-field-appearance-fill .mat-form-field-flex {
-		background-color: white;
-	}
 }
 
 .button.btn.btn-primary {

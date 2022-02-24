@@ -16,6 +16,7 @@ export class NodeService {
 
     nodes: any[] = [];
     nodeFormData: any[] = [];
+    dynamicNodeList: DynamicNodeComponent[] = [];
     jsPlumbInstance: jsPlumbInstance;
 
     private rootViewContainer: ViewContainerRef;
@@ -53,6 +54,7 @@ export class NodeService {
         (<any>component.instance).formData = formData;
         (<any>component.instance).jsPlumbInstance = this.jsPlumbInstance;
         this.rootViewContainer.insert(component.hostView);
+        this.dynamicNodeList.push(component.instance);
     }
 
     public clear() {
@@ -82,6 +84,7 @@ export class NodeService {
         const index = this.nodes.findIndex((d: any) => d.id == id);
         this.nodes.splice(index, 1);
         this.nodeFormData.splice(index, 1);
+        this.dynamicNodeList.splice(index, 1);
     }
 
     downloadJson(overwrite = false) {
@@ -98,6 +101,13 @@ export class NodeService {
 
         if (!connections?.length) {
             this._snackBar.open("Graph doesn't contain any edge", "", { panelClass: "snackbar-error" });
+            return;
+        }
+
+        let invalidComp = this.dynamicNodeList.find(comp => comp.nodeForm.invalid);
+        if (invalidComp) {
+            invalidComp.highlightNode();
+            this._snackBar.open(`Form INVALID of Node - [${invalidComp.componentNameControl.value}]`, "", { panelClass: "snackbar-error" });
             return;
         }
 
@@ -362,6 +372,7 @@ export class NodeService {
     emptyAllNode() {
         this.nodes = [];
         this.nodeFormData = [];
+        this.dynamicNodeList = [];
     }
 
     reset() {

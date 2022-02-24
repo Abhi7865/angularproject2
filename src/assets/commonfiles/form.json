@@ -1,6 +1,6 @@
 {
 	"Input": [
-        {
+		{
 			"name": "description",
 			"required": false,
 			"value": "",
@@ -14,98 +14,198 @@
 			"value": "",
 			"type": "text",
 			"readOnly": true,
-			"label":"Id"
+			"label": "Id"
 		},
 		{
 			"name": "component_name",
 			"required": true,
-			"value": "csv1",
+			"value": "",
 			"type": "text",
 			"readOnly": false,
-			"label":"Component Name"
+			"label": "Component Name"
 		},
 		{
 			"name": "component_type",
 			"required": false,
-			"value": "Input",
+			"value": "",
 			"type": "text",
 			"readOnly": true,
-			"label":"Component Type"
+			"label": "Component Type"
 		},
 		{
 			"name": "sequence_number",
 			"required": false,
-			"value": "1",
+			"value": "",
 			"type": "text",
 			"readOnly": true,
-			"label":"Sequence Number"
-		},
-		{
-			"name": "input_data_file_path",
-			"required": false,
-			"value": "csv",
-			"type": "text",
-			"readOnly": false,
-			"label":"Input Data File Path"
-		},
-		{
-			"name": "input_schema_file_path",
-			"required": false,
-			"value": "",
-			"type": "text",
-			"readOnly": false,
-			"label":"Input Schema File Path"
-		},
-		{
-			"name": "delimiter",
-			"required": false,
-			"value": "",
-			"type": "text",
-			"readOnly": false,
-			"label":"Delimiter"
-		},
-		{
-			"name": "header",
-			"required": false,
-			"value": true,
-			"type": "text",
-			"readOnly": false,
-			"label":"Header"
+			"label": "Sequence Number"
 		},
 		{
 			"name": "input_data_file_type",
-			"required": false,
-			"value": ["csv","db","excel","SeperatedValues","PARQUET" ,"MYSQL" ],
-			"type": "dropdown",
+			"required": true,
+			"type": "propertyType",
 			"readOnly": false,
-			"label":"Input Data File Type"
-		},
-
-		{
-			"name": "table_name",
-			"required": false,
-			"value": "",
-			"type": "text",
-			"readOnly": false,
-			"label":"Table Name"
-		},
-		{
-			"name": "database_name",
-			"required": false,
-			"value": "",
-			"type": "text",
-			"readOnly": false,
-			"label":"Database Name"
+			"label": "Input Data File Type",
+			"selectedIndex": -1,
+			"options": ["CSV", "EXCEL", "SEPERATEDVALUES", "PARQUET", "MYSQL"],
+			"optionProperties": {
+				"CSV": [
+					{
+						"name": "input_data_file_path",
+						"type": "text",
+						"required": true,
+						"value": "",
+						"readOnly": false,
+						"label": "Input Data File Path"
+					},
+					{
+						"name": "input_schema_file_path",
+						"type": "text",
+						"required": true,
+						"value": "",
+						"readOnly": false,
+						"label": "Input Schema File Path"
+					},
+					{
+						"name": "delimiter",
+						"type": "text",
+						"required": true,
+						"value": "",
+						"readOnly": false,
+						"label": "Delimiter"
+					},
+					{
+						"name": "header",
+						"type": "boolean",
+						"required": false,
+						"value": true,
+						"readOnly": false,
+						"label": "Header"
+					}
+				],
+				"EXCEL": [
+					{
+						"name": "input_data_file_path",
+						"type": "text",
+						"required": true,
+						"value": "",
+						"readOnly": false,
+						"label": "Input Data File Path"
+					},
+					{
+						"name": "header",
+						"type": "boolean",
+						"required": false,
+						"value": true,
+						"readOnly": false,
+						"label": "Header"
+					}
+				],
+				"SEPERATEDVALUES": [
+					{
+						"name": "input_data_file_path",
+						"type": "text",
+						"required": true,
+						"value": "",
+						"readOnly": false,
+						"label": "Input Data File Path"
+					},
+					{
+						"name": "input_schema_file_path",
+						"type": "text",
+						"required": true,
+						"value": "",
+						"readOnly": false,
+						"label": "Input Schema File Path"
+					},
+					{
+						"name": "delimiter",
+						"type": "text",
+						"required": true,
+						"value": "",
+						"readOnly": false,
+						"label": "Delimiter"
+					},
+					{
+						"name": "header",
+						"type": "boolean",
+						"required": false,
+						"value": true,
+						"readOnly": false,
+						"label": "Header"
+					}
+				],
+				"PARQUET": [
+					{
+						"name": "input_data_file_path",
+						"type": "text",
+						"required": true,
+						"value": "",
+						"readOnly": false,
+						"label": "Input Data File Path"
+					}
+				],
+				"MYSQL": [
+					{
+						"name": "input_data_file_path",
+						"type": "text",
+						"required": true,
+						"value": "",
+						"readOnly": false,
+						"label": "Input Data File Path"
+					},
+					{
+						"name": "database_name",
+						"type": "text",
+						"required": true,
+						"value": "",
+						"readOnly": false,
+						"label": "Database Name"
+					},
+					{
+						"name": "table_name",
+						"type": "text",
+						"required": true,
+						"value": "",
+						"readOnly": false,
+						"label": "Table Name"
+					},
+					{
+						"name": "db_username",
+						"type": "text",
+						"required": true,
+						"value": "",
+						"readOnly": false,
+						"label": "DB User Name"
+					},
+					{
+						"name": "db_password",
+						"type": "text",
+						"required": true,
+						"value": "",
+						"readOnly": false,
+						"label": "DB Password"
+					},
+					{
+						"name": "jdbc_url",
+						"type": "text",
+						"required": true,
+						"value": "",
+						"readOnly": false,
+						"label": "JDBC URL"
+					}
+				]
+			}
 		}
 	],
 	"Join": [
-        {
+		{
 			"name": "description",
 			"required": false,
 			"value": "",
 			"type": "textarea",
 			"readOnly": false,
-			"label":"Description"
+			"label": "Description"
 		},
 		{
 			"name": "id",
@@ -113,7 +213,7 @@
 			"value": "",
 			"type": "text",
 			"readOnly": true,
-			"label":"Id"
+			"label": "Id"
 		},
 		{
 			"name": "sequence_number",
@@ -176,7 +276,7 @@
 		}
 	],
 	"Scan": [
-        {
+		{
 			"name": "description",
 			"required": false,
 			"value": "",
@@ -184,7 +284,7 @@
 			"readOnly": false,
 			"label": "Description"
 		},
-        {
+		{
 			"name": "id",
 			"required": false,
 			"value": "",
@@ -236,8 +336,8 @@
 		{
 			"name": "scan_partition_key",
 			"required": false,
-			"value": "",
-			"type": "text",
+			"value": [],
+			"type": "array",
 			"readOnly": false,
 			"label": "Scan Partition Key"
 		},
@@ -252,14 +352,14 @@
 		{
 			"name": "scan_sum_column",
 			"required": false,
-			"value": [],
-			"type": "array",
+			"value": "",
+			"type": "text",
 			"readOnly": false,
 			"label": "Scan Sum Column"
 		}
 	],
 	"Filter": [
-        {
+		{
 			"name": "description",
 			"required": false,
 			"value": "",
@@ -267,7 +367,7 @@
 			"readOnly": false,
 			"label": "Description"
 		},
-        {
+		{
 			"name": "id",
 			"required": false,
 			"value": "",
@@ -325,7 +425,7 @@
 		}
 	],
 	"Sort": [
-        {
+		{
 			"name": "description",
 			"required": false,
 			"value": "",
@@ -333,7 +433,7 @@
 			"readOnly": false,
 			"label": "Description"
 		},
-        {
+		{
 			"name": "id",
 			"required": false,
 			"value": "",
@@ -393,7 +493,7 @@
 	],
 
 	"Write": [
-        {
+		{
 			"name": "description",
 			"required": false,
 			"value": "",
@@ -401,7 +501,7 @@
 			"readOnly": false,
 			"label": "Description"
 		},
-        {
+		{
 			"name": "id",
 			"required": false,
 			"value": "",
@@ -418,15 +518,6 @@
 			"label": "Component Name"
 		},
 		{
-			"name": "sequence_number",
-			"display": "Sequence Number",
-			"required": false,
-			"value": "",
-			"type": "text",
-			"readOnly": true,
-			"label": "Sequence Number"
-		},
-		{
 			"name": "component_type",
 			"required": true,
 			"value": "",
@@ -435,20 +526,13 @@
 			"label": "Component Type"
 		},
 		{
-			"name": "output_data_file_path",
+			"name": "sequence_number",
+			"display": "Sequence Number",
 			"required": false,
 			"value": "",
 			"type": "text",
-			"readOnly": false,
-			"label": "Output Data File Path"
-		},
-		{
-			"name": "output_data_file_type",
-			"required": false,
-			"value": ["DB","csv","excel","PARQUET"],
-			"type": "dropdown",
-			"readOnly": false,
-			"label": "Output Data File Type"
+			"readOnly": true,
+			"label": "Sequence Number"
 		},
 		{
 			"name": "node_reference",
@@ -459,24 +543,131 @@
 			"label": "Node Reference"
 		},
 		{
-			"name": "table_name",
-			"required": false,
-			"value": "",
-			"type": "text",
+			"name": "output_data_file_type",
+			"required": true,
+			"type": "propertyType",
 			"readOnly": false,
-			"label": "Table Name"
-		},
-		{
-			"name": "database_name",
-			"required": false,
-			"value": "",
-			"type": "text",
-			"readOnly": false,
-			"label": "Database Name"
+			"label": "Output Data File Type",
+			"selectedIndex": -1,
+			"options": ["CSV", "EXCEL", "PARQUET", "MYSQL"],
+			"optionProperties": {
+				"CSV": [
+					{
+						"name": "input_data_file_path",
+						"type": "text",
+						"required": true,
+						"value": "",
+						"readOnly": false,
+						"label": "Input Data File Path"
+					},
+					{
+						"name": "input_schema_file_path",
+						"type": "text",
+						"required": true,
+						"value": "",
+						"readOnly": false,
+						"label": "Input Schema File Path"
+					},
+					{
+						"name": "delimiter",
+						"type": "text",
+						"required": true,
+						"value": "",
+						"readOnly": false,
+						"label": "Delimiter"
+					},
+					{
+						"name": "header",
+						"type": "boolean",
+						"required": false,
+						"value": true,
+						"readOnly": false,
+						"label": "Header"
+					}
+				],
+				"EXCEL": [
+					{
+						"name": "input_data_file_path",
+						"type": "text",
+						"required": true,
+						"value": "",
+						"readOnly": false,
+						"label": "Input Data File Path"
+					},
+					{
+						"name": "header",
+						"type": "boolean",
+						"required": false,
+						"value": true,
+						"readOnly": false,
+						"label": "Header"
+					}
+				],
+				"PARQUET": [
+					{
+						"name": "input_data_file_path",
+						"type": "text",
+						"required": true,
+						"value": "",
+						"readOnly": false,
+						"label": "Input Data File Path"
+					}
+				],
+				"MYSQL": [
+					{
+						"name": "input_data_file_path",
+						"type": "text",
+						"required": true,
+						"value": "",
+						"readOnly": false,
+						"label": "Input Data File Path"
+					},
+					{
+						"name": "database_name",
+						"type": "text",
+						"required": true,
+						"value": "",
+						"readOnly": false,
+						"label": "Database Name"
+					},
+					{
+						"name": "table_name",
+						"type": "text",
+						"required": true,
+						"value": "",
+						"readOnly": false,
+						"label": "Table Name"
+					},
+					{
+						"name": "db_username",
+						"type": "text",
+						"required": true,
+						"value": "",
+						"readOnly": false,
+						"label": "DB User Name"
+					},
+					{
+						"name": "db_password",
+						"type": "text",
+						"required": true,
+						"value": "",
+						"readOnly": false,
+						"label": "DB Password"
+					},
+					{
+						"name": "jdbc_url",
+						"type": "text",
+						"required": true,
+						"value": "",
+						"readOnly": false,
+						"label": "JDBC URL"
+					}
+				]
+			}
 		}
 	],
 	"Partition": [
-        {
+		{
 			"name": "description",
 			"required": false,
 			"value": "",
@@ -484,7 +675,7 @@
 			"readOnly": false,
 			"label": "Description"
 		},
-        {
+		{
 			"name": "id",
 			"required": false,
 			"value": "",
@@ -551,7 +742,7 @@
 		}
 	],
 	"Lookup": [
-        {
+		{
 			"name": "description",
 			"required": false,
 			"value": "",
@@ -559,7 +750,7 @@
 			"readOnly": false,
 			"label": "Description"
 		},
-        {
+		{
 			"name": "id",
 			"required": false,
 			"value": "",
@@ -577,8 +768,7 @@
 		},
 		{
 			"name": "sequence_number",
-			"display": "Sequence Number",
-
+			"required": false,
 			"value": [],
 			"type": "text",
 			"readOnly": true,
@@ -603,47 +793,79 @@
 		{
 			"name": "lookup_type",
 			"required": true,
-			"value": ["Lookup","Lookup_Select_Join","Lookup_And_Replace"],
-			"selectedIndex": 1,
-			"type": "dropdown",
+			"type": "propertyType",
 			"readOnly": false,
-			"label": "Lookup Type"
-		},
-		{
-			"name": "lookup_select_key1",
-			"required": false,
-			"type": "array",
-			"value": [],
-			"readOnly": false,
-			"label": "Lookup Select Key 1"
-		},
-		{
-			"name": "lookup_select_key2",
-			"required": false,
-			"value": [],
-			"type": "array",
-			"readOnly": false,
-			"label": "Lookup Select Key 2"
-		},
-		{
-			"name": "lookup_join_columns",
-			"required": false,
-			"value": [],
-			"type": "array",
-			"readOnly": false,
-			"label": "Lookup Join Columns"
-		},
-		{
-			"name": "lookup_join_select_columns",
-			"required": false,
-			"value": [],
-			"type": "array",
-			"readOnly": false,
-			"label": "Lookup Join Select Columns"
+			"label": "Lookup Type",
+			"selectedIndex": -1,
+			"options": ["Lookup", "Lookup_Select_Join", "Lookup_And_Replace"],
+            "optionProperties": {
+                "Lookup": [
+                    {
+                        "name": "lookup_select_key",
+                        "required": true,
+                        "value": "",
+                        "type": "text",
+                        "readOnly": false,
+                        "label": "Lookup Select Key"
+                    }
+                ],
+                "Lookup_Select_Join": [
+                    {
+                        "name": "lookup_select_key1",
+                        "required": true,
+                        "value": "",
+                        "type": "text",
+                        "readOnly": false,
+                        "label": "Lookup Select Key 1"
+                    },
+                    {
+                        "name": "lookup_select_key2",
+                        "required": true,
+                        "value": "",
+                        "type": "text",
+                        "readOnly": false,
+                        "label": "Lookup Select Key 2"
+                    },
+                    {
+                        "name": "lookup_join_columns",
+                        "required": true,
+                        "value": "",
+                        "type": "text",
+                        "readOnly": false,
+                        "label": "Lookup Join Columns"
+                    },
+                    {
+                        "name": "lookup_join_select_columns",
+                        "required": true,
+                        "value": "",
+                        "type": "text",
+                        "readOnly": false,
+                        "label": "Lookup Join Select Columns"
+                    }
+                ],
+                "Lookup_And_Replace": [
+                    {
+                        "name": "column_name",
+                        "required": true,
+                        "value": "",
+                        "type": "text",
+                        "readOnly": false,
+                        "label": "Column Name"
+                    },
+                    {
+                        "name": "default_value",
+                        "required": true,
+                        "value": "",
+                        "type": "text",
+                        "readOnly": false,
+                        "label": "Default Value"
+                    }
+                ]
+            }
 		}
 	],
 	"Rollup": [
-        {
+		{
 			"name": "description",
 			"required": false,
 			"value": "",
@@ -662,7 +884,7 @@
 		{
 			"name": "component_name",
 			"required": true,
-			"value": "csv1",
+			"value": "",
 			"type": "text",
 			"readOnly": false,
 			"label": "Component Name"
@@ -670,7 +892,7 @@
 		{
 			"name": "component_type",
 			"required": false,
-			"value": "Input",
+			"value": "",
 			"type": "text",
 			"readOnly": true,
 			"label": "Component Type"
@@ -678,7 +900,7 @@
 		{
 			"name": "sequence_number",
 			"required": false,
-			"value": "1",
+			"value": "",
 			"type": "text",
 			"readOnly": true,
 			"label": "Sequence Number"
@@ -708,6 +930,22 @@
 			"label": "Rollup Type"
 		},
 		{
+			"name": "rollup_condition",
+			"required": false,
+			"value": "",
+			"type": "text",
+			"readOnly": false,
+			"label": "Rollup Condition"
+		},
+		{
+			"name": "rollup_aggregation",
+			"required": false,
+			"value": [],
+			"type": "array",
+			"readOnly": false,
+			"label": "Rollup Aggregation"
+		},
+		{
 			"name": "rollup_col",
 			"required": false,
 			"value": "",
@@ -717,7 +955,7 @@
 		}
 	],
 	"Metapivot": [
-        {
+		{
 			"name": "description",
 			"required": false,
 			"value": "",
@@ -744,7 +982,7 @@
 		{
 			"name": "sequence_number",
 			"required": false,
-			"value": "1",
+			"value": "",
 			"type": "text",
 			"readOnly": true,
 			"label": "Sequence Number"
@@ -752,7 +990,7 @@
 		{
 			"name": "component_type",
 			"required": false,
-			"value": "Input",
+			"value": "",
 			"type": "text",
 			"readOnly": true,
 			"label": "Component Type"
@@ -784,7 +1022,7 @@
 		}
 	],
 	"Concatenation": [
-        {
+		{
 			"name": "description",
 			"required": false,
 			"value": "",
@@ -799,7 +1037,6 @@
 			"type": "text",
 			"readOnly": true,
 			"label": "Id"
-			
 		},
 		{
 			"name": "component_name",
@@ -812,7 +1049,7 @@
 		{
 			"name": "sequence_number",
 			"required": false,
-			"value": "1",
+			"value": "",
 			"type": "text",
 			"readOnly": true,
 			"label": "Sequence Number"
@@ -820,7 +1057,7 @@
 		{
 			"name": "component_type",
 			"required": false,
-			"value": "Input",
+			"value": "",
 			"type": "text",
 			"readOnly": true,
 			"label": "Component Type"
@@ -858,156 +1095,8 @@
 			"label": "Node Reference"
 		}
 	],
-	"Lookup_Select_Join": [
-        {
-			"name": "description",
-			"required": false,
-			"value": "",
-			"type": "textarea",
-			"readOnly": false,
-			"label": "Description"
-		},
-		{
-			"name": "id",
-			"required": false,
-			"value": "",
-			"type": "text",
-			"readOnly": true,
-			"label": "Id"
-		},
-		{
-			"name": "component_name",
-			"required": true,
-			"value": "",
-			"type": "text",
-			"readOnly": false,
-			"label": "Component Name"
-		},
-		{
-			"name": "sequence_number",
-			"required": false,
-			"value": "1",
-			"type": "text",
-			"readOnly": true,
-			"label": "Sequence Number"
-		},
-		{
-			"name": "component_type",
-			"required": false,
-			"value": "Input",
-			"type": "text",
-			"readOnly": true,
-			"label": "Component Type"
-		},
-		{
-			"name": "lookup_type",
-			"required": false,
-			"value": ["LOOKUP","Lookup_Select_Join","Lookup_And_Replace"],
-			"type": "dropdown",
-			"readOnly": false,
-			"label": "Lookup Type"
-		},
-		{
-			"name": "node_reference",
-			"required": false,
-			"value": [],
-			"type": "array",
-			"readOnly": true,
-			"label": "Node Reference"
-		},
-		{
-			"name": "lookup_select_key1",
-			"required": false,
-			"value": [],
-			"type": "array",
-			"readOnly": false,
-			"label": "Lookup Select Key 1"
-		},
-		{
-			"name": "lookup_select_key2",
-			"required": false,
-			"value": [],
-			"type": "array",
-			"readOnly": false,
-			"label": "Lookup Select Key 2"
-		},
-		{
-			"name": "lookup_join_columns",
-			"required": false,
-			"value": [],
-			"type": "array",
-			"readOnly": false,
-			"label": "Lookup Join Columns"
-		},
-		{
-			"name": "lookup_join_select_columns",
-			"required": false,
-			"value": [],
-			"type": "array",
-			"readOnly": false,
-			"label": "Lookup Join Select Columns"
-		}
-	],
-	"LOOKUP": [
-        {
-			"name": "description",
-			"required": false,
-			"value": "",
-			"type": "textarea",
-			"readOnly": false,
-			"label": "Description"
-		},
-		{
-			"name": "id",
-			"required": false,
-			"value": "",
-			"type": "text",
-			"readOnly": true,
-			"label": "Id"
-		},
-		{
-			"name": "component_name",
-			"required": true,
-			"value": "",
-			"type": "text",
-			"readOnly": false,
-			"label": "Component Name"
-		},
-		{
-			"name": "component_type",
-			"required": false,
-			"value": "Input",
-			"type": "text",
-			"readOnly": true,
-			"label": "Component Type"
-		},
-		{
-			"name": "lookup_select_key",
-			"required": false,
-			"value": [],
-			"type": "array",
-			"readOnly": false,
-			"label": "Lookup Select Key"
-		},
-		{
-			"name": "lookup_type",
-			"required": false,
-			"value": ["LOOKUP","Lookup_Select_Join","Lookup_And_Replace"],
-			"type": "dropdown",
-			"readOnly": false,
-			"label": "Lookup Type"
-		},
-		{
-			"name": "node_reference",
-			"required": false,
-			"value": [],
-			"type": "array",
-			"readOnly": true,
-			"label": "Node Reference"
-		}
-	],
 	"INTERMIDIATEFILES": [
-        {
+		{
 			"name": "description",
 			"required": false,
 			"value": "",
@@ -1034,7 +1123,7 @@
 		{
 			"name": "sequence_number",
 			"required": false,
-			"value": "1",
+			"value": "",
 			"type": "text",
 			"readOnly": true,
 			"label": "Sequence Number"
@@ -1042,7 +1131,7 @@
 		{
 			"name": "component_type",
 			"required": false,
-			"value": "Input",
+			"value": "",
 			"type": "text",
 			"readOnly": true,
 			"label": "Component Type"
@@ -1081,7 +1170,7 @@
 		}
 	],
 	"Normalize": [
-        {
+		{
 			"name": "description",
 			"required": false,
 			"value": "",
@@ -1108,7 +1197,7 @@
 		{
 			"name": "sequence_number",
 			"required": false,
-			"value": "1",
+			"value": "",
 			"type": "text",
 			"readOnly": true,
 			"label": "Sequence Number"
@@ -1116,7 +1205,7 @@
 		{
 			"name": "component_type",
 			"required": false,
-			"value": "Input",
+			"value": "",
 			"type": "text",
 			"readOnly": true,
 			"label": "Component Type"
@@ -1155,7 +1244,7 @@
 		}
 	],
 	"Merge": [
-        {
+		{
 			"name": "description",
 			"required": false,
 			"value": "",
@@ -1182,7 +1271,7 @@
 		{
 			"name": "sequence_number",
 			"required": false,
-			"value": "1",
+			"value": "",
 			"type": "text",
 			"readOnly": true,
 			"label": "Sequence Number"
@@ -1190,7 +1279,7 @@
 		{
 			"name": "component_type",
 			"required": false,
-			"value": "Input",
+			"value": "",
 			"type": "text",
 			"readOnly": true,
 			"label": "Component Type"
@@ -1221,7 +1310,7 @@
 		}
 	],
 	"Gather": [
-        {
+		{
 			"name": "description",
 			"required": false,
 			"value": "",
@@ -1248,7 +1337,7 @@
 		{
 			"name": "sequence_number",
 			"required": false,
-			"value": "1",
+			"value": "",
 			"type": "text",
 			"readOnly": true,
 			"label": "Sequence Number"
@@ -1256,7 +1345,7 @@
 		{
 			"name": "component_type",
 			"required": false,
-			"value": "Input",
+			"value": "",
 			"type": "text",
 			"readOnly": true,
 			"label": "Component Type"
@@ -1279,7 +1368,7 @@
 		}
 	],
 	"Fuse": [
-        {
+		{
 			"name": "description",
 			"required": false,
 			"value": "",
@@ -1306,7 +1395,7 @@
 		{
 			"name": "sequence_number",
 			"required": false,
-			"value": "1",
+			"value": "",
 			"type": "text",
 			"readOnly": true,
 			"label": "Sequence Number"
@@ -1314,7 +1403,7 @@
 		{
 			"name": "component_type",
 			"required": false,
-			"value": "Input",
+			"value": "",
 			"type": "text",
 			"readOnly": true,
 			"label": "Component Type"
@@ -1337,7 +1426,7 @@
 		}
 	],
 	"XML_split": [
-        {
+		{
 			"name": "description",
 			"required": false,
 			"value": "",
@@ -1364,7 +1453,7 @@
 		{
 			"name": "sequence_number",
 			"required": false,
-			"value": "1",
+			"value": "",
 			"type": "text",
 			"readOnly": true,
 			"label": "Sequence Number"
@@ -1372,7 +1461,7 @@
 		{
 			"name": "component_type",
 			"required": false,
-			"value": "Input",
+			"value": "",
 			"type": "text",
 			"readOnly": true,
 			"label": "Component Type"
@@ -1427,7 +1516,7 @@
 		}
 	],
 	"XML_combin": [
-        {
+		{
 			"name": "description",
 			"required": false,
 			"value": "",
@@ -1454,7 +1543,7 @@
 		{
 			"name": "sequence_number",
 			"required": false,
-			"value": "1",
+			"value": "",
 			"type": "text",
 			"readOnly": true,
 			"label": "Sequence Number"
@@ -1462,7 +1551,7 @@
 		{
 			"name": "component_type",
 			"required": false,
-			"value": "Input",
+			"value": "",
 			"type": "text",
 			"readOnly": true,
 			"label": "Component Type"
@@ -1509,8 +1598,8 @@
 			"label": "XML Output Data File Path"
 		}
 	],
-	"Repair_Input": [
-        {
+	"REPAIRINPUT": [
+		{
 			"name": "description",
 			"required": false,
 			"value": "",
@@ -1537,7 +1626,7 @@
 		{
 			"name": "sequence_number",
 			"required": false,
-			"value": "1",
+			"value": "",
 			"type": "text",
 			"readOnly": true,
 			"label": "Sequence Number"
@@ -1545,7 +1634,7 @@
 		{
 			"name": "component_type",
 			"required": false,
-			"value": "Input",
+			"value": "",
 			"type": "text",
 			"readOnly": true,
 			"label": "Component Type"
@@ -1585,7 +1674,7 @@
 		}
 	],
 	"Redefine_Format": [
-        {
+		{
 			"name": "description",
 			"required": false,
 			"value": "",
@@ -1612,7 +1701,7 @@
 		{
 			"name": "sequence_number",
 			"required": false,
-			"value": "1",
+			"value": "",
 			"type": "text",
 			"readOnly": true,
 			"label": "Sequence Number"
@@ -1620,7 +1709,7 @@
 		{
 			"name": "component_type",
 			"required": false,
-			"value": "Input",
+			"value": "",
 			"type": "text",
 			"readOnly": true,
 			"label": "Component Type"
@@ -1668,7 +1757,7 @@
 		}
 	],
 	"Split": [
-        {
+		{
 			"name": "description",
 			"required": false,
 			"value": "",
@@ -1695,7 +1784,7 @@
 		{
 			"name": "sequence_number",
 			"required": false,
-			"value": "1",
+			"value": "",
 			"type": "text",
 			"readOnly": true,
 			"label": "Sequence Number"
@@ -1703,12 +1792,19 @@
 		{
 			"name": "component_type",
 			"required": false,
-			"value": "Input",
+			"value": "",
 			"type": "text",
 			"readOnly": true,
 			"label": "Component Type"
 		},
-
+		{
+			"name": "split_delimiter",
+			"type": "text",
+			"required": true,
+			"value": "",
+			"readOnly": false,
+			"label": "Split Delimiter"
+		},
 		{
 			"name": "split_type",
 			"required": false,
@@ -1750,8 +1846,8 @@
 			"label": "Split File Path"
 		}
 	],
-	"Generate_Records": [
-        {
+	"GENERATERECORDS": [
+		{
 			"name": "description",
 			"required": false,
 			"value": "",
@@ -1778,7 +1874,7 @@
 		{
 			"name": "sequence_number",
 			"required": false,
-			"value": "1",
+			"value": "",
 			"type": "text",
 			"readOnly": true,
 			"label": "Sequence Number"
@@ -1786,7 +1882,7 @@
 		{
 			"name": "component_type",
 			"required": false,
-			"value": "Input",
+			"value": "",
 			"type": "text",
 			"readOnly": true,
 			"label": "Component Type"
@@ -1819,7 +1915,7 @@
 		}
 	],
 	"createdata": [
-        {
+		{
 			"name": "description",
 			"required": false,
 			"value": "",
@@ -1846,7 +1942,7 @@
 		{
 			"name": "sequence_number",
 			"required": false,
-			"value": "1",
+			"value": "",
 			"type": "text",
 			"readOnly": true,
 			"label": "Sequence Number"
@@ -1854,7 +1950,7 @@
 		{
 			"name": "component_type",
 			"required": false,
-			"value": "Input",
+			"value": "",
 			"type": "text",
 			"readOnly": true,
 			"label": "Component Type"
@@ -1886,8 +1982,8 @@
 			"label": "Node Reference"
 		}
 	],
-	"Dedup_sort": [
-        {
+	"dedupsort": [
+		{
 			"name": "description",
 			"required": false,
 			"value": "",
@@ -1914,7 +2010,7 @@
 		{
 			"name": "sequence_number",
 			"required": false,
-			"value": "1",
+			"value": "",
 			"type": "text",
 			"readOnly": true,
 			"label": "Sequence Number"
@@ -1922,7 +2018,7 @@
 		{
 			"name": "component_type",
 			"required": false,
-			"value": "Input",
+			"value": "",
 			"type": "text",
 			"readOnly": true,
 			"label": "Component Type"
@@ -1954,8 +2050,8 @@
 			"label": "Dedup Sort Columns"
 		}
 	],
-	"Leading_Records": [
-        {
+	"LeadingRecords": [
+		{
 			"name": "description",
 			"required": false,
 			"value": "",
@@ -1982,7 +2078,7 @@
 		{
 			"name": "sequence_number",
 			"required": false,
-			"value": "1",
+			"value": "",
 			"type": "text",
 			"readOnly": true,
 			"label": "Sequence Number"
@@ -1990,7 +2086,7 @@
 		{
 			"name": "component_type",
 			"required": false,
-			"value": "Input",
+			"value": "",
 			"type": "text",
 			"readOnly": true,
 			"label": "Component Type"
@@ -2016,14 +2112,14 @@
 		{
 			"name": "leading_records_count",
 			"required": false,
-			"value": [],
-			"type": "array",
+			"value": "",
+			"type": "text",
 			"readOnly": false,
 			"label": "Leading Records Count"
 		}
 	],
 	"Reformat": [
-        {
+		{
 			"name": "description",
 			"required": false,
 			"value": "",
@@ -2050,7 +2146,7 @@
 		{
 			"name": "sequence_number",
 			"required": false,
-			"value": "1",
+			"value": "",
 			"type": "text",
 			"readOnly": true,
 			"label": "Sequence Number"
@@ -2058,7 +2154,7 @@
 		{
 			"name": "component_type",
 			"required": false,
-			"value": "Input",
+			"value": "",
 			"type": "text",
 			"readOnly": true,
 			"label": "Component Type"
@@ -2115,7 +2211,7 @@
 		}
 	],
 	"AddColumn": [
-        {
+		{
 			"name": "description",
 			"required": false,
 			"value": "",
@@ -2142,7 +2238,7 @@
 		{
 			"name": "sequence_number",
 			"required": false,
-			"value": "1",
+			"value": "",
 			"type": "text",
 			"readOnly": true,
 			"label": "Sequence Number"
@@ -2150,7 +2246,7 @@
 		{
 			"name": "component_type",
 			"required": false,
-			"value": "Input",
+			"value": "",
 			"type": "text",
 			"readOnly": true,
 			"label": "Component Type"
@@ -2189,80 +2285,5 @@
 			"readOnly": false,
 			"label": "Add Column Condition"
 		}
-	],
-	"Lookup_And_Replace": [
-        {
-			"name": "description",
-			"required": false,
-			"value": "",
-			"type": "textarea",
-			"readOnly": false,
-			"label": "Description"
-		},
-		{
-			"name": "id",
-			"required": false,
-			"value": "",
-			"type": "text",
-			"readOnly": true,
-			"label": "Id"
-		},
-		{
-			"name": "component_name",
-			"required": true,
-			"value": "",
-			"type": "text",
-			"readOnly": false,
-			"label": "Component Name"
-		},
-		{
-			"name": "sequence_number",
-			"required": false,
-			"value": "1",
-			"type": "text",
-			"readOnly": true,
-			"label": "Sequence Number"
-		},
-		{
-			"name": "component_type",
-			"required": false,
-			"value": "Input",
-			"type": "text",
-			"readOnly": true,
-			"label": "Component Type"
-		},
-		{
-			"name": "node_reference",
-			"required": false,
-			"value": [],
-			"type": "array",
-			"readOnly": true,
-			"label": "Node Reference"
-		},
-
-		{
-			"name": "column_name",
-			"required": false,
-			"value": [],
-			"type": "array",
-			"readOnly": false,
-			"label": "Column Name"
-		},
-		{
-			"name": "default_value",
-			"required": false,
-			"value": [],
-			"type": "array",
-			"readOnly": false,
-			"label": "Default Value"
-		},
-		{
-			"name": "lookup_type",
-			"required": false,
-			"value": ["LOOKUP","Lookup_Select_Join","Lookup_And_Replace"],
-			"type": "dropdown",
-			"readOnly": false,
-			"label": "Lookup Type"
-		}
-	]
+	]	
 }

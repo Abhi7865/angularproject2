@@ -12,62 +12,37 @@
                 <label for="fileDropRef">Browse Task files</label>
             </div>
         </div>
-        <div class="files-list" *ngIf="files?.length">
-            <h6>Uploaded Tasks:</h6>
-            <div class="single-file" *ngFor="let file of files; let i = index">
-                <div class="file-icon" >
-                    <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg"
-                        xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 58 58"
-                        style="enable-background:new 0 0 58 58;" xml:space="preserve">
-                      <!--  <polygon style="fill:#EDEADA;" points="51.5,14 37.5,0 6.5,0 6.5,58 51.5,58 " />
-                        <g>
-                            <path style="fill:#CEC9AE;"
-                                d="M16.5,23h25c0.552,0,1-0.447,1-1s-0.448-1-1-1h-25c-0.552,0-1,0.447-1,1S15.948,23,16.5,23z" />
-                            <path style="fill:#CEC9AE;"
-                                d="M16.5,15h10c0.552,0,1-0.447,1-1s-0.448-1-1-1h-10c-0.552,0-1,0.447-1,1S15.948,15,16.5,15z" />
-                            <path style="fill:#CEC9AE;"
-                                d="M41.5,29h-25c-0.552,0-1,0.447-1,1s0.448,1,1,1h25c0.552,0,1-0.447,1-1S42.052,29,41.5,29z" />
-                            <path style="fill:#CEC9AE;"
-                                d="M41.5,37h-25c-0.552,0-1,0.447-1,1s0.448,1,1,1h25c0.552,0,1-0.447,1-1S42.052,37,41.5,37z" />
-                            <path style="fill:#CEC9AE;"
-                                d="M41.5,45h-25c-0.552,0-1,0.447-1,1s0.448,1,1,1h25c0.552,0,1-0.447,1-1S42.052,45,41.5,45z" />
-                        </g>
-                        <polygon style="fill:#CEC9AE;" points="37.5,0 37.5,14 51.5,14 " />-->
-                    </svg>
-                </div>
-                <div class="info">
-                    <h4 class="name" [dndDraggable]="file">
-                        {{ file }}
-                    </h4>
-                </div>
 
-                <div class="delete" (click)="deleteFile(i)">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="18" viewBox="0 0 14 18">
-                        <path fill="#B1B1B1" fill-rule="nonzero"
-                            d="M1 16c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2H3c-1.1 0-2 .9-2 2v10zm3.17-7.83a.996.996 0 0 1 1.41 0L7 9.59l1.42-1.42a.996.996 0 1 1 1.41 1.41L8.41 11l1.42 1.42a.996.996 0 1 1-1.41 1.41L7 12.41l-1.42 1.42a.996.996 0 1 1-1.41-1.41L5.59 11 4.17 9.58a.996.996 0 0 1 0-1.41zM10.5 1L9.79.29C9.61.11 9.35 0 9.09 0H4.91c-.26 0-.52.11-.7.29L3.5 1H1c-.55 0-1 .45-1 1s.45 1 1 1h12c.55 0 1-.45 1-1s-.45-1-1-1h-2.5z" />
-                    </svg>
-                </div>
-            </div>
-        </div>
+        <mat-list class="files-list" *ngIf="files?.length">
+            <span matSubheader>Uploaded Tasks:</span>
+            <ng-container *ngFor="let file of files; let i = index">
+                <mat-list-item class="single-file" [dndDraggable]="file">
+                    <div class="info">
+                        <h4 class="name">{{ file }}</h4>
+                    </div>
 
-        <div *ngIf="taskList?.length">
-            <h6>Recent Created Tasks:</h6>
-            <ng-container *ngFor="let task of taskList">
-                <button mat-stroked-button color="primary" class="mt-2"
-                    [dndDraggable]="task.taskname">{{task.taskname}}</button>
+                    <div class="delete" (click)="deleteFile(i)">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="18" viewBox="0 0 14 18">
+                            <path fill="#B1B1B1" fill-rule="nonzero"
+                                d="M1 16c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2H3c-1.1 0-2 .9-2 2v10zm3.17-7.83a.996.996 0 0 1 1.41 0L7 9.59l1.42-1.42a.996.996 0 1 1 1.41 1.41L8.41 11l1.42 1.42a.996.996 0 1 1-1.41 1.41L7 12.41l-1.42 1.42a.996.996 0 1 1-1.41-1.41L5.59 11 4.17 9.58a.996.996 0 0 1 0-1.41zM10.5 1L9.79.29C9.61.11 9.35 0 9.09 0H4.91c-.26 0-.52.11-.7.29L3.5 1H1c-.55 0-1 .45-1 1s.45 1 1 1h12c.55 0 1-.45 1-1s-.45-1-1-1h-2.5z" />
+                        </svg>
+                    </div>
+                </mat-list-item>
             </ng-container>
-        </div>
+        </mat-list>
 
-        <!-- <div style="display: grid; grid-auto-flow: column; justify-content: space-between;">
-            <button type="button" class="btn btn-secondary" (click)="saveJson(true)">Save</button>
-            <button type="button" class="btn btn-secondary" (click)="saveJson()">Save As</button>
-        </div>
-        <div>
-            <button type="button" class="btn btn-light btn-lg" style="border: 1px solid #6c757d;"
-                (click)="uploadJson()">
-                Upload {{ '{' + (uploadedFileWithHandler?.name || 'No File Choosen') + '}' }}
-            </button>
-        </div> -->
+
+        <mat-list class="files-list" *ngIf="taskList?.length">
+            <span matSubheader>Recent Created Tasks:</span>
+            <ng-container *ngFor="let task of taskList">
+                <mat-list-item class="single-file" [dndDraggable]="task.taskname" [matTooltip]="task.taskname"
+                    matTooltipPosition="right">
+                    <div class="info">
+                        <h4 class="name">{{task.taskname}}</h4>
+                    </div>
+                </mat-list-item>
+            </ng-container>
+        </mat-list>
 
     </div>
     <div class="dropzone" dndDropzone (dndDrop)="onItemDrop($event)">
@@ -81,7 +56,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h4 class="modal-title">{{title}}</h4>
-                    <a href="javascript:void(0)" class="closebtn" (click)="close1()">&times;</a>
+                    <img src="../../assets/images/popup_close.svg" class="modal-closeIcon" (click)="close1()">
                 </div>
                 <div class="modal-body">
                     <form class="form-horizontal" [formGroup]="nodeForm">
@@ -90,8 +65,9 @@
 
                                 <mat-form-field *ngSwitchCase="'text'" floatLabel="always" appearance="fill">
                                     <mat-label>{{item.label}}</mat-label>
-                                    <input matInput type="text" [id]="item.name" [formControlName]="item.name"
-                                        [readonly]="item.readOnly">
+                                    <input matInput [type]="item.subtype || item.type" [id]="item.name"
+                                        [formControlName]="item.name" [readonly]="item.readOnly"
+                                        [required]="item.required">
                                     <mat-icon *ngIf="item.readOnly" class="mat-icon-disable" matSuffix>do_not_disturb
                                     </mat-icon>
                                 </mat-form-field>
@@ -105,13 +81,25 @@
                                 </mat-form-field>
 
                                 <mat-checkbox *ngSwitchCase="'boolean'" [formControlName]="item.name"
-                                    style="margin-bottom: 15px;">
+                                    [required]="item.required" style="margin-bottom: 15px;">
                                     {{item.label}}
                                 </mat-checkbox>
 
+                                <mat-form-field *ngSwitchCase="'select'" floatLabel="always" appearance="fill">
+                                    <mat-label>{{item.label}}</mat-label>
+                                    <mat-select>
+                                        <mat-option *ngFor="let option of item.options" [value]="option">
+                                            {{ option }}
+                                        </mat-option>
+                                    </mat-select>
+                                    <mat-icon *ngIf="item.readOnly" class="mat-icon-disable" matSuffix>do_not_disturb
+                                    </mat-icon>
+                                </mat-form-field>
+
                                 <mat-form-field *ngSwitchCase="'array'" floatLabel="always" appearance="fill">
                                     <mat-label>{{item.label}}</mat-label>
-                                    <mat-chip-list #chipList multiple [formControlName]="item.name">
+                                    <mat-chip-list #chipList multiple [formControlName]="item.name"
+                                        [required]="item.required">
                                         <mat-chip *ngFor="let value of item.value" [selected]="true" [value]="value"
                                             (removed)="removeValueFromArray(value, item.value)">
                                             {{value}}
@@ -128,46 +116,26 @@
                                     </mat-chip-list>
                                 </mat-form-field>
 
+                                <mat-form-field *ngSwitchCase="'date-range'" floatLabel="always" appearance="fill">
+                                    <mat-label>{{ item.label }}</mat-label>
+                                    <mat-date-range-input [formGroupName]="item.name" [rangePicker]="picker">
+                                        <input matStartDate formControlName="start" placeholder="Start date">
+                                        <input matEndDate formControlName="end" placeholder="End date">
+                                    </mat-date-range-input>
+                                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                    <mat-date-range-picker #picker></mat-date-range-picker>
+                                </mat-form-field>
+
                             </ng-container>
-                            <!-- <div class="form-group" *ngIf="item.type == 'text'">
-                                <label class="control-label col-sm-2" for="{{item.name}}">{{item.name}}</label>
-                                <div class="col-sm-10">
-                                    <input type="text" formControlName="{{item.name}}" class="form-control"
-                                        id="{{item.name}}" [readOnly]="item.readOnly" placeholder="">
-                                </div>
-                            </div>
-                            <div class="form-group mt-2 mb-2" *ngIf="item.type == 'boolean'">
-                                <div class="col-sm-offset-2 col-sm-10">
-                                    <div class="checkbox">
-                                        <label><input type="checkbox" formControlName="{{item.name}}">
-                                            {{item.name}}</label>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group" *ngIf="item.type == 'array'">
-                                <label class="control-label col-sm-2" for="{{item.name}}">{{item.name}}</label>
-                                <div class="col-sm-10">
-                                    <select formControlName="{{ item.name }}" class="form-select"
-                                        [multiple]="item.name === 'task_node_reference'">
-                                        <option *ngIf="item.name !== 'task_node_reference'" [value]="null" selected>
-                                            Select
-                                        </option>
-                                        <option [value]="value" *ngFor="let value of item.value">
-                                            {{ value.name || value }}
-                                        </option>
-                                    </select>
-                                </div>
-                            </div> -->
                         </ng-container>
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button mat-stroked-button color="primary" type="button" (click)="close1()">
+                    <button mat-stroked-button color="accent" type="button" (click)="close1()">
                         Close </button>
-                    <button mat-stroked-button color="primary" type="button" (click)="resetValue()">
+                    <button mat-button color="accent" type="button" (click)="resetValue()">
                         Reset </button>
-                    <button mat-raised-button color="primary" type="button" (click)="save()"
-                        [disabled]="!nodeForm.valid">
+                    <button mat-flat-button color="accent" type="button" (click)="save()" [disabled]="!nodeForm.valid">
                         Save </button>
                 </div>
             </div>

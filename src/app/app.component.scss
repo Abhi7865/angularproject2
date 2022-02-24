@@ -108,7 +108,7 @@ header nav .nav-item:hover {
     color: white;
 }
 header nav .nav-item.active {
-	background-color: rgba(0, 0, 0, 0.4);
+	background-color: var(--mat-accent-clr);
 }
 header nav .nav-brand {
     text-transform: uppercase;
@@ -117,19 +117,23 @@ header nav .nav-brand {
     margin-right: 50px;
 }
 header nav .nav-smartdata-logo{
-  width: 58px;
-  height: 46px;
-  margin-left: 50px;
-  display: inline-block;
-  background-color: white;
-  -webkit-mask-image: url(../assets/images/smartdatalogo.png);
-  -webkit-mask-size: contain;
-  -webkit-mask-repeat: no-repeat;
-  -webkit-mask-position: center;
+    min-width: 152px;
+    height: 34px;
+    margin-right: 70px;
+    display: inline-block;
+    background-color: white;
+    // background-image: url(../assets/images/smartdatalogo.png);
+    // background-size: contain;
+    background-position: center;
+
+    -webkit-mask-image: url(../assets/images/SmartData.png);
+    -webkit-mask-size: contain;
+    -webkit-mask-repeat: no-repeat;
+    -webkit-mask-position: center;
 }
 header nav .nav-brand-logo {
-    width: 58px;
-    height: 46px;
+    width: 43px;
+    height: 34px;
     margin-left: 50px;
     display: inline-block;
     background-color: white;

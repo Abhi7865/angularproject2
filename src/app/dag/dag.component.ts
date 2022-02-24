@@ -67,7 +67,7 @@ export class DagComponent implements OnInit {
     create(cor: any) {
 
         const n = {
-            id: (this.index + 1).toString(),
+            id: "i" + (this.index + 1).toString(),
             // name: this.popupTittle,
             type: this.popupTittle,
             cor: cor,
@@ -285,18 +285,41 @@ export class DagComponent implements OnInit {
     }
 
     generateWorkflowForm() {
+        this.nodeForm = new FormGroup({});
         this.title = "Common Task";
         this.commonworkflowlist.forEach((da: any) => {
             if (da.type == 'boolean') {
-                this.nodeForm.addControl(da.name, new FormControl(false, []));
+                this.nodeForm.addControl(da.name, new FormControl(da.value || false));
             } else if (da.type == 'array') {
-                this.nodeForm.addControl(da.name, new FormControl([], []));
+                this.nodeForm.addControl(da.name, new FormControl(da.value || []));
+                if (this.formComponentData?.[da.name]) {
+                    da.value = this.formComponentData?.[da.name];
+                }
+            } else if (da.type == 'date-range') {
+                this.nodeForm.addControl(da.name, new FormGroup({
+                    start: new FormControl(),
+                    end: new FormControl()
+                }));
             } else {
-                this.nodeForm.addControl(da.name, new FormControl('', []));
+                this.nodeForm.addControl(da.name, new FormControl(da.value || ''));
             }
 
             if (da.required) {
                 this.nodeForm.controls[da.name].addValidators(Validators.required);
+            }
+            if (da.validations) {
+                for (let [validator, value] of Object.entries(da.validations)) {
+                    switch (validator) {
+                        case 'min': {
+                            this.nodeForm.controls[da.name].addValidators(Validators.min(value as number));
+                            break;
+                        }
+                        case 'max': {
+                            this.nodeForm.controls[da.name].addValidators(Validators.max(value as number));
+                            break;
+                        }
+                    }
+                }
             }
             if (da.readOnly) {
                 this.nodeForm.controls[da.name].disable();
@@ -308,14 +331,56 @@ export class DagComponent implements OnInit {
                 });
             }
         });
+
+        if (this.formComponentData?.start_year && this.formComponentData?.start_month && this.formComponentData?.start_day) {
+            let startDate = new Date();
+            startDate.setFullYear(this.formComponentData?.start_year);
+            startDate.setMonth(this.formComponentData?.start_month - 1);
+            startDate.setDate(this.formComponentData?.start_day)
+            this.startDateControl.patchValue(startDate);
+        }
+        if (this.formComponentData?.end_year && this.formComponentData?.end_month && this.formComponentData?.end_day) {
+            let endDate = new Date();
+            endDate.setFullYear(this.formComponentData?.end_year);
+            endDate.setMonth(this.formComponentData?.end_month - 1);
+            endDate.setDate(this.formComponentData?.end_day)
+            this.endDateControl.patchValue(endDate);
+        }
+
         this.save();
+    }
+
+    get startEndDateRangeControl() {
+        return this.nodeForm.controls?.startDate_endDate as FormGroup
+    }
+    get startDateControl() {
+        return this.startEndDateRangeControl.controls.start;
+    }
+    get endDateControl() {
+        return this.startEndDateRangeControl.controls.end;
     }
 
     openModal() {
         this.show = true;
     }
     save() {
-        this.node1Service.setCommonData(this.nodeForm.getRawValue());
+
+        let startDate = this.startDateControl.value as Date;
+        let endDate = this.endDateControl.value as Date;
+
+        let value = {
+            ...this.nodeForm.getRawValue(),
+            "start_year": startDate?.getFullYear().toString(),
+            "start_month": (startDate?.getMonth() + 1).toString(),
+            "start_day": startDate?.getDate().toString(),
+            "end_year": endDate?.getFullYear().toString(),
+            "end_month": (endDate?.getMonth() + 1).toString(),
+            "end_day": endDate?.getDate().toString(),
+        };
+        delete value["startDate_endDate"];
+        console.log(value);
+
+        this.node1Service.setCommonData(value);
         this.close1();
     }
     close1() {

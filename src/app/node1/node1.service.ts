@@ -5,6 +5,7 @@ import { fileSave, FileSystemHandle } from 'browser-fs-access';
 import { jsPlumb, jsPlumbInstance } from 'jsplumb';
 import { Observable, Subject } from 'rxjs';
 import { shareReplay } from 'rxjs/operators';
+import { DagService } from '../dag/dag.service';
 import { Dynamicnode1Component } from './dynamicnode1/dynamicnode1.component';
 @Injectable()
 export class Node1Service {
@@ -28,6 +29,7 @@ export class Node1Service {
     constructor(
         private factoryResolver: ComponentFactoryResolver,
         public http: HttpClient,
+        private dagService: DagService,
         private _snackBar: MatSnackBar) {
     }
     public setRootViewContainerRef(viewContainerRef, hostVCR: ViewContainerRef) {
@@ -131,13 +133,19 @@ export class Node1Service {
             "connection": connections
         }
 
-        const nodeDataBlob = new Blob([JSON.stringify({ ...allData, ...this.commonData })], {
+        const finalJson = { ...allData, ...this.commonData };
+
+        const nodeDataBlob = new Blob([JSON.stringify(finalJson)], {
             type: "application/json"
         });
 
         this.saveFile(nodeDataBlob, overwrite).then(() => {
             this.getCurrentFileHandler()?.name &&
                 this.updateListWithNewTask(allData, this.getCurrentFileHandler()?.name);
+        });
+
+        this.dagService.saveWorkflowPython(finalJson).subscribe(data => {
+            console.log(data);
         });
 
     }

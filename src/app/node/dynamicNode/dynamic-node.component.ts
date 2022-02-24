@@ -1,5 +1,5 @@
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
-import { AfterViewInit, ChangeDetectorRef, Component, HostBinding, Input } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, HostBinding, Input, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatChipInputEvent } from '@angular/material/chips';
 import { Subscription } from 'rxjs';
@@ -38,7 +38,6 @@ export class DynamicNodeComponent implements AfterViewInit {
     @Input() node!: Node;
     @Input() formData!: any;
     @Input() jsPlumbInstance;
-    internalChange: boolean = false;
 
     @HostBinding('style.top.px')
     get topPosition(): number {
@@ -48,6 +47,8 @@ export class DynamicNodeComponent implements AfterViewInit {
     get leftPosition(): number {
         return this.left;
     }
+
+    @ViewChild("nodeDiv") nodeDiv: ElementRef;
 
     sourceEndPoint: any;
     destinationEndPoint: any;
@@ -102,8 +103,6 @@ export class DynamicNodeComponent implements AfterViewInit {
 
         this.nodeService.jsPlumbInstance.bind('connection', info => {
             if (info.targetId === this.node.id) {
-                console.log(info.source.getAttribute("data"));
-
                 if (this.referenceId !== -1) {
                     this.fetchNodeReference();
                 }
@@ -111,8 +110,6 @@ export class DynamicNodeComponent implements AfterViewInit {
         });
         this.nodeService.jsPlumbInstance.bind('connectionDetached', info => {
             if (info.targetId === this.node.id) {
-                console.log(info.source.getAttribute("data"));
-
                 if (this.referenceId !== -1) {
                     setTimeout(() => {
                         this.fetchNodeReference();
@@ -185,15 +182,59 @@ export class DynamicNodeComponent implements AfterViewInit {
 
     }
 
-    changingFormValues(val: any) {
-        console.log(val.value);
-        this.node.type = val.value;
-        this.internalChange = true;
-        this.generateForm();
-        if (this.nodeForm.contains("lookup_type")) {
-            this.nodeForm.patchValue({ "lookup_type": this.node.type });
-            console.log(this.componentNameControl.value);
-            this.componentNameControl.patchValue(this.node.type);
+    changePropertyType(e: any, item) {
+
+        // Remove previous type properties
+        if (item.selectedIndex != null && item.selectedIndex > -1) {
+            (item.optionProperties[item.options[item.selectedIndex]] as [])?.forEach((property: any) => {
+                this.attributeList.splice(this.attributeList.findIndex(attr => attr.name === property.name), 1);
+                this.nodeForm.removeControl(property.name);
+            });
+        }
+
+        // Add new type properties
+        (item.optionProperties[e.value] as [])?.forEach((property: any) => {
+            this.attributeList.push(property);
+            this.createFormControl(property);
+        });
+
+        item.selectedIndex = item.options?.findIndex(option => option === e.value);
+
+        this.cdRef.detectChanges();
+    }
+
+    createFormControl(da) {
+        if (da.type == 'boolean') {
+            this.nodeForm.addControl(da.name, new FormControl(da.value || false, []));
+        } else if (da.type == 'array') {
+            this.nodeForm.addControl(da.name, new FormControl(da.value || [], []));
+            if (this.formData?.[da.name]) {
+                da.value = this.formData?.[da.name];
+            }
+        } else {
+            this.nodeForm.addControl(da.name, new FormControl(da.value || '', []));
+        }
+        if (da.type === "propertyType") {
+            let selectedType;
+
+            if (da.selectedIndex != null && da.selectedIndex > -1) {
+                selectedType = da.options[da.selectedIndex];
+            }
+            if (this.formData != null && this.formData[da.name] != null) {
+                selectedType = this.formData[da.name];
+            }
+            if (selectedType) {
+                this.nodeForm.patchValue({ [da.name]: selectedType });
+                if (da.optionProperties && da.optionProperties[selectedType]?.length) {
+                    this.attributeList.push(...da.optionProperties[selectedType]);
+                }
+            }
+        }
+        if (da.required) {
+            this.nodeForm.controls[da.name].addValidators(Validators.required);
+        }
+        if (da.readOnly) {
+            this.nodeForm.controls[da.name].disable();
         }
     }
 
@@ -203,27 +244,10 @@ export class DynamicNodeComponent implements AfterViewInit {
                 this.title = this.node.type;
                 this.attributeList = JSON.parse(JSON.stringify(data[this.node.type]));
 
-                this.attributeList.forEach((da: any, index) => {
-                    if (da.type == 'boolean') {
-                        this.nodeForm.addControl(da.name, new FormControl(false, []));
-                    } else if (da.type == 'array') {
-                        this.nodeForm.addControl(da.name, new FormControl(da.value || [], []));
-                        if (this.formData?.[da.name]) {
-                            da.value = this.formData?.[da.name];
-                        }
-                    } else {
-                        this.nodeForm.addControl(da.name, new FormControl('', []));
-                    }
-                    if (da.type === "dropdown" && da.selectedIndex != null) {
-                        this.nodeForm.patchValue({ [da.name]: da.value[da.selectedIndex] });
-                    }
+                for (let index = 0; index < this.attributeList.length; index++) {
+                    let da = this.attributeList[index];
 
-                    if (da.required) {
-                        this.nodeForm.controls[da.name].addValidators(Validators.required);
-                    }
-                    if (da.readOnly) {
-                        this.nodeForm.controls[da.name].disable();
-                    }
+                    this.createFormControl(da);
 
                     if (da.name === 'component_type' || da.name === "component_name") {
                         this.nodeForm.patchValue({ [da.name]: this.node.type });
@@ -235,7 +259,8 @@ export class DynamicNodeComponent implements AfterViewInit {
                     if (da.name === "node_reference") {
                         this.referenceId = index;
                     }
-                });
+                    this.nodeForm.controls[da.name].updateValueAndValidity();
+                };
             }
             if (this.formData != undefined) {
                 this.nodeForm.patchValue(this.formData);
@@ -243,23 +268,9 @@ export class DynamicNodeComponent implements AfterViewInit {
                     this.nodeForm.patchValue({ "node_reference": [""] });
                 }
             }
-            // this.nodeForm.patchValue({"input_data_file_type":this.node.type});
-            // console.log(this.componentNameControl.value);
-            // this.componentNameControl.patchValue(this.node.type);
-
-            // if (this.nodeForm.contains("lookup_type")) {
-            //     this.nodeForm.patchValue({ "lookup_type": this.node.type });
-            //     console.log(this.componentNameControl.value);
-            //     this.componentNameControl.patchValue(this.node.type);
-            // }
-
-            // this.nodeForm.patchValue({"output_data_file_type":this.node.type});
-            // console.log(this.componentNameControl.value);
-            // this.componentNameControl.patchValue(this.node.type);
-
-
         });
         this.save();
+        this.cdRef.detectChanges();
     }
 
     fetchNodeReference() {
@@ -284,7 +295,6 @@ export class DynamicNodeComponent implements AfterViewInit {
     }
 
     editNode() {
-        this.internalChange = false;
         this.nodeForm.patchValue(this.formData);
         // this.fetchNodeReference();
         if (this.referenceId > -1) {
@@ -293,17 +303,10 @@ export class DynamicNodeComponent implements AfterViewInit {
         this.show = true;
     }
 
-    saveChanges() {
-        this.internalChange = false;
-        this.save();
-    }
-
     save() {
         this.componentNameControl.setValue(this.nodeForm.get("component_name")?.value);
         this.saveNodeFormData();
-        if (!this.internalChange) {
-            this.show = false;
-        }
+        this.show = false;
     }
 
     saveNodeFormData() {
@@ -341,6 +344,14 @@ export class DynamicNodeComponent implements AfterViewInit {
             values.push(event.value);
             event.chipInput!.clear();
         }
+    }
+
+    highlightNode() {
+        this.nodeDiv.nativeElement.classList.add('highlight');
+        setTimeout(() => {
+            this.nodeDiv.nativeElement.classList.remove('highlight');
+        }, 2000);
+
     }
 }
 

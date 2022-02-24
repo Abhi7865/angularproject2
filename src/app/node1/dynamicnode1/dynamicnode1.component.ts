@@ -192,14 +192,14 @@ export class Dynamicnode1Component implements AfterViewInit {
 
                 this.attributeList.forEach((da: any, index) => {
                     if (da.type == 'boolean') {
-                        this.nodeForm.addControl(da.name, new FormControl(false, []));
+                        this.nodeForm.addControl(da.name, new FormControl(da.value || false));
                     } else if (da.type == 'array') {
-                        this.nodeForm.addControl(da.name, new FormControl(da.value || [], []));
+                        this.nodeForm.addControl(da.name, new FormControl(da.value || []));
                         if (this.formData?.[da.name]) {
                             da.value = this.formData?.[da.name];
                         }
                     } else {
-                        this.nodeForm.addControl(da.name, new FormControl('', []));
+                        this.nodeForm.addControl(da.name, new FormControl(da.value || ''));
                     }
 
                     if (da.required) {

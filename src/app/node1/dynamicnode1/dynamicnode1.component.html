@@ -1,14 +1,12 @@
 <div class="node" (dblclick)="allowNodeEdit()">
     <mat-form-field class="mat-no-space text-center">
-        <textarea matInput autosize minRows="1" style="resize: none;" [formControl]="componentNameControl"></textarea>
+        <textarea matInput autosize minRows="1" class="node-textarea" [formControl]="componentNameControl"></textarea>
     </mat-form-field>
-    <img src="../../../assets/images/drag.svg" alt="" class="configIcon" matTooltip="drag">
+
+    <img src="../../../assets/images/drag_new.svg" alt="" class="grab" matTooltip="drag">
     <mat-icon class="edit configIcon" (click)="editNode()" matTooltip="edit">edit</mat-icon>
     <img src="../../../assets/images/close.svg" class="configIcon" (click)="removeNode(node)" matTooltip="close">
 
-  <!-- <mat-icon class="edit" (click)="editNode()">edit</mat-icon>
-    <mat-icon class="close" (click)="removeNode(node)">close</mat-icon>
-    <div class="dragIcon"></div>--> 
 </div>
 
 <ng-template [ngIf]="show">
@@ -17,9 +15,8 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-
-                    <h4 class="modal-title">{{title}}</h4> <a href="javascript:void(0)" class="closebtn"
-                        (click)="close()">&times;</a>
+                    <h4 class="modal-title">{{title}}</h4>
+                    <img src="../../../assets/images/popup_close.svg" class="modal-closeIcon" (click)="close()">
                 </div>
                 <div class="modal-body">
 
@@ -34,7 +31,7 @@
                                     <mat-icon *ngIf="item.readOnly" class="mat-icon-disable" matSuffix>do_not_disturb
                                     </mat-icon>
                                 </mat-form-field>
-                                
+
                                 <mat-form-field *ngSwitchCase="'textarea'" floatLabel="always" appearance="fill">
                                     <mat-label>{{item.label}}</mat-label>
                                     <textarea matInput [id]="item.name" [formControlName]="item.name"
@@ -50,35 +47,36 @@
 
                                 <mat-form-field *ngSwitchCase="'array'" floatLabel="always" appearance="fill">
                                     <mat-label>{{item.label}}</mat-label>
-                                    <mat-chip-list #chipList multiple [formControlName]="item.name">
-                                        <mat-chip *ngFor="let value of item.value" [selected]="true" [value]="value"
-                                            (removed)="removeValueFromArray(value, item.value)">
-                                            {{value}}
-                                            <button matChipRemove *ngIf="!item.readOnly">
-                                                <mat-icon>cancel</mat-icon>
-                                            </button>
-                                        </mat-chip>
+                                    <mat-chip-list #chipList multiple [formControlName]="item.name"
+                                        [required]="item.required">
+                                        <ng-container *ngFor="let value of item.value">
+                                            <mat-chip *ngIf="value" [selected]="true" [value]="value"
+                                                (removed)="removeValueFromArray(value, item.value)">
+                                                {{value}}
+                                                <button matChipRemove *ngIf="!item.readOnly">
+                                                    <mat-icon>cancel</mat-icon>
+                                                </button>
+                                            </mat-chip>
+                                        </ng-container>
                                         <input [matChipInputFor]="chipList"
                                             [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
                                             [matChipInputAddOnBlur]="true"
-                                            (matChipInputTokenEnd)="addKeywordFromInput($event, item.value)"
-                                            [required]="item.required">
+                                            (matChipInputTokenEnd)="addKeywordFromInput($event, item.value)">
                                         <mat-icon *ngIf="item.readOnly" class="mat-icon-disable" matSuffix>
                                             do_not_disturb</mat-icon>
                                     </mat-chip-list>
                                 </mat-form-field>
-                             
+
                             </ng-container>
                         </ng-container>
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button mat-stroked-button color="primary" type="button" (click)="close()">
+                    <button mat-stroked-button color="accent" type="button" (click)="close()">
                         Close </button>
-                    <button mat-stroked-button color="primary" type="button" (click)="resetValue()">
+                    <button mat-button color="accent" type="button" (click)="resetValue()">
                         Reset </button>
-                    <button mat-raised-button color="primary" type="button" (click)="save()"
-                        [disabled]="!nodeForm.valid">
+                    <button mat-flat-button color="accent" type="button" (click)="save()" [disabled]="!nodeForm.valid">
                         Save </button>
                 </div>
             </div>

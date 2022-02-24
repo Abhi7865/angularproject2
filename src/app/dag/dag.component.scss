@@ -4,10 +4,10 @@ html, body {
 .panel-one { 
 
 }
-button {
-    min-height: 40px;
-    min-width: 100px;
-}
+// button {
+//     min-height: 40px;
+//     min-width: 100px;
+// }
 .panel-two {
 
 
@@ -204,31 +204,23 @@ button {
   
   
   .files-list {
-    margin-top: 6px;
+    // margin-top: 6px;
   
     .single-file {
-      
-      padding: 0.5rem;
-      justify-content: space-between;
       align-items: center;
       border: dashed 1px #979797;
       margin-bottom: 1rem;
+      background-color: #DCF2FF;
+      cursor: grab;
   
       .delete {
-        display: flex;
-        margin-left: 0.5rem;
         cursor: pointer;
-        align-self: flex-end;
       }
-  
-  
-      display: flex;
-      flex-grow: 1;
   
       .name {
         font-size: 14px;
         font-weight: 500;
-        color: #353f4a;
+        color: #002060;
         margin: 0;
       }
   

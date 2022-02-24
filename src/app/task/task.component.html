@@ -2,19 +2,16 @@
     <div id="toolbox">
 
         <mat-list>
-            <span matSubheader style="font-size: 16px;">Components</span>
+            <span matSubheader>Components</span>
             <mat-form-field appearance="fill" class="mat-list-search">
                 <input matInput type="text" placeholder="Search" [formControl]="searchControl">
                 <mat-icon matSuffix>search</mat-icon>
             </mat-form-field>
             <ng-container *ngFor="let component of filteredComponentList$ | async">
-                <ng-template [ngIf]="component != 'Lookup_Select_Join' && component != 'LOOKUP' && component != 'Lookup_And_Replace'">
-                    <mat-list-item [dndDraggable]="component" [matTooltip]="component" matTooltipPosition="right">
-                        <mat-icon matListIcon>note</mat-icon>
-                        {{ component }}
-                    </mat-list-item>
-                </ng-template>
-
+                <mat-list-item [dndDraggable]="component" [matTooltip]="component" matTooltipPosition="right">
+                    <mat-icon matListIcon>note</mat-icon>
+                    {{ component }}
+                </mat-list-item>
             </ng-container>
         </mat-list>
     </div>

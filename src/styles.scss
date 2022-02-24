@@ -17,110 +17,107 @@
 
 /* For use in src/lib/core/theming/_palette.scss */
 $primary: (
-    50 : #e0e4ec,
-    100 : #b3bccf,
-    200 : #8090b0,
-    300 : #4d6390,
-    400 : #264178,
-    500 : #002060,
-    600 : #001c58,
-    700 : #00184e,
-    800 : #001344,
-    900 : #000b33,
-    A100 : #6b7cff,
-    A200 : #384eff,
-    A400 : #0521ff,
-    A700 : #001aeb,
-    contrast: (
-        50 : #000000,
-        100 : #000000,
-        200 : #000000,
-        300 : #ffffff,
-        400 : #ffffff,
-        500 : #ffffff,
-        600 : #ffffff,
-        700 : #ffffff,
-        800 : #ffffff,
-        900 : #ffffff,
-        A100 : #000000,
-        A200 : #ffffff,
-        A400 : #ffffff,
-        A700 : #ffffff,
-    )
+	50: #e0e4ec,
+	100: #b3bccf,
+	200: #8090b0,
+	300: #4d6390,
+	400: #264178,
+	500: #002060,
+	600: #001c58,
+	700: #00184e,
+	800: #001344,
+	900: #000b33,
+	A100: #6b7cff,
+	A200: #384eff,
+	A400: #0521ff,
+	A700: #001aeb,
+	contrast: (
+		50: #000000,
+		100: #000000,
+		200: #000000,
+		300: #ffffff,
+		400: #ffffff,
+		500: #ffffff,
+		600: #ffffff,
+		700: #ffffff,
+		800: #ffffff,
+		900: #ffffff,
+		A100: #000000,
+		A200: #ffffff,
+		A400: #ffffff,
+		A700: #ffffff,
+	),
 );
 
 $accent: (
-    50 : #fcf1e0,
-    100 : #f7ddb3,
-    200 : #f1c680,
-    300 : #ebaf4d,
-    400 : #e79d26,
-    500 : #e38c00,
-    600 : #e08400,
-    700 : #dc7900,
-    800 : #d86f00,
-    900 : #d05c00,
-    A100 : #fffbf8,
-    A200 : #ffdbc5,
-    A400 : #ffbb92,
-    A700 : #ffab79,
-    contrast: (
-        50 : #000000,
-        100 : #000000,
-        200 : #000000,
-        300 : #000000,
-        400 : #000000,
-        500 : #000000,
-        600 : #000000,
-        700 : #000000,
-        800 : #000000,
-        900 : #ffffff,
-        A100 : #000000,
-        A200 : #000000,
-        A400 : #000000,
-        A700 : #000000,
-    )
+	50: #e1eef7,
+	100: #b3d4ec,
+	200: #80b7e0,
+	300: #4d9ad3,
+	400: #2785c9,
+	500: #016fc0,
+	600: #0167ba,
+	700: #015cb2,
+	800: #0152aa,
+	900: #00409c,
+	A100: #c7daff,
+	A200: #94b8ff,
+	A400: #6196ff,
+	A700: #4785ff,
+	contrast: (
+		50: #000000,
+		100: #000000,
+		200: #000000,
+		300: #000000,
+		400: #ffffff,
+		500: #ffffff,
+		600: #ffffff,
+		700: #ffffff,
+		800: #ffffff,
+		900: #ffffff,
+		A100: #000000,
+		A200: #000000,
+		A400: #000000,
+		A700: #000000,
+	),
 );
 
-/* For use in src/lib/core/theming/_palette.scss */
 $warn: (
-    50 : #eee6f4,
-    100 : #d4c1e3,
-    200 : #b898d0,
-    300 : #9b6ebd,
-    400 : #854fae,
-    500 : #7030a0,
-    600 : #682b98,
-    700 : #5d248e,
-    800 : #531e84,
-    900 : #411373,
-    A100 : #cfa9ff,
-    A200 : #b276ff,
-    A400 : #9643ff,
-    A700 : #872aff,
-    contrast: (
-        50 : #000000,
-        100 : #000000,
-        200 : #000000,
-        300 : #000000,
-        400 : #ffffff,
-        500 : #ffffff,
-        600 : #ffffff,
-        700 : #ffffff,
-        800 : #ffffff,
-        900 : #ffffff,
-        A100 : #000000,
-        A200 : #000000,
-        A400 : #ffffff,
-        A700 : #ffffff,
-    )
+	50: #fcf1e0,
+	100: #f7ddb3,
+	200: #f1c680,
+	300: #ebaf4d,
+	400: #e79d26,
+	500: #e38c00,
+	600: #e08400,
+	700: #dc7900,
+	800: #d86f00,
+	900: #d05c00,
+	A100: #fffbf8,
+	A200: #ffdbc5,
+	A400: #ffbb92,
+	A700: #ffab79,
+	contrast: (
+		50: #000000,
+		100: #000000,
+		200: #000000,
+		300: #000000,
+		400: #000000,
+		500: #000000,
+		600: #000000,
+		700: #000000,
+		800: #000000,
+		900: #ffffff,
+		A100: #000000,
+		A200: #000000,
+		A400: #000000,
+		A700: #000000,
+	),
 );
-
 
 $smartdata-primary: mat.define-palette($primary);
 $smartdata-accent: mat.define-palette($accent);
 $smartdata-warn: mat.define-palette($warn);
-
 
 // The warn palette is optional (defaults to red).
 // $smartdata-warn: mat.define-palette(mat.$red-palette);
@@ -150,8 +147,8 @@ $smartdata-theme: mat.define-light-theme(
 	// 		50
 	// 	)};
 
-	--mat-primary-light-clr: #016FC0;
-	--mat-primary-lighter-clr: #CCE2F3;
+	--mat-primary-light-clr: #016fc0;
+	--mat-primary-lighter-clr: #cce2f3;
 
 	--mat-accent-clr: #{mat.get-color-from-palette($smartdata-accent)};
 	--mat-accent-lighter-clr: #{mat.get-color-from-palette(
@@ -162,19 +159,20 @@ $smartdata-theme: mat.define-light-theme(
 
 	--primary-clr: #fbfbfb;
 	--primary-dark-clr: #f8f9fa;
-	--bdr-clr: #e5e5e5;
+	--bdr-clr: #a4c4dc;
 
-	--orange-clr: #E38C00;
-	--purple-clr: #7030A0;
+	--orange-clr: #e38c00;
+	--purple-clr: #7030a0;
 }
 
 html,
 body {
 	height: 100%;
+	font-size: 14px;
 }
 body {
 	margin: 0;
-	font-family:Arial, Helvetica, sans-serif !important;
+	font-family: Arial, Helvetica, sans-serif !important;
 }
 
 .container-fluid {
@@ -201,7 +199,7 @@ body {
 	flex-flow: row wrap;
 	align-content: flex-start;
 	overflow: auto;
-	background-color: #CCE2F3;;
+	background-color: #cce2f3;
 	border-right: 1px solid var(--bdr-clr);
 }
 #toolbox > * {
@@ -218,9 +216,6 @@ body {
 	border: 1px solid var(--bdr-clr);
 }
 
-.mat-form-field {
-	width: 100%;
-}
 .mat-icon.mat-icon-disable {
 	color: #8e8e8e;
 }
@@ -237,38 +232,61 @@ body {
 	.mat-form-field-infix {
 	padding: 0 0 0.75em 0;
 }
-.mat-form-field .mat-icon {
+.mat-form-field:not(.mat-form-field-type-mat-chip-list) .mat-icon {
 	color: rgba(0, 0, 0, 0.25);
 }
 .mat-list-item {
 	height: 42px !important;
-	cursor: pointer;
+	cursor: grab;
 	color: rgba(0, 0, 0, 0.77) !important;
-	// color: var(--mat-accent-dark-clr) !important;
 }
 .mat-list-item:hover {
-		background-color: rgba(75, 163, 245, 0.20);
-	// background: var(--mat-accent-lighter-clr);
+	background-color: rgba(75, 163, 245, 0.2);
 }
 .mat-list-item .mat-list-item-content {
-	padding: 0 8px;
+	padding: 0 8px !important;
 }
 .mat-list-item .mat-list-item-content .mat-icon {
 	margin-right: 10px;
+	color: var(--mat-primary-light-clr);
 }
-button.mat-button .mat-icon {
-	margin-right: 6px;
-	// color: rgba(0, 0, 0, 0.6);
-	// color: #8e8e8e
+
+.mat-list {
+	background-color: var(--mat-primary-lighter-clr);
+
+	.mat-subheader {
+		font-size: 1.143rem;
+	}
+	.mat-list-item-content,
+	.mat-subheader {
+		color: var(--mat-primary-clr);
+	}
+	.mat-list-search.mat-form-field-appearance-fill .mat-form-field-flex {
+		background-color: white;
+	}
 }
-.mat-button.mat-accent, .mat-icon-button.mat-accent, .mat-stroked-button.mat-accent {
-    /* color: #e38c00; */
-    color: #016FC0;}
+
+button.mat-button {
+	.mat-icon,
+	img {
+		margin-right: 6px;
+	}
+}
+
+.mat-form-field {
+	width: 100%;
+}
 .mat-form-field-label {
-    transform: translateY(-1.34375em) scale(0.75);
-    width: 133.3333333333%;
-    COLOR: #016FC0;
+	color: var(--mat-accent-clr);
+	font-weight: 500 !important;
 }
+.mat-form-field-appearance-fill .mat-form-field-flex {
+	background-color: rgba(0, 0, 0, 0.02);
+}
+.mat-form-field-appearance-fill.mat-form-field-disabled .mat-form-field-flex {
+	background-color: rgba(0, 0, 0, 0.08);
+}
+
 .mat-form-field.mat-no-space .mat-form-field-wrapper {
 	padding-bottom: 0;
 }
@@ -278,9 +296,8 @@ button.mat-button .mat-icon {
 .mat-form-field.mat-no-space:not(.mat-form-field-has-label)
 	.mat-form-field-infix {
 	border-top-width: 0;
-    padding-bottom: .2em;
+	padding-bottom: 0.2em;
 }
-
 
 .mat-snack-bar-container .mat-simple-snackbar {
 	font-size: 15px;
@@ -298,12 +315,10 @@ button.mat-button .mat-icon {
 	color: hsl(39deg 100% 50%);
 }
 
-
 .mat-tooltip {
 	font-size: 15px;
 	white-space: pre-line;
 }
-
 
 .flex-spacer {
 	flex-grow: 1;
@@ -345,8 +360,23 @@ MODAL
 	background-color: #fafafa;
 }
 .modal-footer {
-    column-gap: 10px;
+	column-gap: 10px;
+
+	button:first-child {
+		margin-right: auto;
+	}
+
+	.mat-button-base:hover:not(.mat-button-disabled) .mat-button-focus-overlay,
+	.mat-button:not(.mat-button-disabled) .mat-button-focus-overlay {
+		opacity: 0.08;
+	}
 }
+.modal-closeIcon {
+	width: 20px;
+	height: 20px;
+	cursor: pointer;
+}
+
 @media (min-width: 576px) {
 	.modal-dialog {
 		margin: 0px;
@@ -354,17 +384,15 @@ MODAL
 }
 
 .sidenav {
-	height: 100%;
+	height: calc(100% - 56px);
 	width: 400px;
 	position: fixed;
 	z-index: 2;
-	top: 0;
+	top: 56px;
 	right: 0;
 	background-color: white;
 	overflow-x: hidden;
 	transition: 0.5s;
-
-	// border: 2px solid #000;
 	box-shadow: 1px 8px 9px 2px grey;
 }
 
@@ -396,22 +424,20 @@ MODAL
 
 ::-webkit-scrollbar-track {
 	background-clip: padding-box;
-    border: solid transparent;
-    border-width: 1px;
-    background-color: #A3BBD6;
-    border-radius: 10px;
+	border: solid transparent;
+	border-width: 1px;
+	background-color: #a3bbd6;
+	border-radius: 10px;
 }
 
 ::-webkit-scrollbar-thumb {
 	background-color: var(--mat-primary-light-clr);
-    background-clip: padding-box;
-    border: solid transparent;
-    border-radius: 10px;
+	background-clip: padding-box;
+	border: solid transparent;
+	border-radius: 10px;
 }
 ::-webkit-scrollbar-corner {
-
-    background-color: transparent;
-
+	background-color: transparent;
 }
 // ::-webkit-scrollbar-thumb:hover {
 // 	background-color: #ccc;

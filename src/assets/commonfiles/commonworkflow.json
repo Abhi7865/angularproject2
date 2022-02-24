@@ -17,30 +17,16 @@
 		{
 			"name": "depends_on_past",
 			"required": false,
-			"value": "",
-			"type": "text",
+			"value": false,
+			"type": "boolean",
 			"label":"Depends On Past"
 		},
-		{
-			"name": "start_year",
+        {
+			"name": "startDate_endDate",
 			"required": false,
 			"value": "",
-			"type": "text",
-			"label":"Start Year"
-		},
-		{
-			"name": "start_month",
-			"required": false,
-			"value": "",
-			"type": "text",
-			"label":"Start Month"
-		},
-		{
-			"name": "start_day",
-			"required": false,
-			"value": "",
-			"type": "text",
-			"label":"Start Day"
+			"type": "date-range",
+			"label":"Start Date - End Date"
 		},
 		{
 			"name": "email",
@@ -66,58 +52,18 @@
 		{
 			"name": "retries",
 			"required": false,
+			"type": "select",
+            "options": [1, 2, 3, 4, 5],
 			"value": "",
-			"type": "text",
 			"label":"Retries"
 		},
 		{
 			"name": "retry_delay",
 			"required": false,
 			"value": "",
-			"type": "text",
-			"label":"Retry Delay"
-		},
-		{
-			"name": "queue",
-			"required": false,
-			"value": "",
-			"type": "text",
-			"label":"Queue"
-		},
-		{
-			"name": "pool",
-			"required": false,
-			"value": "",
-			"type": "text",
-			"label":"Pool"
-		},
-		{
-			"name": "priority_weight",
-			"required": false,
-			"value": "",
-			"type": "text",
-			"label":"Priority Weight"
-		},
-		{
-			"name": "end_year",
-			"required": false,
-			"value": "",
-			"type": "text",
-			"label":"End Year"
-		},
-		{
-			"name": "end_month",
-			"required": false,
-			"value": "",
-			"type": "text",
-			"label":"End Month"
-		},
-		{
-			"name": "end_day",
-			"required": false,
-			"value": "",
-			"type": "text",
-			"label":"End Day"
+			"type": "select",
+            "options": [5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60],
+			"label":"Retry Delay (5-60 mins)"
 		},
 		{
 			"name": "fileName",
@@ -125,13 +71,6 @@
 			"value": "",
 			"type": "text",
 			"label":"File Name"
-		},
-		{
-			"name": "type",
-			"required": false,
-			"value": "",
-			"type": "text",
-			"label":"Type"
 		}
 	]
 }

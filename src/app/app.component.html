@@ -2,21 +2,31 @@
     <header class="mat-elevation-z5">
         <nav>
             <div class="nav-smartdata-logo"></div>
+
             <a mat-button class="nav-item" (click)="changeflowapp('workflow')" routerLink="/" routerLinkActive="active"
                 [routerLinkActiveOptions]="{ exact: true }">Task Workflow</a>
             <a mat-button class="nav-item" (click)="changeflowapp('task')" routerLink="/dag" routerLinkActive="active"
                 [routerLinkActiveOptions]="{ exact: true }">DAG Workflow</a>
+
             <span class="flex-spacer"></span>
+
             <button mat-button (click)="importJson()">
-                <mat-icon>cloud_upload</mat-icon>
+                <img src="../../../assets/images/Import.svg" alt="" class="configIcon">
+                <!--<mat-icon>cloud_upload</mat-icon>-->
                 Import
             </button>
+
             <button mat-button (click)="saveJson(true)">
-                <mat-icon>save</mat-icon>
+                <img src="../../../assets/images/Save.svg" alt="" class="configIcon">
+               <!-- <mat-icon>save</mat-icon>-->
                 Save
             </button>
-            <img src="../../../assets/images/saveas.svg" alt="" class="configIcon">
-            <button mat-button (click)="saveJson()">Save As</button>
+
+            <button mat-button (click)="saveJson()">
+                <img src="../../../assets/images/saveas.svg" alt="" class="configIcon">
+                Save As
+            </button>
+            
             <div class="nav-brand-logo"></div>
         </nav>
     </header>

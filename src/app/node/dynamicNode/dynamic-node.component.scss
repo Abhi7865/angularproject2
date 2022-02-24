@@ -22,15 +22,28 @@
     background: #FFFFFF 0% 0% no-repeat padding-box;
     box-shadow: 0px 0px 20px #00000014;
     border-radius: 3px;
+
+    &.invalid {
+        border: 1px dashed red;
+    }
+    &.highlight {
+        animation: highlight 1s 2 ease-in-out;
+    }
 }
+
+@keyframes highlight {
+    0%, 100% {
+        background-color: white;
+    }
+    50% {
+        background-color: #ffc6c6;
+    }
+}
+
 .edit {
-    height: 16px;
-    width: 16px;
-    font-size: 10px;
+    font-size: 16px;
     cursor: pointer;
-    color: white;
-    background-color: #00B0F0;
-    border-radius: 50%;
+    color: #00B0F0;
     display: grid;
     place-items: center;
 }
@@ -61,6 +74,9 @@
 	cursor: pointer;
 	font-weight: bold;
 }
+.grab {
+    cursor: grab;
+}
 
 .dragIcon {
     height: 15px;
@@ -77,9 +93,17 @@
     border-right: 2px solid #d7d7d7;
 }
 
-// .node > .mat-form-field {
-//     padding: 10px;
-// }
+.node-dragIcon {
+    width: 20px;
+    height: 20px;
+    cursor: grab;
+}
+.node-textarea {
+    resize: none;
+    cursor: text;
+    font-weight: 500;
+    color: var(--mat-primary-clr);
+}
 
 .setwidth {
 	width: 430px !important;

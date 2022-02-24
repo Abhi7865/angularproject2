@@ -74,7 +74,7 @@ export class TaskComponent implements OnInit {
     create(cor: any) {
 
         const n = {
-            id: (this.index + 1).toString(),
+            id: "i" + (this.index + 1).toString(),
             // name: this.popupTittle,
             type: this.popupTittle,
             cor: cor,
@@ -137,8 +137,6 @@ export class TaskComponent implements OnInit {
     import(data: any) {
 
         let nodes: any = [];
-
-        console.log(data);
 
         if (this.isValidJson(data)) {
             nodes = JSON.parse(data);
