@@ -15,10 +15,11 @@ class CanvasTab {
     title: string;
     editing = false;
     nodes: any[] = [];
+    nodeIndex = 0;
 
-    constructor(index: number) {
-        this.id = index;
-        this.title = "Canvas-" + index;
+    constructor(id: number) {
+        this.id = id;
+        this.title = "Canvas-" + id;
     }
 }
 
@@ -103,8 +104,8 @@ export class TaskComponent implements OnInit {
     create(cor: any) {
 
         const n = {
-            id: uuidv4().replaceAll('-', ''),
-            // name: this.popupTittle,
+            uniqueId: uuidv4(),
+            id: (++this.currentCanvasTab.nodeIndex).toString(),
             type: this.popupTittle,
             cor: cor,
         };
@@ -202,6 +203,7 @@ export class TaskComponent implements OnInit {
 
         nodes.nodeData.map((data: any, index) => {
             const n = {
+                uniqueId: data.uniqueId,
                 id: data.id,
                 // name: data.name,
                 type: data.type,
@@ -217,6 +219,9 @@ export class TaskComponent implements OnInit {
             this.nodeService.maintainJson(n, formData);
             this.currentCanvasTab?.nodes.push(n);
 
+            if (parseInt(data.id) > this.currentCanvasTab.nodeIndex) {
+                this.currentCanvasTab.nodeIndex = parseInt(data.id);
+            }
             this.cdRef.detectChanges();
 
         });
@@ -226,7 +231,7 @@ export class TaskComponent implements OnInit {
                 this.nodeService.addConnection(connection);
             });
         }
-        
+
         this.nodeService.updateListWithNewTask(nodes, this.uploadedFileWithHandler?.name);
         this.cdRef.detectChanges();
     }

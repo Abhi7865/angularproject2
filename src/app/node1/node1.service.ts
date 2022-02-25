@@ -1,19 +1,20 @@
 import { HttpClient } from '@angular/common/http';
 import { ComponentFactoryResolver, Injectable, ViewContainerRef } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { BrowserJsPlumbInstance, ContainmentType, newInstance } from '@jsplumb/browser-ui';
 import { fileSave, FileSystemHandle } from 'browser-fs-access';
-import { jsPlumb, jsPlumbInstance } from 'jsplumb';
 import { Observable, Subject } from 'rxjs';
 import { shareReplay } from 'rxjs/operators';
 import { DagService } from '../dag/dag.service';
 import { Dynamicnode1Component } from './dynamicnode1/dynamicnode1.component';
+
 @Injectable()
 export class Node1Service {
 
     nodes: any[] = [];
     nodeFormData: any[] = [];
     dynamicNodeCompList: Dynamicnode1Component[] = [];
-    jsPlumbInstance: jsPlumbInstance;
+    jsPlumbInstance: BrowserJsPlumbInstance;
 
     private rootViewContainer: ViewContainerRef;
     public commonData: any = [];
@@ -37,10 +38,10 @@ export class Node1Service {
     public setRootViewContainerRef(viewContainerRef, hostVCR: ViewContainerRef) {
         this.rootViewContainer = viewContainerRef;
 
-        this.jsPlumbInstance = jsPlumb.getInstance({
-            Container: hostVCR.element.nativeElement,
-            DragOptions: {
-                containment: "parentEnclosed"
+        this.jsPlumbInstance = newInstance({
+            container: hostVCR.element.nativeElement,
+            dragOptions: {
+                containment: ContainmentType.parentEnclosed,
             }
         });
     }
@@ -49,9 +50,9 @@ export class Node1Service {
         const factory = this.factoryResolver.resolveComponentFactory(Dynamicnode1Component);
         const component = factory.create(this.rootViewContainer.parentInjector);
 
-        (<any>component.instance).node = node;
-        (<any>component.instance).formData = formData;
-        (<any>component.instance).jsPlumbInstance = this.jsPlumbInstance;
+        component.instance.node = node;
+        component.instance.formData = formData;
+        component.instance.jsPlumbInstance = this.jsPlumbInstance;
 
         this.rootViewContainer.insert(component.hostView);
         this.dynamicNodeCompList.push(component.instance);
@@ -108,9 +109,9 @@ export class Node1Service {
             return;
         }
 
-        console.log(JSON.stringify(this.nodes));
+        console.log(this.nodes);
 
-        const connections = (this.jsPlumbInstance.getAllConnections() as any[])
+        const connections = (this.jsPlumbInstance.getConnections() as any[])
             .map((conn) => ({ uuids: conn.getUuids() }));
 
         if (!connections?.length) {
@@ -125,14 +126,10 @@ export class Node1Service {
             return;
         }
 
-        let counter = 0;
-        this.nodes.map((d: any) => {
-            const da: any = this.jsPlumbInstance.getEndpoints(d.id)[0];
-
-            this.nodes[counter].cor.x = da.element.offsetLeft;
-            this.nodes[counter].cor.y = da.element.offsetTop;
-
-            counter++;
+        this.dynamicNodeCompList.forEach((d, index) => {
+            const da: any = this.jsPlumbInstance.getEndpoints(d.getNodeElement())[0];
+            this.nodes[index].cor.x = da.element.offsetLeft;
+            this.nodes[index].cor.y = da.element.offsetTop;
         });
 
         let sequenceObj = this.getTaskSequence();
@@ -166,7 +163,7 @@ export class Node1Service {
     getTaskSequence() {
 
         // Get All Edges
-        let edges = this.jsPlumbInstance.getAllConnections()
+        let edges = (this.jsPlumbInstance.getConnections() as any[])
             .map(connection => ({
                 sourceId: connection.sourceId,
                 targetId: connection.targetId
@@ -181,8 +178,8 @@ export class Node1Service {
 
         // Create Node Map with indegree and target node array
 
-        let nodeEdgeMap: { [id: string]: { indegree: number, target: string[] } } = {};
-        let nodeExistRecord: { [id: string]: boolean } = {};
+        let nodeEdgeMap: { [uniqueId: string]: { indegree: number, target: string[] } } = {};
+        let nodeExistRecord: { [uniqueId: string]: boolean } = {};
 
         for (let edge of edges) {
             if (!nodeExistRecord[edge.sourceId]) nodeEdgeMap[edge.sourceId] = { indegree: 0, target: [] };
@@ -236,7 +233,7 @@ export class Node1Service {
         }
 
         this.nodes.forEach((node, index) => {
-            node.sequenceNo = topologicalOrderList[node.id];
+            node.sequenceNo = topologicalOrderList[node.uniqueId];
             this.nodeFormData[index]["sequence_number"] = node.sequenceNo;
         });
 
@@ -263,7 +260,7 @@ export class Node1Service {
             this._snackBar.open(`File has been saved [${newHandle?.name}]`, "", { panelClass: "snackbar-success" });
         }
 
-        this.setCurrentFileHandler(newHandle);
+        overwrite && this.setCurrentFileHandler(newHandle);
     }
 
     setCurrentFileHandler(handler) {
@@ -342,17 +339,15 @@ export class Node1Service {
     }
 
     removeAllNOde() {
-        let connections = (this.jsPlumbInstance.getAllConnections() as any[])
+        let connections = (this.jsPlumbInstance.getConnections() as any[])
             .map((conn) => ({ uuids: conn.getUuids() }));
-        let counter = 0;
-        this.nodes.map((d: any) => {
-            const da: any = this.jsPlumbInstance.getEndpoints(d.id)[0];
 
-            this.nodes[counter].cor.x = da.element.offsetLeft;
-            this.nodes[counter].cor.y = da.element.offsetTop;
+        this.dynamicNodeCompList.forEach((d, index) => {
+            const da: any = this.jsPlumbInstance.getEndpoints(d.getNodeElement())[0];
 
-            counter++;
-        })
+            this.nodes[index].cor.x = da.element.offsetLeft;
+            this.nodes[index].cor.y = da.element.offsetTop;
+        });
 
         const allData = {
             "nodeData": this.nodes,
@@ -364,18 +359,16 @@ export class Node1Service {
 
     }
     removeAllTaskList() {
-        let connections = (this.jsPlumbInstance.getAllConnections() as any[])
+        let connections = (this.jsPlumbInstance.getConnections() as any[])
             .map((conn) => ({ uuids: conn.getUuids() }));
-        let counter = 0;
-        console.log(this.nodes);
-        this.nodes.map((d: any) => {
-            const da: any = this.jsPlumbInstance.getEndpoints(d.id)[0];
 
-            this.nodes[counter].cor.x = da.element.offsetLeft;
-            this.nodes[counter].cor.y = da.element.offsetTop;
+        this.dynamicNodeCompList.forEach((d, index) => {
+            const da: any = this.jsPlumbInstance.getEndpoints(d.getNodeElement())[0];
 
-            counter++;
-        })
+            this.nodes[index].cor.x = da.element.offsetLeft;
+            this.nodes[index].cor.y = da.element.offsetTop;
+
+        });
 
         const allData = {
             "nodeData": this.nodes,

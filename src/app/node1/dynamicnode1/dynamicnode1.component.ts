@@ -2,11 +2,15 @@ import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, HostBinding, Input, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatChipInputEvent } from '@angular/material/chips';
+import { BrowserJsPlumbInstance } from '@jsplumb/browser-ui';
+import { BezierConnector } from '@jsplumb/connector-bezier';
+import { DotEndpoint, EndpointOptions } from '@jsplumb/core';
 import { Subscription } from 'rxjs';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { Node1Service } from '../node1.service';
 
 export interface Node {
+    uniqueId: string;
     id: string;
     type: string;
     cor: any;
@@ -17,7 +21,7 @@ export interface Node {
     templateUrl: './dynamicnode1.component.html',
     styleUrls: ['./dynamicnode1.component.scss'],
     host: {
-        '[id]': 'node.id',
+        '[id]': 'node.uniqueId',
         '[attr.data]': 'node.type'
     }
 })
@@ -37,7 +41,7 @@ export class Dynamicnode1Component implements AfterViewInit {
 
     @Input() node!: Node;
     @Input() formData!: any;
-    @Input() jsPlumbInstance;
+    @Input() jsPlumbInstance: BrowserJsPlumbInstance;
 
     @HostBinding('style.top.px')
     get topPosition(): number {
@@ -57,32 +61,35 @@ export class Dynamicnode1Component implements AfterViewInit {
         hoverClass: 'dropHover',
         activeClass: 'dragActive'
     };
-    source = {
-        endpoint: ['Dot', { radius: 5 }],
+    source: EndpointOptions = {
+        endpoint: { type: DotEndpoint.type, options: { radius: 5 } },
         paintStyle: { fill: '#7030A0' },
-        isSource: true,
-        scope: 'jsPlumb_DefaultScope',
+        source: true,
+        // scope: 'jsPlumb_defaultscope',
         connectorStyle: { stroke: '#7030A0', strokeWidth: 3 },
-        connector: ['Bezier', { curviness: 63 }],
+        connector: { type: BezierConnector.type, options: { curviness: 63 } },
         maxConnections: 2,
-        isTarget: false,
-        connectorOverlays: [['Arrow', { location: 1 }]],
-        dropOptions: this.exampleDropOptions
+        target: false,
+        connectorOverlays: [{ type: 'Arrow', options: { location: 1 } }],
+        // dropOptions: this.exampleDropOptions
     };
-    destination = {
-        endpoint: ['Dot', { radius: 5 }],
+    destination: EndpointOptions = {
+        endpoint: { type: DotEndpoint.type, options: { radius: 5 } },
         paintStyle: { fill: '#E38C00' },
-        isSource: false,
-        scope: 'jsPlumb_DefaultScope',
+        source: false,
+        // scope: 'jsPlumb_defaultscope',
         connectorStyle: { stroke: '#E38C00', strokeWidth: 6 },
-        connector: ['Bezier', { curviness: 23 }],
+        connector: { type: BezierConnector.type, options: { curviness: 23 } },
         maxConnections: 2,
-        isTarget: true,
-        dropOptions: this.exampleDropOptions
+        target: true,
+        // dropOptions: this.exampleDropOptions
     };
     readonly separatorKeysCodes = [ENTER, COMMA] as const;
 
-    constructor(private cdRef: ChangeDetectorRef, public nodeService: Node1Service) { }
+    constructor(
+        private cdRef: ChangeDetectorRef,
+        public nodeService: Node1Service,
+        private readonly hostElementRef: ElementRef) { }
 
     ngOnInit() {
         this.top = this.node.cor.y;
@@ -102,14 +109,14 @@ export class Dynamicnode1Component implements AfterViewInit {
         });
 
         this.nodeService.jsPlumbInstance.bind('connection', info => {
-            if (info.targetId === this.node.id) {
+            if (info.targetId === this.node.uniqueId) {
                 if (this.referenceId !== -1) {
                     this.fetchNodeReference();
                 }
             }
         });
-        this.nodeService.jsPlumbInstance.bind('connectionDetached', info => {
-            if (info.targetId === this.node.id) {
+        this.nodeService.jsPlumbInstance.bind('connection:detach', info => {
+            if (info.targetId === this.node.uniqueId) {
                 if (this.referenceId !== -1) {
                     setTimeout(() => {
                         this.fetchNodeReference();
@@ -118,6 +125,15 @@ export class Dynamicnode1Component implements AfterViewInit {
             }
         });
     }
+
+    get nodeElement() {
+        return this.hostElementRef.nativeElement;
+    }
+
+    getNodeElement() {
+        return this.nodeElement;
+    }
+
 
     ngAfterViewInit() {
 
@@ -129,35 +145,35 @@ export class Dynamicnode1Component implements AfterViewInit {
             || this.node.type == 'Generate_Records' || this.node.type == 'Create_data' || this.node.type == 'Dedup_sort' || this.node.type == 'Leading_Records'
             || this.node.type == 'Reformat' || this.node.type == 'AddColumn' || this.node.type == 'Lookup_And_Replace'
         ) {
-            this.destinationEndPoint = this.jsPlumbInstance.addEndpoints(this.node.id,
-                [{ anchor: 'Left', uuid: this.node.id + 'left' }, { anchor: 'Top', uuid: this.node.id + 'top' }], this.destination);
+            this.destinationEndPoint = this.jsPlumbInstance.addEndpoints(this.nodeElement,
+                [{ anchor: 'Left', uuid: this.node.uniqueId + 'left' }, { anchor: 'Top', uuid: this.node.uniqueId + 'top' }], this.destination);
 
-            this.sourceEndPoint = this.jsPlumbInstance.addEndpoint(this.node.id,
-                { anchor: 'Right', uuid: this.node.id + 'right' }, this.source);
+            this.sourceEndPoint = this.jsPlumbInstance.addEndpoint(this.nodeElement,
+                { anchor: 'Right', uuid: this.node.uniqueId + 'right' }, this.source);
         }
         else if (this.node.type == 'Filter' || this.node.type == 'Lookup' || this.node.type == 'Sort') {
-            this.sourceEndPoint = this.jsPlumbInstance.addEndpoint(this.node.id,
-                { anchor: 'Right', uuid: this.node.id + 'right' }, this.source);
-            this.destinationEndPoint = this.jsPlumbInstance.addEndpoints(this.node.id,
-                [{ anchor: 'Left', uuid: this.node.id + 'left' }], this.destination);
+            this.sourceEndPoint = this.jsPlumbInstance.addEndpoint(this.nodeElement,
+                { anchor: 'Right', uuid: this.node.uniqueId + 'right' }, this.source);
+            this.destinationEndPoint = this.jsPlumbInstance.addEndpoints(this.nodeElement,
+                [{ anchor: 'Left', uuid: this.node.uniqueId + 'left' }], this.destination);
         }
         else if (this.node.type == 'Input') {
-            this.sourceEndPoint = this.jsPlumbInstance.addEndpoint(this.node.id,
-                { anchor: 'Right', uuid: this.node.id + 'right' }, this.source);
+            this.sourceEndPoint = this.jsPlumbInstance.addEndpoint(this.nodeElement,
+                { anchor: 'Right', uuid: this.node.uniqueId + 'right' }, this.source);
         }
         else if (this.node.type == 'Write') {
-            this.destinationEndPoint = this.jsPlumbInstance.addEndpoints(this.node.id,
-                [{ anchor: 'Left', uuid: this.node.id + 'left' }], this.destination);
+            this.destinationEndPoint = this.jsPlumbInstance.addEndpoints(this.nodeElement,
+                [{ anchor: 'Left', uuid: this.node.uniqueId + 'left' }], this.destination);
         }
         else {
-            this.sourceEndPoint = this.jsPlumbInstance.addEndpoint(this.node.id,
-                { anchor: 'Right', uuid: this.node.id + 'right' }, this.source);
+            this.sourceEndPoint = this.jsPlumbInstance.addEndpoint(this.nodeElement,
+                { anchor: 'Right', uuid: this.node.uniqueId + 'right' }, this.source);
             if (this.node.type !== 'start') {
-                this.destinationEndPoint = this.jsPlumbInstance.addEndpoints(this.node.id,
-                    [{ anchor: 'Left', uuid: this.node.id + 'left' }, { anchor: 'Top', uuid: '4233' + 'top' }], this.destination);
+                this.destinationEndPoint = this.jsPlumbInstance.addEndpoints(this.nodeElement,
+                    [{ anchor: 'Left', uuid: this.node.uniqueId + 'left' }, { anchor: 'Top', uuid: '4233' + 'top' }], this.destination);
             }
         }
-        this.jsPlumbInstance.draggable(this.node.id);
+        this.jsPlumbInstance.setDraggable(this.nodeElement, true);
 
         this.generateForm();
     }
@@ -175,11 +191,10 @@ export class Dynamicnode1Component implements AfterViewInit {
         this.componentNameControl.enable();
     }
 
-    removeNode(node: any) {
-        this.jsPlumbInstance.removeAllEndpoints(node.id);
-        this.jsPlumbInstance.remove(node.id);
-        this.nodeService.deleteNode(node.id);
-
+    removeNode() {
+        this.jsPlumbInstance.removeAllEndpoints(this.nodeElement);
+        this.jsPlumbInstance._removeElement(this.nodeElement);
+        this.nodeService.deleteNode(this.node.id);
     }
 
     generateForm() {
@@ -238,15 +253,15 @@ export class Dynamicnode1Component implements AfterViewInit {
 
         let sourceIds: any[] = [];
 
-        this.nodeService.jsPlumbInstance.getEndpoints(this.node.id)
+        this.jsPlumbInstance.getEndpoints(this.nodeElement)
             .filter(ep => ep["isTarget"])
-            .map((ep) => ep.connections?.filter(connection => connection.targetId === this.node.id))
+            .map((ep) => ep.connections?.filter(connection => connection.targetId === this.node.uniqueId))
             .forEach(connections => {
                 connections?.forEach(connection => sourceIds.push(connection.sourceId))
             });
 
         if (sourceIds.length) {
-            nodeReferenceList = sourceIds;
+            nodeReferenceList = sourceIds.map(sourceId => this.nodeService.nodes.find((n: any) => n.uniqueId == sourceId)?.id);
         }
 
         this.attributeList[this.referenceId].value = nodeReferenceList;
@@ -287,8 +302,8 @@ export class Dynamicnode1Component implements AfterViewInit {
     nodeRemove() {
         this.nodeService.getNodeList().then((data: any) => {
             data.map((da: any) => {
-                this.jsPlumbInstance.removeAllEndpoints(da.id);
-                this.jsPlumbInstance.remove(da.id);
+                this.jsPlumbInstance.removeAllEndpoints(this.nodeElement);
+                this.jsPlumbInstance._removeElement(this.nodeElement);
             })
             this.jsPlumbInstance.reset();
         })
@@ -307,7 +322,7 @@ export class Dynamicnode1Component implements AfterViewInit {
             event.chipInput!.clear();
         }
     }
-    
+
     highlightNode() {
         this.nodeDiv.nativeElement.classList.add('highlight');
         setTimeout(() => {

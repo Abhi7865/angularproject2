@@ -3,10 +3,10 @@ import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatChipInputEvent } from '@angular/material/chips';
 import { fileOpen, FileWithHandle } from 'browser-fs-access';
+import { v4 as uuidv4 } from 'uuid';
 import { NodeService } from '../node/node.service';
 import { Node1Component } from '../node1/node1.component';
 import { Node1Service } from '../node1/node1.service';
-import { v4 as uuidv4 } from 'uuid';
 
 
 @Component({
@@ -16,6 +16,7 @@ import { v4 as uuidv4 } from 'uuid';
 })
 export class DagComponent implements OnInit {
 
+    index = 0;
     nodes: any[] = [];
     files: any[] = [];
     @ViewChild('nodeChild') nodeChild: Node1Component;
@@ -44,7 +45,7 @@ export class DagComponent implements OnInit {
     ngOnInit() {
         this.nodeService.updateNodeList.subscribe((information) => {
             this.taskList = information;
-            console.log(this.taskList);
+            console.log("Task List: " + this.taskList);
 
         });
         this.node1Service.changeflowSub.subscribe((data) => {
@@ -67,8 +68,8 @@ export class DagComponent implements OnInit {
     create(cor: any) {
 
         const n = {
-            id: uuidv4().replaceAll('-', ''),
-            // name: this.popupTittle,
+            uniqueId: uuidv4(),
+            id: (++this.index).toString(),
             type: this.popupTittle,
             cor: cor,
 
@@ -227,6 +228,7 @@ export class DagComponent implements OnInit {
 
         nodes.nodeData.map((data: any) => {
             const n = {
+                uniqueId: data.uniqueId,
                 id: data.id,
                 // name: data.name,
                 type: data.type,
@@ -242,8 +244,10 @@ export class DagComponent implements OnInit {
             this.node1Service.maintainJson(n, formData);
             this.nodes.push(n);
 
+            if (parseInt(data.id) > this.index) {
+                this.index = parseInt(data.id);
+            }
             this.cdRef.detectChanges();
-
         });
 
         if (nodes.connection.length > 0) {
@@ -283,7 +287,7 @@ export class DagComponent implements OnInit {
 
     generateWorkflowForm() {
         this.nodeForm = new FormGroup({});
-        
+
         this.commonworkflowlist.forEach((da: any) => {
             if (da.type == 'boolean') {
                 this.nodeForm.addControl(da.name, new FormControl(da.value || false));
@@ -376,7 +380,7 @@ export class DagComponent implements OnInit {
             "end_day": endDate?.getDate().toString(),
         };
         delete value["startDate_endDate"];
-        console.log(value);
+        console.log("Workflow Settings: " + value);
 
         this.node1Service.setCommonData(value);
         this.close1();
