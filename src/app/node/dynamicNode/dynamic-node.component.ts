@@ -260,6 +260,7 @@ export class DynamicNodeComponent implements AfterViewInit {
             if (this.formData != undefined) {
                 this.nodeForm.patchValue(this.formData);
                 if (this.referenceId > -1) {
+                    this.attributeList[this.referenceId].value = [""];
                     this.nodeForm.patchValue({ "node_reference": [""] });
                 }
             }

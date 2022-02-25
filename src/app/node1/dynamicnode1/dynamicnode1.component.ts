@@ -141,11 +141,11 @@ export class Dynamicnode1Component implements AfterViewInit {
             this.destinationEndPoint = this.jsPlumbInstance.addEndpoints(this.node.id,
                 [{ anchor: 'Left', uuid: this.node.id + 'left' }], this.destination);
         }
-        else if (this.node.type == 'InputRead') {
+        else if (this.node.type == 'Input') {
             this.sourceEndPoint = this.jsPlumbInstance.addEndpoint(this.node.id,
                 { anchor: 'Right', uuid: this.node.id + 'right' }, this.source);
         }
-        else if (this.node.type == 'WriteOutput') {
+        else if (this.node.type == 'Write') {
             this.destinationEndPoint = this.jsPlumbInstance.addEndpoints(this.node.id,
                 [{ anchor: 'Left', uuid: this.node.id + 'left' }], this.destination);
         }
@@ -224,6 +224,7 @@ export class Dynamicnode1Component implements AfterViewInit {
             if (this.formData != undefined) {
                 this.nodeForm.patchValue(this.formData);
                 if (this.referenceId > -1) {
+                    this.attributeList[this.referenceId].value = [""];
                     this.nodeForm.patchValue({ "task_node_reference": [""] });
                 }
             }

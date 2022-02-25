@@ -1,5 +1,5 @@
 <div class="node" #nodeDiv (dblclick)="allowNodeEdit()" [ngClass]="nodeForm.invalid ? 'invalid': ''">
-    <mat-form-field class="mat-no-space text-center">
+    <mat-form-field class="mat-no-space text-center" [matTooltip]="formData?.description">
         <textarea matInput autosize minRows="1" class="node-textarea" [formControl]="componentNameControl"></textarea>
     </mat-form-field>
 
@@ -23,7 +23,7 @@
                     <form class="form-horizontal" [formGroup]="nodeForm">
                         <ng-container *ngFor="let item of attributeList; index as i;">
                             <ng-container [ngSwitch]="item.type"
-                                *ngIf="item.name != 'id' && item.name != 'sequence_number' && item.name != 'task_node_reference'">
+                                *ngIf="item.name != 'sequence_number' && item.name != 'task_node_reference'">
 
                                 <mat-form-field *ngSwitchCase="'text'" floatLabel="always" appearance="fill">
                                     <mat-label>{{item.label}}</mat-label>
@@ -51,7 +51,7 @@
                                     <mat-chip-list #chipList multiple [formControlName]="item.name"
                                         [required]="item.required">
                                         <ng-container *ngFor="let value of item.value">
-                                            <mat-chip *ngIf="value" [selected]="true" [value]="value"
+                                            <mat-chip [selected]="true" [value]="value"
                                                 (removed)="removeValueFromArray(value, item.value)">
                                                 {{value}}
                                                 <button matChipRemove *ngIf="!item.readOnly">
