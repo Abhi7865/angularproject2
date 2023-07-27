@@ -17,8 +17,9 @@
 		{
 			"name": "depends_on_past",
 			"required": false,
-			"value": false,
-			"type": "boolean",
+			"value": "false",
+			"type": "select",
+		     "options":["true","false"],
 			"label":"Depends On Past"
 		},
         {
@@ -38,15 +39,17 @@
 		{
 			"name": "email_on_failure",
 			"required": false,
-			"value": "",
-			"type": "text",
+			"value": "false",
+			"type": "select",
+		     "options":["true","false"],
 			"label":"Email On Failure"
 		},
 		{
 			"name": "email_on_retry",
 			"required": false,
-			"value": "",
-			"type": "text",
+			"value": "false",
+			"type": "select",
+		     "options":["true","false"],
 			"label":"Email On Retry"
 		},
 		{
@@ -54,13 +57,13 @@
 			"required": false,
 			"type": "select",
             "options": [1, 2, 3, 4, 5],
-			"value": "",
+			"value": [],
 			"label":"Retries"
 		},
 		{
 			"name": "retry_delay",
 			"required": false,
-			"value": "",
+			"value": [],
 			"type": "select",
             "options": [5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60],
 			"label":"Retry Delay (5-60 mins)"

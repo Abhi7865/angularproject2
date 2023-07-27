@@ -1,3 +1,111 @@
+<div class="sidenav">
+    <div class="modal-header">
+        <h4 mat-dialog-title>{{title}}</h4>
+        <img src="../../../assets/images/popup_close.svg" class="modal-closeIcon" (click)="close()" [mat-dialog-close]="nodeForm"
+        >
+
+    </div>
+
+    <div class="modal-body">
+
+        <mat-dialog-content>
+
+            <form class="form-horizontal" [formGroup]="nodeForm">
+                <ng-container *ngFor="let item of attributeList; index as i;">
+                    <ng-container [ngSwitch]="item.type"
+                        *ngIf="item.name != 'sequence_number' && item.name != 'node_reference'">
+                        <mat-form-field *ngSwitchCase="'text'" floatLabel="always" appearance="fill">
+                            <mat-label>{{item.label}}</mat-label>
+                            <input matInput type="text" [id]="item.name" [formControlName]="item.name"
+                                [readonly]="item.readOnly" [required]="item.required" >
+                            <mat-icon *ngIf="item.readOnly" class="mat-icon-disable" matSuffix>
+                                do_not_disturb
+                            </mat-icon>
+                        </mat-form-field>
+
+                        <mat-form-field *ngSwitchCase="'textarea'" floatLabel="always" appearance="fill">
+                            <mat-label>{{item.label}}</mat-label>
+                            <textarea matInput [id]="item.name" [formControlName]="item.name" [readonly]="item.readOnly"
+                                [required]="item.required"></textarea>
+                            <mat-icon *ngIf="item.readOnly" class="mat-icon-disable" matSuffix>
+                                do_not_disturb
+                            </mat-icon>
+                        </mat-form-field>
+
+                        <mat-checkbox *ngSwitchCase="'boolean'" [formControlName]="item.name"
+                            style="margin-bottom: 15px;" [required]="item.required">
+                            {{item.label}}
+                        </mat-checkbox>
+
+                        <mat-form-field *ngSwitchCase="'propertyType'" floatLabel="always" appearance="fill">
+                            <mat-label>{{item.label}}</mat-label>
+                            <mat-select [id]="item.name" [formControlName]="item.name" [required]="item.required"
+                                (selectionChange)='changePropertyType($event, item)'>
+                                <mat-option *ngFor="let option of item.options" [value]="option">
+                                    {{option}} </mat-option>
+                            </mat-select>
+                            <mat-icon *ngIf="item.readOnly" class="mat-icon-disable" matSuffix>
+                                do_not_disturb
+                            </mat-icon>
+                        </mat-form-field>
+
+                        <mat-form-field *ngSwitchCase="'array'" floatLabel="always" appearance="fill">
+                            <mat-label>{{item.label}}</mat-label>
+                            <mat-chip-list #chipList multiple [formControlName]="item.name" [required]="item.required">
+                                <ng-container *ngFor="let value of item.value">
+                                    <mat-chip *ngIf="value" [selected]="true" [value]="value"
+                                        (removed)="removeValueFromArray(value, item.value)">
+                                        <span class="mat-chip-value">{{value}}</span>
+                                        <button matChipRemove *ngIf="!item.readOnly">
+                                            <mat-icon>cancel</mat-icon>
+                                        </button>
+                                    </mat-chip>
+                                </ng-container>
+
+                                <input [matChipInputFor]="chipList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                                    [matChipInputAddOnBlur]="true"
+                                    (matChipInputTokenEnd)="addKeywordFromInput($event, item.value)">
+                                <mat-icon *ngIf="item.readOnly" class="mat-icon-disable" matSuffix>
+                                    do_not_disturb</mat-icon>
+                            </mat-chip-list>
+                        </mat-form-field>
 
 
+                        <mat-form-field *ngSwitchCase="'object'" floatLabel="always" appearance="fill">
+                            <table class="table table-bordered" formArrayName="customArguments">
+                                <tr style="margin: 40px;">
+                                  <th colspan="2">Add Custom Arguments:</th>
+                                  <th width="150px"><button type="button"  style="background-color:#0275d8" (click)=" addCustomArgument()" class="btn btn-primary">Add More</button></th>
+                                </tr>
+                                <tr style="margin: 40px;" *ngFor="let customArgument of customArguments().controls; let i=index" [formGroupName]="i">
+                                  <td>
+                                     Key :
+                                      <input matInput type="text" formControlName="key" class="form-control" (change) ="saveCustomComponentNodeFormData()">
+                                  </td>
+                                  <td>
+                                     Value:
+                                      <input  matInput type="text" formControlName="value" class="form-control" (change) ="saveCustomComponentNodeFormData()" >
+                                  </td>
+                                  <td>
+                                    <button style="background-color:#d9534f" (click)="removeCustomArguments(i)" class="btn btn-danger">Remove</button>
+                                  </td>
+                                </tr>
+                              </table>
+                        </mat-form-field>
 
+                    </ng-container>
+                </ng-container>
+            </form>
+        </mat-dialog-content>
+    </div>
+    <mat-dialog-actions class="modal-footer">
+        <button mat-stroked-button color="accent" type="button" (click)="close()" [mat-dialog-close]="nodeForm"
+        [disabled]="!nodeForm.valid">
+            Close </button>
+        <button mat-button color="accent" type="button" (click)="resetValue()">
+            Reset </button>
+        <button mat-flat-button color="accent" type="button" (click)="save()" [mat-dialog-close]="nodeForm"
+            [disabled]="!nodeForm.valid">
+            Save </button>
+    </mat-dialog-actions>
+</div>

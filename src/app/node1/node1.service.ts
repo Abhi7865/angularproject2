@@ -101,6 +101,22 @@ export class Node1Service {
         this.nodeFormData.splice(index, 1);
         this.dynamicNodeCompList.splice(index, 1);
     }
+    previewJson()
+    {
+        const connections = (this.jsPlumbInstance.getConnections() as any[])
+        .map((conn) => ({ uuids: conn.getUuids() }));
+        const allData = {
+                "component": this.nodeFormData,
+                "nodeData": this.nodes,
+                "connection": connections
+            }
+    
+            const finalJson = { ...allData, ...this.commonData };
+    
+        var myjson = JSON.stringify(finalJson, null, 2);
+    console.log(myjson);
+    return myjson;
+    }
 
     downloadJson(overwrite = false) {
 
@@ -178,8 +194,8 @@ export class Node1Service {
 
         // Create Node Map with indegree and target node array
 
-        let nodeEdgeMap: { [uniqueId: string]: { indegree: number, target: string[] } } = {};
-        let nodeExistRecord: { [uniqueId: string]: boolean } = {};
+        let nodeEdgeMap: { [id: string]: { indegree: number, target: string[] } } = {};
+        let nodeExistRecord: { [id: string]: boolean } = {};
 
         for (let edge of edges) {
             if (!nodeExistRecord[edge.sourceId]) nodeEdgeMap[edge.sourceId] = { indegree: 0, target: [] };
@@ -233,7 +249,7 @@ export class Node1Service {
         }
 
         this.nodes.forEach((node, index) => {
-            node.sequenceNo = topologicalOrderList[node.uniqueId];
+            node.sequenceNo = topologicalOrderList[node.id];
             this.nodeFormData[index]["sequence_number"] = node.sequenceNo;
         });
 

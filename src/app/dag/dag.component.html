@@ -32,7 +32,7 @@
         </mat-list>
 
 
-        <mat-list class="files-list" *ngIf="taskList?.length">
+  <mat-list class="files-list" *ngIf="taskList?.length">
             <span matSubheader>Recent Created Tasks:</span>
             <ng-container *ngFor="let task of taskList">
                 <mat-list-item class="single-file" [dndDraggable]="task.taskname" [matTooltip]="task.taskname"
@@ -42,7 +42,7 @@
                     </div>
                 </mat-list-item>
             </ng-container>
-        </mat-list>
+        </mat-list>-->
 
     </div>
     <div class="dropzone" dndDropzone (dndDrop)="onItemDrop($event)">
@@ -87,7 +87,7 @@
 
                                 <mat-form-field *ngSwitchCase="'select'" floatLabel="always" appearance="fill">
                                     <mat-label>{{item.label}}</mat-label>
-                                    <mat-select>
+                                    <mat-select  [formControlName]="item.name">
                                         <mat-option *ngFor="let option of item.options" [value]="option">
                                             {{ option }}
                                         </mat-option>
@@ -102,7 +102,7 @@
                                         [required]="item.required">
                                         <mat-chip *ngFor="let value of item.value" [selected]="true" [value]="value"
                                             (removed)="removeValueFromArray(value, item.value)">
-                                            {{value}}
+                                            <span class="mat-chip-value">{{value}}</span>
                                             <button matChipRemove *ngIf="!item.readOnly">
                                                 <mat-icon>cancel</mat-icon>
                                             </button>

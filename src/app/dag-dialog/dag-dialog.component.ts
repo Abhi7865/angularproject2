@@ -1,5 +1,6 @@
+import { Component, Inject, OnInit } from '@angular/core';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
-import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, HostBinding, Input, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef,ElementRef, HostBinding, Input, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatChipInputEvent } from '@angular/material/chips';
 import { BrowserJsPlumbInstance } from '@jsplumb/browser-ui';
@@ -7,26 +8,26 @@ import { BezierConnector } from '@jsplumb/connector-bezier';
 import { DotEndpoint, EndpointOptions } from '@jsplumb/core';
 import { Subscription } from 'rxjs';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
-import { DagDialogComponent } from 'src/app/dag-dialog/dag-dialog.component';
-import { Node1Service } from '../node1.service';
-import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+//import { Node1Service } from '../node1.service';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Node1Service } from '../node1/node1.service';
 
 export interface Node {
-    id: string;
-    type: string;
-    cor: any;
+  id: string;
+  type: string;
+  cor: any;
 }
-
 @Component({
-    selector: 'app-dynamicnode1',
-    templateUrl: './dynamicnode1.component.html',
-    styleUrls: ['./dynamicnode1.component.scss'],
-    host: {
-        '[id]': 'node.id',
-        '[attr.data]': 'node.type'
-    }
+  selector: 'app-dag-dialog',
+  templateUrl: './dag-dialog.component.html',
+  styleUrls: ['./dag-dialog.component.scss'],
+  host: {
+    '[id]': 'node.id',
+    '[attr.data]': 'node.type'
+}
 })
-export class Dynamicnode1Component implements AfterViewInit {
+export class DagDialogComponent {
+
 
     nodeForm = new FormGroup({});
     componentNameControl = new FormControl({ value: "", disabled: true });
@@ -34,8 +35,7 @@ export class Dynamicnode1Component implements AfterViewInit {
 
     attributeList: any[] = [];
     referenceId = -1;
-    dialogRef: MatDialogRef<DagDialogComponent>;
-
+    
     public top: any = 0;
     public left: any = 0;
     public show = false;
@@ -55,7 +55,6 @@ export class Dynamicnode1Component implements AfterViewInit {
     }
 
     @ViewChild("nodeDiv") nodeDiv: ElementRef;
-
     sourceEndPoint: any;
     destinationEndPoint: any;
     exampleDropOptions = {
@@ -91,12 +90,23 @@ export class Dynamicnode1Component implements AfterViewInit {
     constructor(
         private cdRef: ChangeDetectorRef,
         public nodeService: Node1Service,
+        public dialog: MatDialog,
         private readonly hostElementRef: ElementRef,
-        public dialog: MatDialog) { }
+        private dialogRef: MatDialogRef<DagDialogComponent>,
+        @Inject(MAT_DIALOG_DATA) public matDialogData: { node: any, jsPlumbInstance: any, formData: any,nodeForm:any })
+         {
+            
+   }  
 
     ngOnInit() {
-        this.top = this.node.cor.y;
-        this.left = this.node.cor.x;
+        this.node = this.matDialogData.node;
+        this.jsPlumbInstance = this.matDialogData.jsPlumbInstance;
+        this.formData = this.matDialogData.formData;
+        this.nodeForm=this.matDialogData.nodeForm;
+        
+
+        // this.top = this.node.cor.y;
+        // this.left = this.node.cor.x;
 
         this.componentNameControl.setValue(this.node.type);
         this.componentNameSubscription = this.componentNameControl.valueChanges.pipe(
@@ -176,7 +186,7 @@ export class Dynamicnode1Component implements AfterViewInit {
                     [{ anchor: 'Left', uuid: this.node.id + 'left' }, { anchor: 'Top', uuid: '4233' + 'top' }], this.destination);
             }
         }
-        this.jsPlumbInstance.setDraggable(this.nodeElement, true);
+        //this.jsPlumbInstance.setDraggable(this.nodeElement, true);
 
         this.generateForm();
     }
@@ -274,45 +284,23 @@ export class Dynamicnode1Component implements AfterViewInit {
 
 
     editNode() {
+
+        console.log("Dialog edit Node");
         this.nodeForm.patchValue(this.formData);
         // this.fetchNodeReference();
         if (this.referenceId > -1) {
-            this.nodeForm?.patchValue({ "task_node_reference": this.attributeList[this.referenceId].value });
+            this.nodeForm?.patchValue({ "node_reference": this.attributeList[this.referenceId].value });
         }
-
-       // this.show = true;
-        this.dialogRef = this.dialog.open( DagDialogComponent, {
-            // minWidth: '50px',
-            // minHeight:'100px',
-            width: '375px',
-            height: '560px',
-            disableClose:false,
-            closeOnNavigation:true,
-           // hasBackdrop: false,
-            position: { right: '0', top: '55px' },
-            data: {
-                node: this.node,
-                jsPlumbInstance: this.jsPlumbInstance,
-                formData: this.formData,
-                nodeForm: this.nodeForm
-            }
-        });
-        
-
-        this.dialogRef.afterClosed().subscribe(result => {
-            console.log(result.value);
-            this.formData = result.value;
-            this.nodeForm.patchValue(this.formData);
-            //this.fetchNodeReference();
-            // this.patchFormValues();
-        });
+        this.show = true;
         
     }
 
     save() {
         this.componentNameControl.setValue(this.nodeForm.get("task_Name")?.value);
         this.saveNodeFormData();
-        this.show = false;
+       // this.show = false;
+        console.log(this.nodeForm);
+       
     }
 
     saveNodeFormData() {
@@ -321,7 +309,7 @@ export class Dynamicnode1Component implements AfterViewInit {
     }
 
     close() {
-        this.show = false;
+        this.dialogRef.close();
     }
     resetValue() {
         this.nodeForm.reset();
@@ -360,4 +348,3 @@ export class Dynamicnode1Component implements AfterViewInit {
 
     }
 }
-

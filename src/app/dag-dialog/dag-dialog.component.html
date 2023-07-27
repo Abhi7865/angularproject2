@@ -1,31 +1,17 @@
-<div class="node" #nodeDiv (dblclick)="allowNodeEdit()" [ngClass]="nodeForm.invalid ? 'invalid': ''">
-    <mat-form-field class="mat-no-space text-center" [matTooltip]="formData?.description">
-        <textarea matInput autosize minRows="1" class="node-textarea" [formControl]="componentNameControl"></textarea>
-    </mat-form-field>
 
-    <img src="../../../assets/images/drag_new.svg" alt="" class="grab" matTooltip="drag">
-    <mat-icon class="edit configIcon" (click)="editNode()" matTooltip="edit">edit</mat-icon>
-    <img src="../../../assets/images/close.svg" class="configIcon" (click)="removeNode()" matTooltip="close">
-
-</div>
-
-
-
-<!--<ng-template [ngIf]="show">
     <div class="sidenav">
 
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
+       
                 <div class="modal-header">
-                    <h4 class="modal-title">{{title}}</h4>
+                    <h4 mat-dialog-title>{{title}}</h4>
                     <img src="../../../assets/images/popup_close.svg" class="modal-closeIcon" (click)="close()">
                 </div>
                 <div class="modal-body">
-
+                    <mat-dialog-content>
                     <form class="form-horizontal" [formGroup]="nodeForm">
                         <ng-container *ngFor="let item of attributeList; index as i;">
-                            <ng-container [ngSwitch]="item.type" *ngIf="item.name !='sequence_number' &&
-                            item.name != 'node_reference'">
+                            <ng-container [ngSwitch]="item.type"
+                                *ngIf="item.name != 'sequence_number' && item.name != 'task_node_reference'">
 
                                 <mat-form-field *ngSwitchCase="'text'" floatLabel="always" appearance="fill">
                                     <mat-label>{{item.label}}</mat-label>
@@ -48,17 +34,6 @@
                                     {{item.label}}
                                 </mat-checkbox>
 
-                                <mat-form-field *ngSwitchCase="'propertyType'" floatLabel="always" appearance="fill">
-                                    <mat-label>{{item.label}}</mat-label>
-                                    <mat-select [id]="item.name" [formControlName]="item.name"
-                                        [required]="item.required" (selectionChange)='changePropertyType($event, item)'>
-                                        <mat-option *ngFor="let option of item.options" [value]="option">
-                                            {{option}} </mat-option>
-                                    </mat-select>
-                                    <mat-icon *ngIf="item.readOnly" class="mat-icon-disable" matSuffix>do_not_disturb
-                                    </mat-icon>
-                                </mat-form-field>
-
                                 <mat-form-field *ngSwitchCase="'array'" floatLabel="always" appearance="fill">
                                     <mat-label>{{item.label}}</mat-label>
                                     <mat-chip-list #chipList multiple [formControlName]="item.name"
@@ -72,7 +47,7 @@
                                                 </button>
                                             </mat-chip>
                                         </ng-container>
-
+                                        
                                         <input [matChipInputFor]="chipList"
                                             [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
                                             [matChipInputAddOnBlur]="true"
@@ -85,18 +60,17 @@
                             </ng-container>
                         </ng-container>
                     </form>
+                </mat-dialog-content>
                 </div>
-                <div class="modal-footer">
+                <mat-dialog-actions class="modal-footer">
                     <button mat-stroked-button color="accent" type="button" (click)="close()">
                         Close </button>
                     <button mat-button color="accent" type="button" (click)="resetValue()">
                         Reset </button>
-                    <button mat-flat-button color="accent" type="button" (click)="save()" [disabled]="!nodeForm.valid">
+                    <button mat-flat-button color="accent" type="button" (click)="save()" [disabled]="!nodeForm.valid" [mat-dialog-close]="nodeForm">
                         Save </button>
-                </div>
+                    </mat-dialog-actions>
             </div>
-        </div>
+       
 
-    </div>
-</ng-template>
--->
+ 

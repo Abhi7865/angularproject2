@@ -4,7 +4,6 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { fileOpen, FileWithHandle } from 'browser-fs-access';
 import { concat, Observable } from 'rxjs';
 import { debounceTime, distinctUntilChanged, map, skip, take } from 'rxjs/operators';
-import { v4 as uuidv4 } from 'uuid';
 import { NodeComponent } from '../node/node.component';
 import { NodeService } from '../node/node.service';
 
@@ -104,8 +103,7 @@ export class TaskComponent implements OnInit {
     create(cor: any) {
 
         const n = {
-            uniqueId: uuidv4(),
-            id: (++this.currentCanvasTab.nodeIndex).toString(),
+            id: "i" +(++this.currentCanvasTab.nodeIndex).toString(),
             type: this.popupTittle,
             cor: cor,
         };
@@ -203,7 +201,6 @@ export class TaskComponent implements OnInit {
 
         nodes.nodeData.map((data: any, index) => {
             const n = {
-                uniqueId: data.uniqueId,
                 id: data.id,
                 // name: data.name,
                 type: data.type,
@@ -219,8 +216,10 @@ export class TaskComponent implements OnInit {
             this.nodeService.maintainJson(n, formData);
             this.currentCanvasTab?.nodes.push(n);
 
-            if (parseInt(data.id) > this.currentCanvasTab.nodeIndex) {
-                this.currentCanvasTab.nodeIndex = parseInt(data.id);
+           // let tempId = parseInt(data.id.replace("i", ""));
+
+            if (parseInt(data.id.replace("i", "")) > this.currentCanvasTab.nodeIndex) {
+                this.currentCanvasTab.nodeIndex = parseInt(data.id.replace("i", ""));
             }
             this.cdRef.detectChanges();
 

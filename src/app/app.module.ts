@@ -7,6 +7,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatNativeDateModule, MAT_DATE_FORMATS } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatDialogModule, MAT_DIALOG_DEFAULT_OPTIONS } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
@@ -32,6 +33,7 @@ import { Dynamicnode1Component } from './node1/dynamicnode1/dynamicnode1.compone
 import { Node1Component } from './node1/node1.component';
 import { Node1Service } from './node1/node1.service';
 import { TaskComponent } from './task/task.component';
+import { DagDialogComponent } from './dag-dialog/dag-dialog.component';
 
 
 
@@ -69,9 +71,10 @@ export const CUSTOM_DATE_FORMAT = {
         Node1Component,
         Dynamicnode1Component,
         DagComponent,
-        TaskComponent
+        TaskComponent,
+        DagDialogComponent
     ],
-    entryComponents: [DynamicNodeComponent, DialogComponent],
+    entryComponents: [DynamicNodeComponent, DialogComponent, DagDialogComponent],
     imports: [
         BrowserModule,
         AppRoutingModule,
@@ -97,7 +100,8 @@ export const CUSTOM_DATE_FORMAT = {
         MatDatepickerModule,
         MatNativeDateModule,
         A11yModule,
-        AutosizeModule
+        AutosizeModule,
+        MatDialogModule
     ],
     exports: [RouterModule],
     providers: [
@@ -118,6 +122,10 @@ export const CUSTOM_DATE_FORMAT = {
         {
             provide: MAT_DATE_FORMATS, useValue: CUSTOM_DATE_FORMAT
         },
+        // {provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: { 
+        //     disableClose:false,
+        //     closeOnNavigation:true,
+        //     hasBackdrop: false,}},
     ],
     bootstrap: [AppComponent]
 })

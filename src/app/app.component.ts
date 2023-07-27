@@ -15,13 +15,20 @@ export class AppComponent {
     selectedIndex = 0;
     @ViewChild(TaskComponent) TaskComponent: TaskComponent;
     @ViewChild(DagComponent) DagComponent: DagComponent;
+    taskList: any = [];
 
     constructor(
         private nodeService: NodeService,
         private node1Service: Node1Service,
         private _snackBar: MatSnackBar) { }
 
-    ngOnInit() { }
+    ngOnInit() { 
+        this.nodeService.updateNodeList.subscribe((information) => {
+            this.taskList = information;
+            console.log(this.taskList);
+
+        });
+    }
 
     saveJson(overwrite = false) {
         if (this.isDagView) {
@@ -62,4 +69,27 @@ export class AppComponent {
     changeflowapp(val: any) {
         this.nodeService.changeflow(val);
     }
+    x:any;
+    myjson:any;
+    previewJson()
+    {
+        this.saveJson();
+        if (this.isDagView) {
+            console.log("Hello Preview Json")
+            this. myjson=this.node1Service.previewJson();
+             this. x = window.open();
+              this. x.document.open();
+             this. x.document.write('<html><body><pre>' + this.myjson + '</pre></body></html>');
+             this. x.document.close();
+        }
+        else{
+            console.log("Hello Preview Json")
+            this. myjson=this.nodeService.previewJson();
+             this. x = window.open();
+             this. x.document.open();
+             this. x.document.write('<html><body><pre>' + this.myjson + '</pre></body></html>');
+             this. x.document.close();
+        }
+    }
+   
 }

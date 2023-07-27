@@ -3,7 +3,6 @@ import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatChipInputEvent } from '@angular/material/chips';
 import { fileOpen, FileWithHandle } from 'browser-fs-access';
-import { v4 as uuidv4 } from 'uuid';
 import { NodeService } from '../node/node.service';
 import { Node1Component } from '../node1/node1.component';
 import { Node1Service } from '../node1/node1.service';
@@ -20,7 +19,7 @@ export class DagComponent implements OnInit {
     nodes: any[] = [];
     files: any[] = [];
     @ViewChild('nodeChild') nodeChild: Node1Component;
-
+    
     popupTittle = "";
     typeofFlow = 'task';
     taskList: any = [];
@@ -68,14 +67,15 @@ export class DagComponent implements OnInit {
     create(cor: any) {
 
         const n = {
-            uniqueId: uuidv4(),
-            id: (++this.index).toString(),
+            id: "i" + (this.index + 1).toString(),
             type: this.popupTittle,
             cor: cor,
 
         };
 
-        this.nodeChild.addDynamicNodes(n, {});
+
+        this.index += 1;       
+         this.nodeChild.addDynamicNodes(n, {});
         this.node1Service.maintainJson(n, {});
         this.nodes.push(n);
     }
@@ -228,7 +228,6 @@ export class DagComponent implements OnInit {
 
         nodes.nodeData.map((data: any) => {
             const n = {
-                uniqueId: data.uniqueId,
                 id: data.id,
                 // name: data.name,
                 type: data.type,
@@ -244,8 +243,10 @@ export class DagComponent implements OnInit {
             this.node1Service.maintainJson(n, formData);
             this.nodes.push(n);
 
-            if (parseInt(data.id) > this.index) {
-                this.index = parseInt(data.id);
+            let tempId = parseInt(data.id.replace("i", ""));
+
+            if (tempId > this.index) {
+                this.index = tempId;
             }
             this.cdRef.detectChanges();
         });
@@ -370,15 +371,19 @@ export class DagComponent implements OnInit {
         let startDate = this.startDateControl.value as Date;
         let endDate = this.endDateControl.value as Date;
 
-        let value = {
-            ...this.nodeForm.getRawValue(),
-            "start_year": startDate?.getFullYear().toString(),
-            "start_month": (startDate?.getMonth() + 1).toString(),
-            "start_day": startDate?.getDate().toString(),
-            "end_year": endDate?.getFullYear().toString(),
-            "end_month": (endDate?.getMonth() + 1).toString(),
-            "end_day": endDate?.getDate().toString(),
-        };
+        let value = { ...this.nodeForm.getRawValue() };
+
+        if (startDate) {
+            value["start_year"] = startDate?.getFullYear().toString();
+            value["start_month"] = (startDate?.getMonth() + 1).toString();
+            value["start_day"] = startDate?.getDate().toString();
+        }
+        if (endDate) {
+            value["end_year"] = endDate?.getFullYear().toString();
+            value["end_month"] = (endDate?.getMonth() + 1).toString();
+            value["end_day"] = endDate?.getDate().toString();
+        }
+
         delete value["startDate_endDate"];
         console.log("Workflow Settings: " + value);
 

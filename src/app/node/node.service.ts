@@ -96,7 +96,9 @@ export class NodeService {
 
     updateNodeFormData(id, formData) {
         const index = this.selectedNodeTab.nodes.findIndex((d: any) => d.id == id);
+        console.log(index);
         this.selectedNodeTab.nodeFormData[index] = formData;
+        console.log(formData);
     }
 
     deleteNode(id: any) {
@@ -104,6 +106,21 @@ export class NodeService {
         this.selectedNodeTab.nodes.splice(index, 1);
         this.selectedNodeTab.nodeFormData.splice(index, 1);
         this.selectedNodeTab.dynamicNodeCompList.splice(index, 1);
+    }
+    previewJson()
+    {
+        const connections = (this.selectedNodeTab.jsPlumbInstance.getConnections() as any[])
+        .map((conn) => ({ uuids: conn.getUuids() }));
+
+        const allData = {
+            "component": this.selectedNodeTab.nodeFormData,
+            "nodeData": this.selectedNodeTab.nodes,
+            "connection": connections
+        }
+
+        var myjson = JSON.stringify(allData, null, 2);
+    console.log(myjson);
+    return myjson;
     }
 
     async downloadJson(overwrite = false, filename: string) {
@@ -176,8 +193,8 @@ export class NodeService {
 
         // Create Node Map with indegree and target node array
 
-        let nodeEdgeMap: { [uniqueId: string]: { indegree: number, target: string[] } } = {};
-        let nodeExistRecord: { [uniqueId: string]: boolean } = {};
+        let nodeEdgeMap: { [id: string]: { indegree: number, target: string[] } } = {};
+        let nodeExistRecord: { [id: string]: boolean } = {};
 
         for (let edge of edges) {
             if (!nodeExistRecord[edge.sourceId]) nodeEdgeMap[edge.sourceId] = { indegree: 0, target: [] };
@@ -231,7 +248,7 @@ export class NodeService {
         }
 
         this.selectedNodeTab.nodes.forEach((node, index) => {
-            node.sequenceNo = topologicalOrderList[node.uniqueId];
+            node.sequenceNo = topologicalOrderList[node.id];
             this.selectedNodeTab.nodeFormData[index]["sequence_number"] = node.sequenceNo;
         });
 
@@ -388,5 +405,6 @@ export class NodeService {
     changeflow(type: any) {
         this.changeflowSub.next(type)
     }
+
 }
 

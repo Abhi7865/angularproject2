@@ -9,7 +9,25 @@
                 (click)="selectedIndex = 1">DAG Workflow</button>
 
             <span class="flex-spacer"></span>
-
+        <!--    <button mat-button [matMenuTriggerFor]="menu">Menu</button>
+            <mat-menu #menu="matMenu" >
+                <mat-list class="files-list" *ngIf="taskList?.length">
+                    <ng-container *ngFor="let task of taskList">
+                        <mat-list-item class="single-file" [dndDraggable]="task.taskname" [matTooltip]="task.taskname"
+                            matTooltipPosition="right">
+                       
+                                <h6 class="name"  >{{task.taskname}}</h6>
+                           
+                        </mat-list-item>
+                    </ng-container>
+                </mat-list></mat-menu>-->
+            
+            <button mat-button (click)="previewJson()">
+                <!--  <img src="../../../assets/images/Import.svg" alt="" class="configIcon">--> 
+                <mat-icon>developer_mode</mat-icon>
+                Preview Code
+               </button>
+   
             <button mat-button (click)="importJson()">
                 <img src="../../../assets/images/Import.svg" alt="" class="configIcon">
                 Import
